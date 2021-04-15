@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 import org.exceptions.UserDoesNotExistException;
 import org.model.User;
-import org.services.UserService;
+import org.services.DatabaseService;
 
 
 public class LoginController {
@@ -30,7 +30,7 @@ public class LoginController {
     @FXML
     public void handleLoginAction() {
         try {
-            User user = UserService.login(usernameField.getText(), passwordField.getText());
+            User user = DatabaseService.login(usernameField.getText(), passwordField.getText());
             loginMessage.setText("Logged-In succesfully");
         } catch (UserDoesNotExistException e) {
             loginMessage.setText(e.getMessage());

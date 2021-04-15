@@ -13,7 +13,7 @@ import java.util.Objects;
 
 import static org.services.FileSystemService.getPathToFile;
 
-public class UserService {
+public class DatabaseService {
 
     private static ObjectRepository<User> userRepository;
 

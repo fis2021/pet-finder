@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import org.exceptions.UsernameAlreadyExistsException;
-import org.services.UserService;
+import org.services.DatabaseService;
 
 public class RegistrationController {
 
@@ -41,7 +41,7 @@ public class RegistrationController {
                 throw new NullPointerException("Username and password required");
             }
 
-            UserService.addUser(usernameField.getText(), passwordField.getText(), (String) role.getValue());
+            DatabaseService.addUser(usernameField.getText(), passwordField.getText(), (String) role.getValue());
             registrationMessage.setText("Account created successfully!\nRedirecting to login...");
 
         } catch (UsernameAlreadyExistsException e) {
