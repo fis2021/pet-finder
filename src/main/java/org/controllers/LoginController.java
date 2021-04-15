@@ -11,7 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import org.exceptions.UserDoesNotExistException;
+import org.exceptions.InvalidUserException;
 import org.model.User;
 import org.services.DatabaseService;
 
@@ -53,7 +53,7 @@ public class LoginController {
             currentStage.setScene(new Scene(root, 500, 500));
             currentStage.show();
 
-        } catch (UserDoesNotExistException | IOException e) {
+        } catch (InvalidUserException | IOException e) {
             loginMessage.setText(e.getMessage());
         }
     }

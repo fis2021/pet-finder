@@ -2,7 +2,7 @@ package org.services;
 
 import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.objects.ObjectRepository;
-import org.exceptions.UserDoesNotExistException;
+import org.exceptions.InvalidUserException;
 import org.exceptions.UsernameAlreadyExistsException;
 import org.model.User;
 
@@ -25,13 +25,13 @@ public class DatabaseService {
         userRepository = database.getRepository(User.class);
     }
 
-    public static User login(String username, String password) throws UserDoesNotExistException{
+    public static User login(String username, String password) throws InvalidUserException{
         User crt;
 
         crt = attemptLogin(username, password);
 
         if(crt == null){
-            throw new UserDoesNotExistException(username);
+            throw new InvalidUserException();
         }
 
         return crt;
