@@ -48,10 +48,13 @@ public class LoginController {
             if(user.getRole().equals("Shelter")){
                 page = "shelterHomePage.fxml";
             }
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(page));
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
+            Parent root = loader.load();
             currentStage.setTitle("Home");
             currentStage.setScene(new Scene(root, 500, 500));
             currentStage.show();
+            HomePageController hpc = loader.getController();
+            hpc.setUser(user);
 
         } catch (InvalidUserException | IOException e) {
             loginMessage.setText(e.getMessage());
