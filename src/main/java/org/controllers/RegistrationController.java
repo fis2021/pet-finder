@@ -31,7 +31,7 @@ public class RegistrationController {
 
     @FXML
     public void initialize() {
-        role.getItems().addAll("User", "Shelter");
+        role.getItems().addAll("Individual", "Shelter");
     }
 
     @FXML

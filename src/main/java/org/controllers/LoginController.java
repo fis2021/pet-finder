@@ -15,6 +15,8 @@ import org.exceptions.UserDoesNotExistException;
 import org.model.User;
 import org.services.DatabaseService;
 
+import java.io.IOException;
+
 
 public class LoginController {
 
@@ -28,11 +30,30 @@ public class LoginController {
     private String role;
 
     @FXML
-    public void handleLoginAction() {
+    public void handleLoginAction(ActionEvent event) {
         try {
+            Node node = (Node) event.getSource();
+            Stage currentStage = (Stage) node.getScene().getWindow();
+
             User user = DatabaseService.login(usernameField.getText(), passwordField.getText());
             loginMessage.setText("Logged-In succesfully");
-        } catch (UserDoesNotExistException e) {
+            //wait(2000);
+
+            String page = "";
+
+            if(user.getRole().equals("Individual")){
+                page = "homePage.fxml";
+            }
+
+            if(user.getRole().equals("Shelter")){
+                page = "shelterHomePage.fxml";
+            }
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(page));
+            currentStage.setTitle("Home");
+            currentStage.setScene(new Scene(root, 500, 500));
+            currentStage.show();
+
+        } catch (UserDoesNotExistException | IOException e) {
             loginMessage.setText(e.getMessage());
         }
     }
