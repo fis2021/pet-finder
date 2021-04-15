@@ -36,6 +36,7 @@ public class RegistrationController {
 
     @FXML
     public void handleRegisterAction(ActionEvent event) throws IOException, InterruptedException {
+        boolean succes = false;
         try {
             if(usernameField.getText() == "" || passwordField.getText() == "" || role.getValue() == ""){
                 throw new NullPointerException("Username and password required");
@@ -43,18 +44,30 @@ public class RegistrationController {
 
             DatabaseService.addUser(usernameField.getText(), passwordField.getText(), (String) role.getValue());
             registrationMessage.setText("Account created successfully!\nRedirecting to login...");
+            succes = true;
 
         } catch (UsernameAlreadyExistsException e) {
             registrationMessage.setText(e.getMessage());
         } catch(Exception e){
             registrationMessage.setText(e.getMessage());
         }
-            TimeUnit.SECONDS.sleep(2);
+        if(succes) {
             Node node = (Node) event.getSource();
             Stage currentStage = (Stage) node.getScene().getWindow();
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("login.fxml"));
             currentStage.setTitle("Register");
             currentStage.setScene(new Scene(root, 500, 500));
             currentStage.show();
+        }
+    }
+
+    @FXML
+    public void redirectToLogin(ActionEvent event) throws Exception{
+        Node node = (Node) event.getSource();
+        Stage currentStage = (Stage) node.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("login.fxml"));
+        currentStage.setTitle("Register");
+        currentStage.setScene(new Scene(root, 500, 500));
+        currentStage.show();
     }
 }
