@@ -25,4 +25,5 @@ buildNumber.properties
 .vscode
 .classpath
 .java-version
-bin/main/
+**/bin/
+!src/**/bin/
