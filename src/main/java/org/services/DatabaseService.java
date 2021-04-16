@@ -2,6 +2,7 @@ package org.services;
 
 import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.objects.ObjectRepository;
+import org.exceptions.InvalidUserException;
 import org.exceptions.UsernameAlreadyExistsException;
 import org.model.User;
 
@@ -12,7 +13,7 @@ import java.util.Objects;
 
 import static org.services.FileSystemService.getPathToFile;
 
-public class UserService {
+public class DatabaseService {
 
     private static ObjectRepository<User> userRepository;
 
@@ -22,6 +23,28 @@ public class UserService {
                 .openOrCreate("User1", "P@ssw0rd!");
 
         userRepository = database.getRepository(User.class);
+    }
+
+    public static User login(String username, String password) throws InvalidUserException{
+        User crt;
+
+        crt = attemptLogin(username, password);
+
+        if(crt == null){
+            throw new InvalidUserException();
+        }
+
+        return crt;
+    }
+
+    public static User attemptLogin(String username, String password){
+        for (User user : userRepository.find()) {
+            if(Objects.equals(username, user.getUsername()) && Objects.equals(encodePassword(username, password), user.getPassword())){
+                return user;
+            }
+        }
+        
+        return null;
     }
 
     public static void addUser(String username, String password, String role) throws UsernameAlreadyExistsException {
