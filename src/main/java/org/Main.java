@@ -6,7 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.services.FileSystemService;
-import org.services.UserService;
+import org.services.DatabaseService;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,8 +16,8 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         initDirectory();
-        UserService.initDatabase();
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("register.fxml"));
+        DatabaseService.initDatabase();
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("login.fxml"));
         primaryStage.setTitle("Petfinder");
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();

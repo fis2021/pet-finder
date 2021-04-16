@@ -20,4 +20,10 @@ buildNumber.properties
 **/build/
 !src/**/build/
 
+.project
+.settings
+.vscode
+.classpath
 .java-version
+**/bin/
+!src/**/bin/
