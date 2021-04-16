@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 import org.dizitart.no2.objects.Id;
 
-public abstract class Pet{
+public class Pet{
     private String type;
     private Image image;
     private String info;

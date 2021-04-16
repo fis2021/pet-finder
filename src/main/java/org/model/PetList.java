@@ -26,4 +26,6 @@ class PetList{
     public void removePet(Pet pet){
         petList.remove(pet);
     }
+
+    public ArrayList<Pet> getPetList(){ return this.petList; }
 }
