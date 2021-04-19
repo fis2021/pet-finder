@@ -2,11 +2,15 @@ package org.model;
 
 import org.dizitart.no2.objects.Id;
 
+import java.util.ArrayList;
+
 public class User {
     @Id
     private String username;
     private String password;
     private String role;
+    private ArrayList<Pet> petList=new ArrayList<Pet>();
+
 
     public User(String username, String password, String role) {
         this.username = username;
@@ -60,4 +64,14 @@ public class User {
         result = 31 * result + (role != null ? role.hashCode() : 0);
         return result;
     }
+
+    public void addPet(Pet pet){
+        petList.add(pet);
+    }
+
+    public void removePet(Pet pet){
+        petList.remove(pet);
+    }
+
+    public ArrayList<Pet> getPetList(){ return this.petList; }
 }
