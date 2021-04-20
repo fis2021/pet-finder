@@ -1,6 +1,7 @@
 package org.model;
 
 import org.dizitart.no2.objects.Id;
+import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 
@@ -74,4 +75,5 @@ public class User {
     }
 
     public ArrayList<Pet> getPetList(){ return this.petList; }
+
 }
