@@ -13,18 +13,18 @@
     <Text id="title-text" text="Add Pet Page" GridPane.columnIndex="1" GridPane.columnSpan="2"
           GridPane.rowIndex="0"/>
 
-    <Label text="Type:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+    <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+    <TextField fx:id="petName" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
-    <ChoiceBox fx:id="type" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+    <Label text="Type:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+    <ChoiceBox fx:id="type" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
     </ChoiceBox>
 
-    <Label text="Info:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+    <Label text="Info:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+    <TextField fx:id="petInfo" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
-    <TextField fx:id="info" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-
-    <Text fx:id="addPetMessage" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
     <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="5">
-        <Button onAction="#handleAddPetAction" text="Register"/>
+        <Button onAction="#handleAddPetAction" text="Add"/>
     </HBox>
 
 
