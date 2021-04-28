@@ -26,6 +26,13 @@
     <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="5">
         <Button onAction="#handleAddPetAction" text="Add"/>
     </HBox>
+    <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="2" GridPane.rowIndex="5">
+    <Button onAction="#cancelAddPet" text="Cancel"/>
+    </HBox>
+
+    <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="6">
+    <Text fx:id="AddStatus"></Text>
+    </HBox>
 
 
 </GridPane>

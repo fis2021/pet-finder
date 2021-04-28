@@ -22,7 +22,7 @@
 
     <HBox alignment="bottom_left" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="2">
         <Text fx:id="RemovePet"/>
-        <Button fx:id="removePetButton" onAction="#redirectToShelterHomePage" text="Remove pet"/>
+        <Button fx:id="removePetButton" onAction="#handleRemovePetAction" text="Remove pet"/>
     </HBox>
 
     <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="3">

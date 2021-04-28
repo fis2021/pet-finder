@@ -15,6 +15,7 @@ import org.model.Pet;
 import org.model.User;
 import org.services.DatabaseService;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -36,6 +37,9 @@ public class ShelterManagerController {
 
     @FXML
     private Text AccountStatus;
+
+    @FXML
+    private Text AddStatus;
 
     @FXML
     public void initialize() {
@@ -74,12 +78,50 @@ public class ShelterManagerController {
 
     @FXML
     public void handleAddPetAction(ActionEvent event) throws IOException {
+        if(petName.getText() == "" || type.getValue() == null){
+            AddStatus.setText("Name and type are required!");
+            return;
+        }
         Pet crt = new Pet(petName.getText(), (String) type.getValue());
 
         crt.setInfo(petInfo.getText());
         user.addPet(crt);
         DatabaseService.updateUser(user);
 
+        Node node = (Node) event.getSource();
+        Stage currentStage = (Stage) node.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("shelterManagerPage.fxml"));
+        Parent root = loader.load();
+        currentStage.setTitle("Manage pets");
+        currentStage.setScene(new Scene(root, 500, 500));
+        currentStage.show();
+
+        ShelterManagerController smc = loader.getController();
+        smc.setUser(user);
+        smc.updateList();
+    }
+
+    @FXML
+    public void handleRemovePetAction(ActionEvent event) {
+        String crt = (String) pets.getSelectionModel().getSelectedItem();
+
+        ArrayList<Pet> userPets;
+
+        userPets = user.getPetList();
+
+        for(Pet pet : userPets){
+            if(pet.toString().equals(crt)){
+                userPets.remove(pet);
+            }
+        }
+
+        DatabaseService.updateUser(user);
+
+        this.updateList();
+    }
+
+    @FXML
+    public void cancelAddPet(ActionEvent event) throws IOException {
         Node node = (Node) event.getSource();
         Stage currentStage = (Stage) node.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("shelterManagerPage.fxml"));
