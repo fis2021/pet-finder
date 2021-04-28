@@ -12,24 +12,25 @@
     </padding>
     <Text id="title-text" text="Shelter Home Page" GridPane.columnIndex="1" GridPane.columnSpan="2"
           GridPane.rowIndex="0"/>
+    <ListView fx:id="pets" layoutX="38.0" layoutY="141.0" prefHeight="150.0" prefWidth="150.0" />
 
-    <HBox alignment="top_left" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="1">
+    <HBox alignment="bottom_left" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <Text fx:id="AccountStatus"/>
         <Text fx:id="AddPet"/>
-        <Button fx:id="addPetButton" onAction="#redirectToShelterHomePage" text="Add pet"/>
+        <Button fx:id="addPetButton" onAction="#openAddPetPage" text="Add pet"/>
     </HBox>
 
-    <HBox alignment="top_left" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="2">
+    <HBox alignment="bottom_left" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="2">
         <Text fx:id="RemovePet"/>
         <Button fx:id="removePetButton" onAction="#redirectToShelterHomePage" text="Remove pet"/>
     </HBox>
 
-    <HBox alignment="top_left" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="3">
+    <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="3">
         <Text fx:id="ReturnHome"/>
         <Button fx:id="returnHomeButton" onAction="#redirectToShelterHomePage" text="Return Home"/>
     </HBox>
 
     <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="2" GridPane.rowIndex="2">
-        <Text fx:id="AccountStatus"/>
         <Button fx:id="signOutButton" onAction="#handleSignOutAction" text="Sign-out"/>
     </HBox>
 

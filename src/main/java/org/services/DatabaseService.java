@@ -52,6 +52,10 @@ public class DatabaseService {
         userRepository.insert(new User(username, encodePassword(username, password), role));
     }
 
+    public static void updateUser(User user){
+        userRepository.update(user);
+    }
+
     private static void checkUserDoesNotAlreadyExist(String username) throws UsernameAlreadyExistsException {
         for (User user : userRepository.find()) {
             if (Objects.equals(username, user.getUsername()))

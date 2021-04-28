@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<GridPane xmlns:fx="http://javafx.com/fxml/1" alignment="center" hgap="10" prefHeight="700" prefWidth="800"
+          vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal"
+          fx:controller="org.controllers.ShelterManagerController">
+    <padding>
+        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0"/>
+    </padding>
+    <Text id="title-text" text="Add Pet Page" GridPane.columnIndex="1" GridPane.columnSpan="2"
+          GridPane.rowIndex="0"/>
+
+    <Label text="Type:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+
+    <ChoiceBox fx:id="type" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+    </ChoiceBox>
+
+    <Label text="Info:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+
+    <TextField fx:id="info" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+    <Text fx:id="addPetMessage" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+    <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="5">
+        <Button onAction="#handleAddPetAction" text="Register"/>
+    </HBox>
+
+
+</GridPane>
+

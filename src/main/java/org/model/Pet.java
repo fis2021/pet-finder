@@ -4,44 +4,56 @@ package org.model;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.util.UUID;
+
 public class Pet{
+    private String ID;
     private String type;
+    private String name;
     private String info;
     private String imagePath;
 
-    public Pet(String type, String info){
+    public Pet(String name, String type){
+        this.ID = UUID.randomUUID().toString();
         this.type = type;
-        this.info=info;
+        this.name = name;
+        this.info = "";
         this.imagePath="";
     }
 
-    public Pet() {
-    }
-
+    public String getID(){ return this.ID; }
+    public String getName(){ return this.name; }
     public String getType(){ return this.type; }
     public String getInfo(){ return this.info; }
     public String getImagePath(){ return this.imagePath; }
+    public void setName(String name){ this.name = name; }
     public void setType(String type){ this.type=type; }
     public void setInfo(String info){ this.info=info; }
     public void setImagePath(String imagePath){ this.imagePath=imagePath; }
-    public void setImage(String imagePath){
-        Image image=new Image(imagePath);
-        ImageView imageView = new ImageView(image);
-    }
-    public Image getImage(){
-        Image image=new Image(imagePath);
-        ImageView imageView = new ImageView(image);
-        return image;
-    }
 
+    //public void setImage(String imagePath){
+    //    Image image=new Image(imagePath);
+    //    ImageView imageView = new ImageView(image);
+    //}
+    //public Image getImage(){
+    //    Image image=new Image(imagePath);
+    //    ImageView imageView = new ImageView(image);
+    //    return image;
+    //}
 
+    @Override
     public boolean equals(Object o){
         if(o instanceof Pet){
-            Pet comp=(Pet)o;
-            if(this.type.equals(comp.getType()) && this.info.equals(comp.getInfo()) && this.imagePath.equals(comp.getImagePath()))
+            Pet comp=(Pet) o;
+            if(this.ID.equals(comp.getID()) && this.name.equals(comp.getName()) && this.type.equals(comp.getType()) && this.info.equals(comp.getInfo()) && this.imagePath.equals(comp.getImagePath()))
                 return true;
         }
+
         return false;
     }
 
+    @Override
+    public String toString(){
+        return (this.name + " " + this.type + " " + this.info);
+    }
 }

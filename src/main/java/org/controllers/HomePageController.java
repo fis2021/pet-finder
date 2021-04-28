@@ -36,6 +36,7 @@ public class HomePageController {
             System.out.println(e);
         }
     }
+
     @FXML
     public void handleManagePetsAction(ActionEvent event) throws Exception{
             Node node = (Node) event.getSource();
@@ -46,7 +47,9 @@ public class HomePageController {
             currentStage.setTitle("Manage Pets");
             currentStage.setScene(new Scene(root, 500, 500));
             currentStage.show();
-            ShelterManagerController smc= loader.getController();
+            ShelterManagerController smc = loader.getController();
+            smc.setUser(user);
+            smc.updateList();
     }
 
     public void setUser(User user){
