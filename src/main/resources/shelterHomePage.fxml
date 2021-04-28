@@ -4,17 +4,23 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
-<GridPane xmlns:fx="http://javafx.com/fxml/1" alignment="center" hgap="10" prefHeight="700" prefWidth="800"
+<GridPane xmlns:fx="http://javafx.com/fxml/1" alignment="center" hgap="10" prefHeight="500" prefWidth="500"
           vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal"
           fx:controller="org.controllers.HomePageController">
     <padding>
         <Insets bottom="25.0" left="25.0" right="25.0" top="25.0"/>
     </padding>
-    <Text id="title-text" text="Shelter Home Page" GridPane.columnIndex="0" GridPane.columnSpan="2"
-          GridPane.rowIndex="5"/>
+    <Text id="title-text" text="Shelter Home Page" GridPane.columnIndex="1" GridPane.columnSpan="2"
+          GridPane.rowIndex="0"/>
 
-    <HBox alignment="top_right" spacing="10" GridPane.columnIndex="2" GridPane.rowIndex="0">
+    <HBox alignment="top_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="5">
         <Text fx:id="AccountStatus"/>
         <Button fx:id="signOutButton" onAction="#handleSignOutAction" text="Sign-out"/>
     </HBox>
+
+    <HBox alignment="top_left" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <Text fx:id="ShelterStatus"/>
+        <Button fx:id="managePetsButton" onAction="#handleManagePetsAction" text="Manage pets"/>
+    </HBox>
+
 </GridPane>

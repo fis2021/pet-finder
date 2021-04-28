@@ -20,7 +20,7 @@ public class DatabaseService {
     public static void initDatabase() {
         Nitrite database = Nitrite.builder()
                 .filePath(getPathToFile("petfinder.db").toFile())
-                .openOrCreate("User1", "P@ssw0rd!");
+                .openOrCreate("test", "parola");
 
         userRepository = database.getRepository(User.class);
     }
@@ -50,6 +50,10 @@ public class DatabaseService {
     public static void addUser(String username, String password, String role) throws UsernameAlreadyExistsException {
         checkUserDoesNotAlreadyExist(username);
         userRepository.insert(new User(username, encodePassword(username, password), role));
+    }
+
+    public static void updateUser(User user){
+        userRepository.update(user);
     }
 
     private static void checkUserDoesNotAlreadyExist(String username) throws UsernameAlreadyExistsException {
