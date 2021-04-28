@@ -155,9 +155,9 @@ public class ShelterManagerController {
         try {
             Node node = (Node) event.getSource();
             Stage currentStage = (Stage) node.getScene().getWindow();
-            FXMLLoader loader = FXMLLoader.load(getClass().getClassLoader().getResource("shelterHomePage.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("shelterHomePage.fxml"));
             Parent root = loader.load();
-            currentStage.setTitle("Shelter Home Page");
+            currentStage.setTitle("Home");
             currentStage.setScene(new Scene(root, 500, 500));
             currentStage.show();
 
