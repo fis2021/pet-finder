@@ -20,7 +20,7 @@ public class DatabaseService {
     public static void initDatabase() {
         Nitrite database = Nitrite.builder()
                 .filePath(getPathToFile("petfinder.db").toFile())
-                .openOrCreate("User1", "P@ssw0rd!");
+                .openOrCreate("test", "parola");
 
         userRepository = database.getRepository(User.class);
     }

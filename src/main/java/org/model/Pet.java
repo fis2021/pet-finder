@@ -21,6 +21,10 @@ public class Pet{
         this.imagePath="";
     }
 
+    public Pet(){
+
+    }
+
     public String getID(){ return this.ID; }
     public String getName(){ return this.name; }
     public String getType(){ return this.type; }

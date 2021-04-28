@@ -13,11 +13,20 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.model.Pet;
 import org.model.User;
+import org.services.DatabaseService;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ShelterManagerController {
 
     private User user;
+
+    @FXML
+    private TextField petName;
+
+    @FXML
+    private TextField petInfo;
 
     @FXML
     private ListView pets = new ListView<>();
@@ -64,19 +73,39 @@ public class ShelterManagerController {
     }
 
     @FXML
-    public void handleAddPetAction(){
+    public void handleAddPetAction(ActionEvent event) throws IOException {
+        Pet crt = new Pet(petName.getText(), (String) type.getValue());
 
+        crt.setInfo(petInfo.getText());
+        user.addPet(crt);
+        DatabaseService.updateUser(user);
+
+        Node node = (Node) event.getSource();
+        Stage currentStage = (Stage) node.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("shelterManagerPage.fxml"));
+        Parent root = loader.load();
+        currentStage.setTitle("Manage pets");
+        currentStage.setScene(new Scene(root, 500, 500));
+        currentStage.show();
+
+        ShelterManagerController smc = loader.getController();
+        smc.setUser(user);
+        smc.updateList();
     }
 
     @FXML
     public void openAddPetPage(ActionEvent event) throws Exception{
-        //User currentUser=userRepository.find
         Node node = (Node) event.getSource();
-        Stage addPetStage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("addPetPage.fxml"));
-        addPetStage.setTitle("AddPet");
-        addPetStage.setScene(new Scene(root, 500, 500));
-        addPetStage.show();
+        Stage currentStage = (Stage) node.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("addPetPage.fxml"));
+        Parent root = loader.load();
+        currentStage.setTitle("AddPet");
+        currentStage.setScene(new Scene(root, 500, 500));
+        currentStage.show();
+
+        ShelterManagerController smc = loader.getController();
+        smc.setUser(user);
+
     }
 
     @FXML
@@ -84,10 +113,14 @@ public class ShelterManagerController {
         try {
             Node node = (Node) event.getSource();
             Stage currentStage = (Stage) node.getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("shelterHomePage.fxml"));
+            FXMLLoader loader = FXMLLoader.load(getClass().getClassLoader().getResource("shelterHomePage.fxml"));
+            Parent root = loader.load();
             currentStage.setTitle("Shelter Home Page");
             currentStage.setScene(new Scene(root, 500, 500));
             currentStage.show();
+
+            HomePageController hpc = loader.getController();
+            hpc.setUser(user);
         } catch (Exception e) {
             System.out.println(e);
         }
