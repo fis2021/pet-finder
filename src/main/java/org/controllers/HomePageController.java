@@ -6,21 +6,26 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.exceptions.InvalidUserException;
 import org.model.User;
 import org.services.DatabaseService;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 
 public class HomePageController {
     @FXML
     private User user;
-
     @FXML
     private Text AccountStatus;
+    @FXML
+    private ImageView imageView;
 
     @FXML
     public void handleSignOutAction(ActionEvent event) {
@@ -52,8 +57,16 @@ public class HomePageController {
             smc.updateList();
     }
 
-    public void setUser(User user){
+    public void setUser(User user) throws MalformedURLException {
         this.user = user;
         AccountStatus.setText("Logged-in as " + user.getUsername());
+
+        File file = new File(user.getImagePath());
+        String localUrl = file.toURI().toURL().toExternalForm();
+        Image profile = new Image(localUrl, false);
+        imageView.setImage(profile);
+        imageView.setFitHeight(100);
+        imageView.setFitWidth(150);
+        imageView.rotateProperty();
     }
 }
