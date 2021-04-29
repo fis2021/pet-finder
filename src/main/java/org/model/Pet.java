@@ -18,7 +18,7 @@ public class Pet{
         this.type = type;
         this.name = name;
         this.info = "";
-        this.imagePath="";
+        this.imagePath = "";
     }
 
     public Pet(){
@@ -47,10 +47,13 @@ public class Pet{
 
     @Override
     public boolean equals(Object o){
+        if(o == null){
+            return false;
+        }
+
         if(o instanceof Pet){
             Pet comp=(Pet) o;
-            if(this.ID.equals(comp.getID()) && this.name.equals(comp.getName()) && this.type.equals(comp.getType()) && this.info.equals(comp.getInfo()) && this.imagePath.equals(comp.getImagePath()))
-                return true;
+            return this.ID.equals(comp.getID()) && this.name.equals(comp.getName()) && this.type.equals(comp.getType()) && this.info.equals(comp.getInfo()) && this.imagePath.equals(comp.getImagePath());
         }
 
         return false;
