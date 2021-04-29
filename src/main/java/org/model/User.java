@@ -10,7 +10,7 @@ public class User {
     private String username;
     private String password;
     private String role;
-    private ArrayList<Pet> petList=new ArrayList<>();
+    private ArrayList<Pet> petList = new ArrayList<>();
     private String imagePath;
 
 
@@ -18,6 +18,7 @@ public class User {
         this.username = username;
         this.password = password;
         this.role = role;
+        this.imagePath = "";
     }
 
     public User(){
