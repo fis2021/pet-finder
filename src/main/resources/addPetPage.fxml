@@ -19,6 +19,7 @@
         <Label text="Add photo: " GridPane.columnIndex="1" GridPane.rowIndex="1"/>
         <Button onAction="#handleAddPhotoAction" text="Choose..." GridPane.columnIndex="2" GridPane.rowIndex="1"/>
         <ImageView fx:id="imageView" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+        <Button onAction="#clearImageAction" text="Clear" GridPane.columnIndex="4" GridPane.rowIndex="1"/>
     </HBox>
 
     <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>

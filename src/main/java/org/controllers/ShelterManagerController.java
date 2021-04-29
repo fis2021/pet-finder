@@ -108,6 +108,18 @@ public class ShelterManagerController {
     }
 
     @FXML
+    public void clearImageAction(ActionEvent event) throws MalformedURLException {
+        imagePath = "";
+        File file = new File(imagePath);
+        String localUrl = file.toURI().toURL().toExternalForm();
+        Image profile = new Image(localUrl, false);
+        imageView.setImage(profile);
+        imageView.setFitHeight(0);
+        imageView.setFitWidth(0);
+        imageView.rotateProperty();
+    }
+
+    @FXML
     public void handleAddPetAction(ActionEvent event) throws IOException {
         if(petName.getText() == "" || type.getValue() == null){
             AddStatus.setText("Name and type are required!");

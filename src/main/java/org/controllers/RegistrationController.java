@@ -64,6 +64,19 @@ public class RegistrationController {
         imageView.rotateProperty();
     }
 
+
+    @FXML
+    public void clearImageAction(ActionEvent event) throws MalformedURLException {
+        imagePath = "";
+        File file = new File(imagePath);
+        String localUrl = file.toURI().toURL().toExternalForm();
+        Image profile = new Image(localUrl, false);
+        imageView.setImage(profile);
+        imageView.setFitHeight(0);
+        imageView.setFitWidth(0);
+        imageView.rotateProperty();
+    }
+
     @FXML
     public void handleRegisterAction(ActionEvent event) throws IOException, InterruptedException {
         boolean success = false;
