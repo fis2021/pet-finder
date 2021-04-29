@@ -4,6 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.image.ImageView?>
 <GridPane xmlns:fx="http://javafx.com/fxml/1" alignment="center" hgap="10" prefHeight="700" prefWidth="800"
           vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal"
           fx:controller="org.controllers.ShelterManagerController">
@@ -13,15 +14,22 @@
     <Text id="title-text" text="Add Pet Page" GridPane.columnIndex="1" GridPane.columnSpan="2"
           GridPane.rowIndex="0"/>
 
-    <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-    <TextField fx:id="petName" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
-    <Label text="Type:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-    <ChoiceBox fx:id="type" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+    <HBox GridPane.columnIndex="0" GridPane.rowIndex="1">
+        <Label text="Add photo: " GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        <Button onAction="#handleAddPhotoAction" text="Choose..." GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+        <ImageView fx:id="imageView" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+    </HBox>
+
+    <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+    <TextField fx:id="petName" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+    <Label text="Type:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+    <ChoiceBox fx:id="type" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
     </ChoiceBox>
 
-    <Label text="Info:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-    <TextField fx:id="petInfo" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+    <Label text="Info:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+    <TextField fx:id="petInfo" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
 
     <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="5">
         <Button onAction="#handleAddPetAction" text="Add"/>
@@ -31,7 +39,7 @@
     </HBox>
 
     <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="6">
-    <Text fx:id="AddStatus"></Text>
+    <Text fx:id="AddStatus"/>
     </HBox>
 
 
