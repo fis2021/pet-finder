@@ -3,13 +3,15 @@ package org.model;
 import org.dizitart.no2.objects.Id;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class User {
     @Id
     private String username;
     private String password;
     private String role;
-    private ArrayList<Pet> petList=new ArrayList<Pet>();
+    private ArrayList<Pet> petList=new ArrayList<>();
+    private String imagePath;
 
 
     public User(String username, String password, String role) {
@@ -23,7 +25,7 @@ public class User {
     }
 
     public String getUsername() {
-        return username;
+        return this.username;
     }
 
     public void setUsername(String username) {
@@ -31,7 +33,7 @@ public class User {
     }
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     public void setPassword(String password) {
@@ -39,12 +41,16 @@ public class User {
     }
 
     public String getRole() {
-        return role;
+        return this.role;
     }
 
     public void setRole(String role) {
         this.role = role;
     }
+
+    public String getImagePath(){ return this.imagePath; }
+
+    public void setImagePath(String imagePath){ this.imagePath = imagePath; }
 
     @Override
     public boolean equals(Object o) {
@@ -53,9 +59,9 @@ public class User {
 
         User user = (User) o;
 
-        if (username != null ? !username.equals(user.username) : user.username != null) return false;
-        if (password != null ? !password.equals(user.password) : user.password != null) return false;
-        return role != null ? role.equals(user.role) : user.role == null;
+        if (!Objects.equals(username, user.username)) return false;
+        if (!Objects.equals(password, user.password)) return false;
+        return Objects.equals(role, user.role);
     }
 
     @Override
