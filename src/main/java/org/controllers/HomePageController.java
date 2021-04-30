@@ -57,6 +57,21 @@ public class HomePageController {
             smc.updateList();
     }
 
+    @FXML
+    public void handleAddAnnouncementAction(ActionEvent event) throws Exception{
+        Node node = (Node) event.getSource();
+        Stage currentStage = (Stage) node.getScene().getWindow();
+        String page = "addAnnouncementPage.fxml";
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
+        Parent root = loader.load();
+        currentStage.setTitle("Add Announcement");
+        currentStage.setScene(new Scene(root, 500, 500));
+        currentStage.show();
+        ShelterManagerController smc = loader.getController();
+        smc.setUser(user);
+        smc.updateList();
+    }
+
     public void setUser(User user) throws MalformedURLException {
         this.user = user;
         AccountStatus.setText("Logged-in as " + user.getUsername());
