@@ -19,4 +19,9 @@
         <ImageView fx:id="imageView" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
         <Button fx:id="signOutButton" onAction="#handleSignOutAction" text="Sign-out" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
     </HBox>
+
+    <HBox alignment="top_left" spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="4">
+        <Text fx:id="AddAnnouncement" GridPane.columnIndex="1"/>
+        <Button fx:id="addAnnouncementButton" onAction="#handleAddAnnouncementAction" text="Add Announcement" GridPane.columnIndex="2"/>
+    </HBox>
 </GridPane>
