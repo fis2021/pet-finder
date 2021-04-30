@@ -4,6 +4,7 @@ import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.objects.ObjectRepository;
 import org.exceptions.InvalidUserException;
 import org.exceptions.UsernameAlreadyExistsException;
+import org.model.Announcement;
 import org.model.User;
 
 import java.nio.charset.StandardCharsets;
@@ -16,7 +17,7 @@ import static org.services.FileSystemService.getPathToFile;
 public class DatabaseService {
 
     private static ObjectRepository<User> userRepository;
-//    private static ObjectRepository<Announcement> announcementRepository;
+    private static ObjectRepository<Announcement> announcementRepository;
 //    private static ObjectRepository<User> requestRepository;
 
     public static void initDatabase() {
@@ -25,8 +26,9 @@ public class DatabaseService {
                 .openOrCreate("test", "parola");
 
         userRepository = database.getRepository(User.class);
+        announcementRepository = database.getRepository(Announcement.class);
 
         UserService.initUserRepo(userRepository);
-//        AnnouncementService.initAnnouncementRepo(announcementRepository);
+        AnnouncementService.initAnnouncementRepo(announcementRepository);
     }
 }
