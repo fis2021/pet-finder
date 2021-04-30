@@ -3,8 +3,10 @@ package org.model;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 public class Announcement {
+    private String ID;
     private Pet pet;
     private User user;
     private Date datePosted=new Date();
@@ -12,6 +14,7 @@ public class Announcement {
     private String category="";
 
     public Announcement(Pet pet, User user, String category){
+        this.ID = UUID.randomUUID().toString();
         this.pet=pet;
         this.user=user;
         this.category=category;
@@ -19,6 +22,7 @@ public class Announcement {
 
     public Announcement(){}
 
+    public String getID(){ return this.ID; }
     public Pet getPet(){ return this.pet; }
     public User getUser() { return this.user; }
     public Date getDatePosted() { return this.datePosted; }
@@ -47,7 +51,7 @@ public class Announcement {
         }
         if(o instanceof Announcement){
             Announcement comp=(Announcement) o;
-            return this.user.equals(comp.getUser()) && this.pet.equals(comp.getPet()) && this.category.equals(comp.getCategory()) && this.info.equals(comp.getInfo()) && this.getStringDate().equals(comp.getStringDate());
+            return this.ID.equals(comp.getID()) && this.user.equals(comp.getUser()) && this.pet.equals(comp.getPet()) && this.category.equals(comp.getCategory()) && this.info.equals(comp.getInfo()) && this.getStringDate().equals(comp.getStringDate());
         }
         return false;
     }
