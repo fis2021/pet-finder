@@ -49,7 +49,7 @@ public class ShelterManagerController {
     @FXML
     private File image;
     @FXML
-    private String imagePath;
+    private String imagePath="";
     @FXML
     private ImageView imageView;
 
