@@ -4,6 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.image.ImageView?>
 <GridPane xmlns:fx="http://javafx.com/fxml/1" alignment="center" hgap="10" prefHeight="700" prefWidth="800"
           vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal"
           fx:controller="org.controllers.HomePageController">
@@ -13,8 +14,9 @@
     <Text id="title-text" text="Individual Home Page" GridPane.columnIndex="0" GridPane.columnSpan="2"
           GridPane.rowIndex="5"/>
 
-    <HBox alignment="top_right" spacing="10" GridPane.columnIndex="2" GridPane.rowIndex="0">
-        <Text fx:id="AccountStatus"/>
-        <Button fx:id="signOutButton" onAction="#handleSignOutAction" text="Sign-out"/>
+    <HBox alignment="top_right" spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="1">
+        <Text fx:id="AccountStatus" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+        <ImageView fx:id="imageView" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+        <Button fx:id="signOutButton" onAction="#handleSignOutAction" text="Sign-out" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
     </HBox>
 </GridPane>

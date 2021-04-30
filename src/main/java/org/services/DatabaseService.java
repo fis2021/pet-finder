@@ -25,6 +25,16 @@ public class DatabaseService {
         userRepository = database.getRepository(User.class);
     }
 
+    public static User findUserByUsername(String username){
+        for(User user : userRepository.find()){
+            if(Objects.equals(username,user.getUsername())){
+                return user;
+            }
+        }
+
+        return null;
+    }
+
     public static User login(String username, String password) throws InvalidUserException{
         User crt;
 

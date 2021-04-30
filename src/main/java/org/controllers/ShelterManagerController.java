@@ -9,14 +9,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.model.Pet;
 import org.model.User;
 import org.services.DatabaseService;
 
 import javax.xml.crypto.Data;
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 public class ShelterManagerController {
@@ -40,6 +45,13 @@ public class ShelterManagerController {
 
     @FXML
     private Text AddStatus;
+
+    @FXML
+    private File image;
+    @FXML
+    private String imagePath;
+    @FXML
+    private ImageView imageView;
 
     @FXML
     public void initialize() {
@@ -77,6 +89,37 @@ public class ShelterManagerController {
     }
 
     @FXML
+    void handleAddPhotoAction() throws MalformedURLException {
+        Stage stage = new Stage();
+        stage.setTitle("Add Photo");
+        FileChooser filechooser = new FileChooser();
+        filechooser.setInitialDirectory(new File("C:\\"));
+        filechooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("jpg files","*.jpg"));
+        image = filechooser.showOpenDialog(stage);
+        imagePath = image.getAbsolutePath();
+        filechooser.setInitialDirectory(image.getParentFile());
+        File file = new File(imagePath);
+        String localUrl = file.toURI().toURL().toExternalForm();
+        Image profile = new Image(localUrl, false);
+        imageView.setImage(profile);
+        imageView.setFitHeight(100);
+        imageView.setFitWidth(150);
+        imageView.rotateProperty();
+    }
+
+    @FXML
+    public void clearImageAction(ActionEvent event) throws MalformedURLException {
+        imagePath = "";
+        File file = new File(imagePath);
+        String localUrl = file.toURI().toURL().toExternalForm();
+        Image profile = new Image(localUrl, false);
+        imageView.setImage(profile);
+        imageView.setFitHeight(0);
+        imageView.setFitWidth(0);
+        imageView.rotateProperty();
+    }
+
+    @FXML
     public void handleAddPetAction(ActionEvent event) throws IOException {
         if(petName.getText() == "" || type.getValue() == null){
             AddStatus.setText("Name and type are required!");
@@ -85,6 +128,7 @@ public class ShelterManagerController {
         Pet crt = new Pet(petName.getText(), (String) type.getValue());
 
         crt.setInfo(petInfo.getText());
+        crt.setImagePath(imagePath);
         user.addPet(crt);
         DatabaseService.updateUser(user);
 
