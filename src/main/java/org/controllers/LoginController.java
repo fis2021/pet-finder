@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import org.exceptions.InvalidUserException;
 import org.model.User;
 import org.services.DatabaseService;
+import org.services.UserService;
 
 import java.io.IOException;
 
@@ -35,7 +36,7 @@ public class LoginController {
             Node node = (Node) event.getSource();
             Stage currentStage = (Stage) node.getScene().getWindow();
 
-            User user = DatabaseService.login(usernameField.getText(), passwordField.getText());
+            User user = UserService.login(usernameField.getText(), passwordField.getText());
             loginMessage.setText("Logged-In succesfully");
             //wait(2000);
 
