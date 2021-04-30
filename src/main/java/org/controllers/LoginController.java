@@ -65,9 +65,9 @@ public class LoginController {
     public void redirectToRegister(ActionEvent event) throws Exception{
         Node node = (Node) event.getSource();
         Stage currentStage = (Stage) node.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("register.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("registerScene.fxml"));
         currentStage.setTitle("Register");
-        currentStage.setScene(new Scene(root, 500, 500));
+        currentStage.setScene(new Scene(root, 800, 600));
         currentStage.show();
     }
 }
