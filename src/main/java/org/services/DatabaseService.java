@@ -16,6 +16,8 @@ import static org.services.FileSystemService.getPathToFile;
 public class DatabaseService {
 
     private static ObjectRepository<User> userRepository;
+//    private static ObjectRepository<Announcement> announcementRepository;
+//    private static ObjectRepository<User> requestRepository;
 
     public static void initDatabase() {
         Nitrite database = Nitrite.builder()
@@ -25,5 +27,6 @@ public class DatabaseService {
         userRepository = database.getRepository(User.class);
 
         UserService.initUserRepo(userRepository);
+//        AnnouncementService.initAnnouncementRepo(announcementRepository);
     }
 }
