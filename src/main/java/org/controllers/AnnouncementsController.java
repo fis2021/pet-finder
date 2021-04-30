@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import org.model.Pet;
 import org.model.User;
 import org.services.DatabaseService;
+import org.services.UserService;
 
 import javax.xml.crypto.Data;
 import java.io.File;
@@ -136,7 +137,7 @@ public class AnnouncementsController {
         crt.setInfo(petInfo.getText());
         crt.setImagePath(imagePath);
         user.addPet(crt);
-        DatabaseService.updateUser(user);
+        UserService.updateUser(user);
 
         Node node = (Node) event.getSource();
         Stage currentStage = (Stage) node.getScene().getWindow();

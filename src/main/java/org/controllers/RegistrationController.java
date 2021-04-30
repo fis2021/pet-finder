@@ -22,6 +22,7 @@ import java.net.MalformedURLException;
 import org.exceptions.UsernameAlreadyExistsException;
 import org.model.User;
 import org.services.DatabaseService;
+import org.services.UserService;
 
 public class RegistrationController {
 
@@ -95,11 +96,11 @@ public class RegistrationController {
                 throw new NullPointerException("Username and password required");
             }
 
-            DatabaseService.addUser(usernameField.getText(), passwordField.getText(), (String) role.getValue());
+            UserService.addUser(usernameField.getText(), passwordField.getText(), (String) role.getValue());
             if(imagePath != ""){
-                User crt = DatabaseService.findUserByUsername(usernameField.getText());
+                User crt = UserService.findUserByUsername(usernameField.getText());
                 crt.setImagePath(imagePath);
-                DatabaseService.updateUser(crt);
+                UserService.updateUser(crt);
             }
             registrationMessage.setText("Account created successfully!\nRedirecting to login...");
             success = true;
