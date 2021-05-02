@@ -50,9 +50,9 @@ public class UserService {
         return null;
     }
 
-    public static void addUser(String username, String password, String role) throws UsernameAlreadyExistsException {
-        checkUserDoesNotAlreadyExist(username);
-        userRepository.insert(new User(username, encodePassword(username, password), role));
+    public static void addUser(User user) throws UsernameAlreadyExistsException {
+        checkUserDoesNotAlreadyExist(user.getUsername());
+        userRepository.insert(user);
     }
 
     public static void updateUser(User user){
@@ -66,7 +66,7 @@ public class UserService {
         }
     }
 
-    private static String encodePassword(String salt, String password) {
+    public static String encodePassword(String salt, String password) {
         MessageDigest md = getMessageDigest();
         md.update(salt.getBytes(StandardCharsets.UTF_8));
 
