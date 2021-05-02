@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 
 import org.exceptions.UsernameAlreadyExistsException;
+import org.model.Address;
 import org.model.User;
 import org.services.DatabaseService;
 import org.services.UserService;
@@ -92,16 +93,25 @@ public class RegistrationController {
     public void handleRegisterAction(ActionEvent event) throws IOException, InterruptedException {
         boolean success = false;
         try {
-            if(usernameField.getText() == "" || passwordField.getText() == "" || role.getValue() == ""){
-                throw new NullPointerException("Username and password required");
+            if(usernameField.getText() == "" || passwordField.getText() == "" || role.getValue() == "" || phoneNo.getText() == ""){
+                throw new NullPointerException("Username,password, role and phone number are required");
             }
 
-            UserService.addUser(usernameField.getText(), passwordField.getText(), (String) role.getValue());
-            if(imagePath != ""){
-                User crt = UserService.findUserByUsername(usernameField.getText());
-                crt.setImagePath(imagePath);
-                UserService.updateUser(crt);
+            String encodedPassword = UserService.encodePassword(usernameField.getText(), passwordField.getText());
+
+            User user = new User(usernameField.getText(), encodedPassword, (String) role.getValue(), phoneNo.getText());
+
+            Address address = new Address(country.getText(), region.getText(), town.getText(), street.getText());
+            if(address.equals(new Address()) == false){
+                user.setAddress(address);
             }
+            if(imagePath != ""){
+                user.setImagePath(imagePath);
+                user.setAddress(address);
+            }
+
+            UserService.addUser(user);
+
             registrationMessage.setText("Account created successfully!\nRedirecting to login...");
             success = true;
 
