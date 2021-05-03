@@ -34,7 +34,7 @@ public class Announcement {
     public void setDatePosted(Date datePosted){ this.datePosted=datePosted; }
     public void setCategory(String category){ this.category=category; }
     public String getStringDate(){
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String strDate = df.format(this.datePosted);
         return strDate;
     }
