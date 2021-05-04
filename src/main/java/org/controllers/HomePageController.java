@@ -67,9 +67,9 @@ public class HomePageController {
         currentStage.setTitle("Add Announcement");
         currentStage.setScene(new Scene(root, 500, 500));
         currentStage.show();
-        ShelterManagerController smc = loader.getController();
-        smc.setUser(user);
-        smc.updateList();
+        AnnouncementsController ac = loader.getController();
+        ac.setUser(user);
+        //smc.updateList();
     }
 
     public void setUser(User user) throws MalformedURLException {
