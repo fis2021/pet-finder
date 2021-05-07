@@ -43,7 +43,7 @@
         <Button onAction="#handleAddAnnouncementAction" text="Add"/>
     </HBox>
     <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="2" GridPane.rowIndex="7">
-        <Button onAction="#cancelAddPet" text="Cancel"/>
+        <Button onAction="#cancelAddAnnouncement" text="Cancel"/>
     </HBox>
 
     <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="8">

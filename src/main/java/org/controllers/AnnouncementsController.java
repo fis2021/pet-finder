@@ -1,5 +1,7 @@
 package org.controllers;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,6 +14,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.dizitart.no2.objects.Cursor;
+import org.dizitart.no2.objects.ObjectFilter;
+import org.dizitart.no2.objects.filters.ObjectFilters;
 import org.model.Announcement;
 import org.model.Pet;
 import org.model.User;
@@ -37,6 +42,9 @@ public class AnnouncementsController {
 
     @FXML
     private ChoiceBox petType = new ChoiceBox();
+
+    @FXML
+    private ListView ads = new ListView<>();
 
     @FXML
     private TextField adInfo;
@@ -75,6 +83,20 @@ public class AnnouncementsController {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    @FXML
+    public void updateMyAnnouncementList() {
+        ObservableList<String> crtAds = FXCollections.observableArrayList();
+
+        ArrayList<Announcement> userAds=AnnouncementService.getUserAnnouncements(user.getUsername());
+        for(Announcement announcement : userAds){
+            crtAds.add(announcement.toString());
+        }
+        if(crtAds.isEmpty()){
+            crtAds.add("Currently you have no announcements");
+        }
+        ads.setItems(crtAds);
     }
 
     @FXML
@@ -132,11 +154,12 @@ public class AnnouncementsController {
 
         HomePageController hc = loader.getController();
         hc.setUser(user);
+        hc.updateAnnouncementList();
     }
 
 
     @FXML
-    public void cancelAddPet(ActionEvent event) throws IOException {
+    public void cancelAddAnnouncement(ActionEvent event) throws IOException {
         Node node = (Node) event.getSource();
         Stage currentStage = (Stage) node.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("homePage.fxml"));
@@ -147,8 +170,50 @@ public class AnnouncementsController {
 
         HomePageController hc = loader.getController();
         hc.setUser(user);
+        hc.updateAnnouncementList();
 
     }
+
+    @FXML
+    public void handleRemoveAnnouncementAction(ActionEvent event) {
+        //String crt = (String) ads.getSelectionModel().getSelectedItem();
+        Announcement crt = (Announcement) ads.getSelectionModel().getSelectedItem();
+        //ArrayList<Announcement> userAds;
+
+        //userPets = user.getPetList();
+
+        //ObservableList<String> userAds = FXCollections.observableArrayList();
+
+        //Cursor<Announcement> cursor = AnnouncementService.getAnnouncementRepository().find(ObjectFilters.eq("user",user));
+        //Cursor<Announcement> cursor = AnnouncementService.getAnnouncementRepository().find();
+
+        AnnouncementService.getAnnouncementRepository().remove(crt);
+
+        //UserService.updateUser(user);
+        //AnnouncementService.updateAnnouncement(ann);
+
+        this.updateMyAnnouncementList();
+    }
+
+    @FXML
+    public void redirectToHomePage(ActionEvent event){
+        try {
+            Node node = (Node) event.getSource();
+            Stage currentStage = (Stage) node.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("homePage.fxml"));
+            Parent root = loader.load();
+            currentStage.setTitle("Home");
+            currentStage.setScene(new Scene(root, 500, 500));
+            currentStage.show();
+
+            HomePageController hpc = loader.getController();
+            hpc.setUser(user);
+            hpc.updateAnnouncementList();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
 
     public void setUser(User user){
         this.user = user;
