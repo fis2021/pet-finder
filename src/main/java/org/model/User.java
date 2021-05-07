@@ -13,7 +13,7 @@ public class User {
     private ArrayList<Pet> petList = new ArrayList<>();
     private String imagePath;
     private Address address;
-    private String phoneNo;
+    private String phoneNo="";
 
 
     public User(String username, String password, String role, String phoneNo) {
@@ -27,6 +27,12 @@ public class User {
 
     public User(){
 
+    }
+
+    @Override
+    public String toString(){
+        String s=this.getRole()+": "+this.getUsername()+"\nPhone: "+this.getPhoneNo()+"\nAddress: "+this.getAddress();
+        return s;
     }
 
     public String getUsername() {
@@ -94,4 +100,5 @@ public class User {
     }
 
     public ArrayList<Pet> getPetList(){ return this.petList; }
+
 }

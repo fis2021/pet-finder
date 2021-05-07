@@ -56,6 +56,7 @@ public class LoginController {
             currentStage.show();
             HomePageController hpc = loader.getController();
             hpc.setUser(user);
+            hpc.updateAnnouncementList();
 
         } catch (InvalidUserException | IOException e) {
             loginMessage.setText(e.getMessage());
