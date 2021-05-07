@@ -41,7 +41,7 @@ public class Announcement {
 
     @Override
     public String toString(){
-        return this.user + " " + this.category + "\nPet:" + this.pet + "\n" + this.getStringDate() +"\n" + this.info;
+        return this.user + "\n" + this.category + " pet: " + this.pet + "\n" + this.getStringDate() +"\n" + this.info;
     }
 
     @Override

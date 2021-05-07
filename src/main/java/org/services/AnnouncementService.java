@@ -5,6 +5,9 @@ import org.exceptions.UsernameAlreadyExistsException;
 import org.model.Announcement;
 import org.model.User;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 public class AnnouncementService {
 
     private static ObjectRepository<Announcement> announcementRepository;
@@ -21,7 +24,20 @@ public class AnnouncementService {
         announcementRepository.update(announcement);
     }
 
+    public static ObjectRepository<Announcement> getAnnouncementRepository() {return announcementRepository;}
+
     public static void removeAnnouncement(Announcement announcement){
         announcementRepository.remove(announcement);
+    }
+
+    public static ArrayList<Announcement> getUserAnnouncements(String username){
+        ArrayList<Announcement> userAds= new ArrayList<>();
+        for(Announcement crt : announcementRepository.find()){
+            if(Objects.equals(crt.getUser().getUsername(),username)){
+                userAds.add(crt);
+            }
+        }
+
+        return userAds;
     }
 }
