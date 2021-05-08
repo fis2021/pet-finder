@@ -1,7 +1,7 @@
 package org.controllers;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableListBase;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,8 +14,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.dizitart.no2.objects.Cursor;
+import org.dizitart.no2.objects.ObjectFilter;
+import org.dizitart.no2.objects.filters.ObjectFilters;
+import org.model.Announcement;
 import org.model.Pet;
 import org.model.User;
+import org.services.AnnouncementService;
 import org.services.DatabaseService;
 import org.services.UserService;
 
@@ -25,7 +30,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
-public class ShelterManagerController {
+public class AnnouncementsController {
 
     private User user;
 
@@ -36,10 +41,16 @@ public class ShelterManagerController {
     private TextField petInfo;
 
     @FXML
-    private ListView pets = new ListView<>();
+    private ChoiceBox petType = new ChoiceBox();
 
     @FXML
-    private ChoiceBox type = new ChoiceBox();
+    private ListView ads = new ListView<>();
+
+    @FXML
+    private TextField adInfo;
+
+    @FXML
+    private ChoiceBox category = new ChoiceBox();
 
     @FXML
     private Text AccountStatus;
@@ -56,23 +67,8 @@ public class ShelterManagerController {
 
     @FXML
     public void initialize() {
-        type.getItems().addAll("Dog", "Cat", "Other");
-    }
-
-    @FXML
-    public void updateList() {
-        ObservableList<String> crtPets = FXCollections.observableArrayList();
-        ArrayList<Pet> crtPetList = user.getPetList();
-
-        for(Pet pet : crtPetList){
-            crtPets.add(pet.toString());
-        }
-
-        if(crtPets.isEmpty()){
-            crtPets.add("Currently you have no pets");
-        }
-
-        pets.setItems(crtPets);
+        category.getItems().addAll("Lost", "Found", "Adoption");
+        petType.getItems().addAll("Cat","Dog","Other");
     }
 
     @FXML
@@ -87,6 +83,20 @@ public class ShelterManagerController {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    @FXML
+    public void updateMyAnnouncementList() {
+        ObservableList<String> crtAds = FXCollections.observableArrayList();
+
+        ArrayList<Announcement> userAds=AnnouncementService.getUserAnnouncements(user.getUsername());
+        for(Announcement announcement : userAds){
+            crtAds.add(announcement.toString());
+        }
+        if(crtAds.isEmpty()){
+            crtAds.add("Currently you have no announcements");
+        }
+        ads.setItems(crtAds);
     }
 
     @FXML
@@ -121,86 +131,76 @@ public class ShelterManagerController {
     }
 
     @FXML
-    public void handleAddPetAction(ActionEvent event) throws IOException {
-        if(petName.getText() == "" || type.getValue() == null){
-            AddStatus.setText("Name and type are required!");
+    public void handleAddAnnouncementAction(ActionEvent event) throws IOException {
+        if(petName.getText() == "" || petType.getValue() == null || category.getValue() == null){
+            AddStatus.setText("Pet name, pet type and announcement category are required!");
             return;
         }
-        Pet crt = new Pet(petName.getText(), (String) type.getValue());
+        Pet crtPet = new Pet(petName.getText(), (String) petType.getValue());
 
-        crt.setInfo(petInfo.getText());
-        crt.setImagePath(imagePath);
-        user.addPet(crt);
-        UserService.updateUser(user);
+        crtPet.setInfo(petInfo.getText());
+        crtPet.setImagePath(imagePath);
+        Announcement crtAd = new Announcement(crtPet, user, (String) category.getValue());
+        crtAd.setInfo(adInfo.getText());
+        AnnouncementService.addAnnouncement(crtAd);
 
         Node node = (Node) event.getSource();
         Stage currentStage = (Stage) node.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("shelterManagerPage.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("homePage.fxml"));
         Parent root = loader.load();
-        currentStage.setTitle("Manage pets");
+        currentStage.setTitle("Individual Homepage");
         currentStage.setScene(new Scene(root, 500, 500));
         currentStage.show();
 
-        ShelterManagerController smc = loader.getController();
-        smc.setUser(user);
-        smc.updateList();
+        HomePageController hc = loader.getController();
+        hc.setUser(user);
+        hc.updateAnnouncementList();
     }
 
-    @FXML
-    public void handleRemovePetAction(ActionEvent event) {
-        String crt = (String) pets.getSelectionModel().getSelectedItem();
-
-        ArrayList<Pet> userPets;
-
-        userPets = user.getPetList();
-
-        for(Pet pet : userPets){
-            if(pet.toString().equals(crt)){
-                userPets.remove(pet);
-            }
-        }
-
-        UserService.updateUser(user);
-
-        this.updateList();
-    }
 
     @FXML
-    public void cancelAddPet(ActionEvent event) throws IOException {
+    public void cancelAddAnnouncement(ActionEvent event) throws IOException {
         Node node = (Node) event.getSource();
         Stage currentStage = (Stage) node.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("shelterManagerPage.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("homePage.fxml"));
         Parent root = loader.load();
-        currentStage.setTitle("Manage pets");
+        currentStage.setTitle("Individual Homepage");
         currentStage.setScene(new Scene(root, 500, 500));
         currentStage.show();
 
-        ShelterManagerController smc = loader.getController();
-        smc.setUser(user);
-        smc.updateList();
-    }
-
-    @FXML
-    public void openAddPetPage(ActionEvent event) throws Exception{
-        Node node = (Node) event.getSource();
-        Stage currentStage = (Stage) node.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("addPetPage.fxml"));
-        Parent root = loader.load();
-        currentStage.setTitle("AddPet");
-        currentStage.setScene(new Scene(root, 500, 500));
-        currentStage.show();
-
-        ShelterManagerController smc = loader.getController();
-        smc.setUser(user);
+        HomePageController hc = loader.getController();
+        hc.setUser(user);
+        hc.updateAnnouncementList();
 
     }
 
     @FXML
-    public void redirectToShelterHomePage(ActionEvent event){
+    public void handleRemoveAnnouncementAction(ActionEvent event) {
+        //String crt = (String) ads.getSelectionModel().getSelectedItem();
+        Announcement crt = (Announcement) ads.getSelectionModel().getSelectedItem();
+        //ArrayList<Announcement> userAds;
+
+        //userPets = user.getPetList();
+
+        //ObservableList<String> userAds = FXCollections.observableArrayList();
+
+        //Cursor<Announcement> cursor = AnnouncementService.getAnnouncementRepository().find(ObjectFilters.eq("user",user));
+        //Cursor<Announcement> cursor = AnnouncementService.getAnnouncementRepository().find();
+
+        AnnouncementService.getAnnouncementRepository().remove(crt);
+
+        //UserService.updateUser(user);
+        //AnnouncementService.updateAnnouncement(ann);
+
+        this.updateMyAnnouncementList();
+    }
+
+    @FXML
+    public void redirectToHomePage(ActionEvent event){
         try {
             Node node = (Node) event.getSource();
             Stage currentStage = (Stage) node.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("shelterHomePage.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("homePage.fxml"));
             Parent root = loader.load();
             currentStage.setTitle("Home");
             currentStage.setScene(new Scene(root, 500, 500));
@@ -208,10 +208,12 @@ public class ShelterManagerController {
 
             HomePageController hpc = loader.getController();
             hpc.setUser(user);
+            hpc.updateAnnouncementList();
         } catch (Exception e) {
             System.out.println(e);
         }
     }
+
 
     public void setUser(User user){
         this.user = user;

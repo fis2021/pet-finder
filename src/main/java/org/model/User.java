@@ -12,17 +12,27 @@ public class User {
     private String role;
     private ArrayList<Pet> petList = new ArrayList<>();
     private String imagePath;
+    private Address address;
+    private String phoneNo="";
 
 
-    public User(String username, String password, String role) {
+    public User(String username, String password, String role, String phoneNo) {
         this.username = username;
         this.password = password;
         this.role = role;
         this.imagePath = "";
+        this.address = new Address();
+        this.phoneNo = phoneNo;
     }
 
     public User(){
 
+    }
+
+    @Override
+    public String toString(){
+        String s=this.getRole()+": "+this.getUsername()+"\nPhone: "+this.getPhoneNo()+"\nAddress: "+this.getAddress();
+        return s;
     }
 
     public String getUsername() {
@@ -52,6 +62,14 @@ public class User {
     public String getImagePath(){ return this.imagePath; }
 
     public void setImagePath(String imagePath){ this.imagePath = imagePath; }
+
+    public Address getAddress() { return address; }
+
+    public void setAddress(Address address) { this.address = address; }
+
+    public String getPhoneNo() { return phoneNo; }
+
+    public void setPhoneNo(String phoneNo) { this.phoneNo = phoneNo; }
 
     @Override
     public boolean equals(Object o) {
