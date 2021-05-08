@@ -177,29 +177,20 @@ public class AnnouncementsController {
     @FXML
     public void handleRemoveAnnouncementAction(ActionEvent event) {
 
-
-        //String crt = (String) ads.getSelectionModel().getSelectedItem();
         String crt = (String) ads.getSelectionModel().getSelectedItem();
         ArrayList<Announcement> userAds=AnnouncementService.getUserAnnouncements(user.getUsername());
+        Announcement ad = null;
         for(Announcement announcement : userAds){
             if(announcement.toString().equals(crt)){
-                AnnouncementService.getAnnouncementRepository().remove(announcement);
+                ad = announcement;
             }
         }
-
-        //userPets = user.getPetList();
-
-        //ObservableList<String> userAds = FXCollections.observableArrayList();
-
-        //Cursor<Announcement> cursor = AnnouncementService.getAnnouncementRepository().find(ObjectFilters.eq("user",user));
-        //Cursor<Announcement> cursor = AnnouncementService.getAnnouncementRepository().find();
-
-        //AnnouncementService.getAnnouncementRepository().remove(crt);
-
-        //UserService.updateUser(user);
-        //AnnouncementService.updateAnnouncement(ann);
-
+        if(ad != null){
+            userAds.remove(ads);
+            AnnouncementService.removeAnnouncement(ad);
+        }
         this.updateMyAnnouncementList();
+
     }
 
     @FXML
