@@ -1,11 +1,14 @@
 package org.model;
 
+import org.dizitart.no2.objects.Id;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
 public class Announcement {
+    @Id
     private String ID;
     private Pet pet;
     private User user;

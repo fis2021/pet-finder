@@ -159,12 +159,23 @@ public class ShelterManagerController {
 
         userPets = user.getPetList();
 
+        Announcement ad = null;
+
+        Pet crtPet = null;
+
         for(Pet pet : userPets){
             if(pet.toString().equals(crt)){
-                userPets.remove(pet);
+                crtPet=pet;
             }
         }
 
+        if(crtPet!=null){
+            userPets.remove(crtPet);
+            this.user.removePet(crtPet);
+            ad = AnnouncementService.getPetAnnouncement(crtPet);
+        }
+
+        if(ad!=null) { AnnouncementService.removeAnnouncement(ad); }
         UserService.updateUser(user);
 
         this.updateList();
