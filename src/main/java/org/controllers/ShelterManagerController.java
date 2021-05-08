@@ -14,8 +14,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.model.Announcement;
 import org.model.Pet;
 import org.model.User;
+import org.services.AnnouncementService;
 import org.services.DatabaseService;
 import org.services.UserService;
 
@@ -132,6 +134,9 @@ public class ShelterManagerController {
         crt.setImagePath(imagePath);
         user.addPet(crt);
         UserService.updateUser(user);
+        Announcement crtAd = new Announcement(crt,user,"Adoption");
+        crtAd.setInfo("");
+        AnnouncementService.addAnnouncement(crtAd);
 
         Node node = (Node) event.getSource();
         Stage currentStage = (Stage) node.getScene().getWindow();
