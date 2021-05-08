@@ -34,6 +34,16 @@ public class RegistrationController {
     @FXML
     private ChoiceBox role;
     @FXML
+    private TextField phoneNo;
+    @FXML
+    private TextField country;
+    @FXML
+    private TextField region;
+    @FXML
+    private TextField town;
+    @FXML
+    private TextField street;
+    @FXML
     private File image;
     @FXML
     private String imagePath;
@@ -104,7 +114,7 @@ public class RegistrationController {
             Stage currentStage = (Stage) node.getScene().getWindow();
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("login.fxml"));
             currentStage.setTitle("Register");
-            currentStage.setScene(new Scene(root, 500, 500));
+            currentStage.setScene(new Scene(root, 800, 600));
             currentStage.show();
         }
     }
@@ -115,7 +125,7 @@ public class RegistrationController {
         Stage currentStage = (Stage) node.getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("login.fxml"));
         currentStage.setTitle("Register");
-        currentStage.setScene(new Scene(root, 500, 500));
+        currentStage.setScene(new Scene(root, 800, 600));
         currentStage.show();
     }
 }
