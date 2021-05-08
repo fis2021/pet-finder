@@ -3,6 +3,7 @@ package org.services;
 import org.dizitart.no2.objects.ObjectRepository;
 import org.exceptions.UsernameAlreadyExistsException;
 import org.model.Announcement;
+import org.model.Pet;
 import org.model.User;
 
 import java.util.ArrayList;
@@ -37,7 +38,16 @@ public class AnnouncementService {
                 userAds.add(crt);
             }
         }
-
         return userAds;
     }
+
+    public static Announcement getPetAnnouncement(Pet pet){
+        for(Announcement crt : announcementRepository.find()){
+            if(crt.getPet().equals(pet)){
+                return crt;
+            }
+        }
+        return null;
+    }
+
 }
