@@ -9,16 +9,16 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.dizitart.no2.objects.Cursor;
-import org.exceptions.InvalidUserException;
 import org.model.Announcement;
+import org.model.ImageStringTableRow;
 import org.model.User;
 import org.services.AnnouncementService;
-import org.services.DatabaseService;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,8 +32,12 @@ public class HomePageController {
     private Text AccountStatus;
     @FXML
     private ImageView imageView;
+    //@FXML
+    //private ListView announcements = new ListView<>();
     @FXML
-    private ListView ads = new ListView<>();
+    private ImageView profilePicture;
+    @FXML
+    private TableView announcements = new TableView();
 
     @FXML
     public void handleSignOutAction(ActionEvent event) {
@@ -43,7 +47,7 @@ public class HomePageController {
 
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("login.fxml"));
             currentStage.setTitle("Login");
-            currentStage.setScene(new Scene(root, 500, 500));
+            currentStage.setScene(new Scene(root, 800, 600));
             currentStage.show();
         } catch (IOException e) {
             System.out.println(e);
@@ -58,7 +62,7 @@ public class HomePageController {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
             Parent root = loader.load();
             currentStage.setTitle("Manage Pets");
-            currentStage.setScene(new Scene(root, 500, 500));
+            currentStage.setScene(new Scene(root, 800, 600));
             currentStage.show();
             ShelterManagerController smc = loader.getController();
             smc.setUser(user);
@@ -73,7 +77,7 @@ public class HomePageController {
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
         Parent root = loader.load();
         currentStage.setTitle("My announcements");
-        currentStage.setScene(new Scene(root, 500, 500));
+        currentStage.setScene(new Scene(root, 800, 600));
         currentStage.show();
         AnnouncementsController ac = loader.getController();
         ac.setUser(user);
@@ -88,7 +92,7 @@ public class HomePageController {
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
         Parent root = loader.load();
         currentStage.setTitle("Add Announcement");
-        currentStage.setScene(new Scene(root, 500, 500));
+        currentStage.setScene(new Scene(root, 800, 600));
         currentStage.show();
         AnnouncementsController ac = loader.getController();
         ac.setUser(user);
@@ -102,25 +106,37 @@ public class HomePageController {
         File file = new File(user.getImagePath());
         String localUrl = file.toURI().toURL().toExternalForm();
         Image profile = new Image(localUrl, false);
-        imageView.setImage(profile);
-        imageView.setFitHeight(100);
-        imageView.setFitWidth(150);
-        imageView.rotateProperty();
+        profilePicture.setImage(profile);
+        //imageView.setImage(profile);
+        //imageView.setFitHeight(100);
+        //imageView.setFitWidth(150);
+        //imageView.rotateProperty();
     }
 
     @FXML
-    public void updateAnnouncementList() {
-        ObservableList<String> allAds = FXCollections.observableArrayList();
+    public void updateAnnouncementList() throws MalformedURLException {
+        //ObservableList<String> allAds = FXCollections.observableArrayList();
+        ObservableList<ImageStringTableRow> announcementTable = FXCollections.observableArrayList();
 
         Cursor<Announcement> cursor = AnnouncementService.getAnnouncementRepository().find();
         for (Announcement announcement : cursor) {
-            allAds.add(announcement.toString());
+            //allAds.add(announcement.toString());
+            File file = new File((announcement.getPet()).getImagePath());
+            String localUrl = file.toURI().toURL().toExternalForm();
+            Image profile = new Image(localUrl, false);
+            ImageView crtImg = new ImageView();
+            crtImg.setImage(profile);
+
+            ImageStringTableRow crtAnnouncement = new ImageStringTableRow(crtImg, announcement.toString());
+
+            announcementTable.add(crtAnnouncement);
         }
 
-        if(allAds.isEmpty()){
-            allAds.add("Currently there are no announcements");
-        }
+        //if(allAds.isEmpty()){
+        //    allAds.add("Currently there are no announcements");
+        //}
 
-        ads.setItems(allAds);
+        //announcements.setItems(allAds);
+        announcements.setItems(announcementTable);
     }
 }
