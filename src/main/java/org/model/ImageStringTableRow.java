@@ -7,11 +7,17 @@ public class ImageStringTableRow {
     private ImageView imageView;
     //private final SimpleStringProperty info;
     private final String info;
+    private final String ID;
 
-    public ImageStringTableRow(ImageView imageView, String info){
+    public ImageStringTableRow(ImageView imageView, String info, String ID){
         this.imageView = imageView;
         //this.info = new SimpleStringProperty(info);
         this.info = info;
+        this.ID = ID;
+    }
+
+    public final String getID(){
+        return ID;
     }
 
     public final String getInfo(){

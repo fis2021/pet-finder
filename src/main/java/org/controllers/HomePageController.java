@@ -14,6 +14,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.dizitart.no2.objects.Cursor;
@@ -56,6 +58,12 @@ public class HomePageController {
         announcementImage.setCellValueFactory(new PropertyValueFactory<>("imageView"));
 
         announcementInfo.setCellValueFactory(new PropertyValueFactory<>("info"));
+
+        announcementsTable.setOnMouseClicked((MouseEvent event) -> {
+            if(event.getButton().equals(MouseButton.PRIMARY)){
+                handleViewAnnouncementAction(announcementsTable.getSelectionModel().getSelectedItem());
+            }
+        });
     }
 
     @FXML
@@ -150,7 +158,7 @@ public class HomePageController {
 
             User crtUser = announcement.getUser();
             String info = announcement.getCategory() + " " + announcement.getPet().getType() + "\n\nName: " + announcement.getPet().getName() + "\n\nPosted on " + announcement.getDatePosted().toString() + " by " + crtUser.getUsername();
-            ImageStringTableRow crtAnnouncement = new ImageStringTableRow(crtImg, info);
+            ImageStringTableRow crtAnnouncement = new ImageStringTableRow(crtImg, info, announcement.getID());
 
             announcements.add(crtAnnouncement);
         }
@@ -161,5 +169,32 @@ public class HomePageController {
 
         //ads.setItems(allAds);
         announcementsTable.setItems(announcements);
+    }
+
+    @FXML
+    public void handleViewAnnouncementAction(ImageStringTableRow selected){
+        String ID = selected.getID();
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Viewing announcement " + ID);
+        alert.showAndWait();
+    }
+
+    @FXML
+    public void redirectToHomePage(ActionEvent event){
+        try {
+            Node node = (Node) event.getSource();
+            Stage currentStage = (Stage) node.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("homePageScene.fxml"));
+            Parent root = loader.load();
+            currentStage.setTitle("Home");
+            currentStage.setScene(new Scene(root, 800, 600));
+            currentStage.show();
+
+            HomePageController hpc = loader.getController();
+            hpc.setUser(user);
+            hpc.updateAnnouncementList();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 }
