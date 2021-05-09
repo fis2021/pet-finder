@@ -66,13 +66,9 @@ public class AnnouncementsController {
     private ImageView imageView;
 
     @FXML
-    public void initialize() throws MalformedURLException {
+    public void initialize() {
         category.getItems().addAll("Lost", "Found", "Adoption");
         petType.getItems().addAll("Cat","Dog","Other");
-        File file = new File(imagePath);
-        String localUrl = file.toURI().toURL().toExternalForm();
-        Image profile = new Image(localUrl, false);
-        imageView.setImage(profile);
     }
 
     @FXML
@@ -118,7 +114,7 @@ public class AnnouncementsController {
         Image profile = new Image(localUrl, false);
         imageView.setImage(profile);
         imageView.setFitHeight(100);
-        imageView.setFitWidth(150);
+        imageView.setFitWidth(100);
         imageView.rotateProperty();
     }
 
@@ -129,7 +125,7 @@ public class AnnouncementsController {
         String localUrl = file.toURI().toURL().toExternalForm();
         Image profile = new Image(localUrl, false);
         imageView.setImage(profile);
-        imageView.setFitHeight(150);
+        imageView.setFitHeight(100);
         imageView.setFitWidth(100);
         imageView.rotateProperty();
     }
@@ -166,10 +162,10 @@ public class AnnouncementsController {
     public void cancelAddAnnouncement(ActionEvent event) throws IOException {
         Node node = (Node) event.getSource();
         Stage currentStage = (Stage) node.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("homePage.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("homePageScene.fxml"));
         Parent root = loader.load();
         currentStage.setTitle("Individual Homepage");
-        currentStage.setScene(new Scene(root, 500, 500));
+        currentStage.setScene(new Scene(root, 800, 600));
         currentStage.show();
 
         HomePageController hc = loader.getController();
@@ -219,8 +215,13 @@ public class AnnouncementsController {
     }
 
 
-    public void setUser(User user){
+    public void setUser(User user) throws MalformedURLException {
         this.user = user;
-        AccountStatus.setText("Logged-in as " + user.getUsername());
+        AccountStatus.setText("Logged-in as " + user.getUsername());File file = new File(imagePath);
+        String localUrl = file.toURI().toURL().toExternalForm();
+        Image profile = new Image(localUrl, false);
+        imageView.setImage(profile);
+        imageView.setFitHeight(100);
+        imageView.setFitHeight(100);
     }
 }

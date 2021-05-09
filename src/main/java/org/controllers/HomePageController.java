@@ -1,5 +1,7 @@
 package org.controllers;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -8,8 +10,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
@@ -32,12 +34,29 @@ public class HomePageController {
     private Text AccountStatus;
     @FXML
     private ImageView imageView;
-    //@FXML
-    //private ListView announcements = new ListView<>();
+    @FXML
+    private ListView ads = new ListView<>();
     @FXML
     private ImageView profilePicture;
+
+    private final ObservableList<ImageStringTableRow> announcements = FXCollections.observableArrayList();
+
     @FXML
-    private TableView announcements = new TableView();
+    private TableView<ImageStringTableRow> announcementsTable;
+    @FXML
+    private TableColumn<ImageStringTableRow, ImageView> announcementImage;
+    @FXML
+    private TableColumn<ImageStringTableRow, String> announcementInfo;
+
+    @FXML
+    private MenuButton menu;
+
+    public void initialize(){
+        announcementImage.setPrefWidth(100);
+        announcementImage.setCellValueFactory(new PropertyValueFactory<>("imageView"));
+
+        announcementInfo.setCellValueFactory(new PropertyValueFactory<>("info"));
+    }
 
     @FXML
     public void handleSignOutAction(ActionEvent event) {
@@ -71,8 +90,7 @@ public class HomePageController {
 
     @FXML
     public void handleViewMyAnnouncements(ActionEvent event) throws Exception{
-        Node node = (Node) event.getSource();
-        Stage currentStage = (Stage) node.getScene().getWindow();
+        Stage currentStage = (Stage) menu.getScene().getWindow();
         String page = "viewMyAnnouncements.fxml";
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
         Parent root = loader.load();
@@ -116,27 +134,32 @@ public class HomePageController {
     @FXML
     public void updateAnnouncementList() throws MalformedURLException {
         //ObservableList<String> allAds = FXCollections.observableArrayList();
-        ObservableList<ImageStringTableRow> announcementTable = FXCollections.observableArrayList();
 
         Cursor<Announcement> cursor = AnnouncementService.getAnnouncementRepository().find();
+
         for (Announcement announcement : cursor) {
             //allAds.add(announcement.toString());
+
             File file = new File((announcement.getPet()).getImagePath());
             String localUrl = file.toURI().toURL().toExternalForm();
             Image profile = new Image(localUrl, false);
             ImageView crtImg = new ImageView();
             crtImg.setImage(profile);
+            crtImg.setFitHeight(100);
+            crtImg.setFitWidth(100);
 
-            ImageStringTableRow crtAnnouncement = new ImageStringTableRow(crtImg, announcement.toString());
+            User crtUser = announcement.getUser();
+            String info = announcement.getCategory() + " " + announcement.getPet().getType() + "\n\nName: " + announcement.getPet().getName() + "\n\nPosted on " + announcement.getDatePosted().toString() + " by " + crtUser.getUsername();
+            ImageStringTableRow crtAnnouncement = new ImageStringTableRow(crtImg, info);
 
-            announcementTable.add(crtAnnouncement);
+            announcements.add(crtAnnouncement);
         }
 
         //if(allAds.isEmpty()){
         //    allAds.add("Currently there are no announcements");
         //}
 
-        //announcements.setItems(allAds);
-        announcements.setItems(announcementTable);
+        //ads.setItems(allAds);
+        announcementsTable.setItems(announcements);
     }
 }
