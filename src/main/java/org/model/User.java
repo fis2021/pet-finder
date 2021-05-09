@@ -11,16 +11,14 @@ public class User {
     private String password;
     private String role;
     private ArrayList<Pet> petList = new ArrayList<>();
-    private String imagePath;
+    private String imagePath = "src/main/resources/img/user.png";
     private Address address;
-    private String phoneNo="";
-
+    private String phoneNo = "";
 
     public User(String username, String password, String role, String phoneNo) {
         this.username = username;
         this.password = password;
         this.role = role;
-        this.imagePath = "";
         this.address = new Address();
         this.phoneNo = phoneNo;
     }

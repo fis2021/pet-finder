@@ -43,7 +43,7 @@ public class LoginController {
             String page = "";
 
             if(user.getRole().equals("Individual")){
-                page = "homePage.fxml";
+                page = "homePageScene.fxml";
             }
 
             if(user.getRole().equals("Shelter")){
@@ -52,7 +52,7 @@ public class LoginController {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
             Parent root = loader.load();
             currentStage.setTitle("Home");
-            currentStage.setScene(new Scene(root, 500, 500));
+            currentStage.setScene(new Scene(root, 800, 600));
             currentStage.show();
             HomePageController hpc = loader.getController();
             hpc.setUser(user);
