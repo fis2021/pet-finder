@@ -9,8 +9,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -18,6 +21,7 @@ import org.dizitart.no2.objects.Cursor;
 import org.dizitart.no2.objects.ObjectFilter;
 import org.dizitart.no2.objects.filters.ObjectFilters;
 import org.model.Announcement;
+import org.model.ImageStringTableRow;
 import org.model.Pet;
 import org.model.User;
 import org.services.AnnouncementService;
@@ -47,6 +51,19 @@ public class AnnouncementsController {
     private ListView ads = new ListView<>();
 
     @FXML
+    private ImageView profilePicture;
+
+    private final ObservableList<ImageStringTableRow> announcements = FXCollections.observableArrayList();
+
+    @FXML
+    private TableView<ImageStringTableRow> announcementsTable;
+    @FXML
+    private TableColumn<ImageStringTableRow, ImageView> announcementImage;
+    @FXML
+    private TableColumn<ImageStringTableRow, String> announcementInfo;
+
+
+    @FXML
     private TextField adInfo;
 
     @FXML
@@ -66,9 +83,25 @@ public class AnnouncementsController {
     private ImageView imageView;
 
     @FXML
-    public void initialize() {
+    public void initialize() throws MalformedURLException {
         category.getItems().addAll("Lost", "Found", "Adoption");
         petType.getItems().addAll("Cat","Dog","Other");
+        if(announcementImage != null && announcementInfo != null){
+            announcementImage.setPrefWidth(100);
+            announcementImage.setCellValueFactory(new PropertyValueFactory<>("imageView"));
+            announcementInfo.setCellValueFactory(new PropertyValueFactory<>("info"));
+            announcementsTable.setOnMouseClicked((MouseEvent event) -> {
+                if(event.getButton().equals(MouseButton.PRIMARY)){
+                    try{
+                        //handleViewMyAnnouncementAction(announcementsTable.getSelectionModel().getSelectedItem(), event);
+                        ;
+                    }
+                    catch(Exception e){
+                        System.out.println(e);
+                    }
+                }
+            });
+        }
     }
 
     @FXML
@@ -86,8 +119,9 @@ public class AnnouncementsController {
     }
 
     @FXML
-    public void updateMyAnnouncementList() {
-        ObservableList<String> crtAds = FXCollections.observableArrayList();
+    public void updateMyAnnouncementList() throws MalformedURLException{
+
+        /*ObservableList<String> crtAds = FXCollections.observableArrayList();
 
         ArrayList<Announcement> userAds=AnnouncementService.getUserAnnouncements(user.getUsername());
         for(Announcement announcement : userAds){
@@ -96,7 +130,37 @@ public class AnnouncementsController {
         if(crtAds.isEmpty()){
             crtAds.add("Currently you have no announcements");
         }
-        ads.setItems(crtAds);
+        ads.setItems(crtAds);*/
+
+        //ObservableList<String> allAds = FXCollections.observableArrayList();
+
+        ArrayList<Announcement> cursor=AnnouncementService.getUserAnnouncements(user.getUsername());
+        //Cursor<Announcement> cursor = AnnouncementService.getAnnouncementRepository().find();
+
+        for (Announcement announcement : cursor) {
+            //allAds.add(announcement.toString());
+
+            File file = new File((announcement.getPet()).getImagePath());
+            String localUrl = file.toURI().toURL().toExternalForm();
+            Image profile = new Image(localUrl, false);
+            ImageView crtImg = new ImageView();
+            crtImg.setImage(profile);
+            crtImg.setFitHeight(100);
+            crtImg.setFitWidth(100);
+
+            User crtUser = announcement.getUser();
+            String info = announcement.getCategory() + " " + announcement.getPet().getType() + "\n\nName: " + announcement.getPet().getName() + "\n\nPosted on " + announcement.getDatePosted().toString() + " by " + crtUser.getUsername();
+            ImageStringTableRow crtAnnouncement = new ImageStringTableRow(crtImg, info, announcement.getID());
+
+            announcements.add(crtAnnouncement);
+        }
+
+        //if(allAds.isEmpty()){
+        //    allAds.add("Currently there are no announcements");
+        //}
+
+        //ads.setItems(allAds);
+        announcementsTable.setItems(announcements);
     }
 
     @FXML
@@ -131,6 +195,21 @@ public class AnnouncementsController {
     }
 
     @FXML
+    public void handleAddAnnouncement(ActionEvent event) throws Exception{
+        Node node = (Node) event.getSource();
+        Stage currentStage = (Stage) node.getScene().getWindow();
+        String page = "addAnnouncementPage.fxml";
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
+        Parent root = loader.load();
+        currentStage.setTitle("Add Announcement");
+        currentStage.setScene(new Scene(root, 800, 600));
+        currentStage.show();
+        AnnouncementsController ac = loader.getController();
+        ac.setUser(user);
+        //smc.updateList();
+    }
+
+    @FXML
     public void handleAddAnnouncementAction(ActionEvent event) throws IOException {
         if(petName.getText() == "" || petType.getValue() == null || category.getValue() == null){
             AddStatus.setText("Pet name, pet type and announcement category are required!");
@@ -146,10 +225,10 @@ public class AnnouncementsController {
 
         Node node = (Node) event.getSource();
         Stage currentStage = (Stage) node.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("homePage.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("homePageScene.fxml"));
         Parent root = loader.load();
         currentStage.setTitle("Individual Homepage");
-        currentStage.setScene(new Scene(root, 500, 500));
+        currentStage.setScene(new Scene(root, 800, 600));
         currentStage.show();
 
         HomePageController hc = loader.getController();
@@ -175,23 +254,32 @@ public class AnnouncementsController {
     }
 
     @FXML
-    public void handleRemoveAnnouncementAction(ActionEvent event) {
+    public void handleRemoveAnnouncementAction(ActionEvent event) throws MalformedURLException {
 
-        String crt = (String) ads.getSelectionModel().getSelectedItem();
+        //String crt = (String) ads.getSelectionModel().getSelectedItem();
+        ImageStringTableRow crt = announcementsTable.getSelectionModel().getSelectedItem();
         ArrayList<Announcement> userAds=AnnouncementService.getUserAnnouncements(user.getUsername());
         Announcement ad = null;
         for(Announcement announcement : userAds){
-            if(announcement.toString().equals(crt)){
+            if(crt.getID().equals(announcement.getID())){
                 ad = announcement;
             }
+            /*if(announcement.toString().equals(crt)){
+                ad = announcement;
+            }*/
         }
         if(ad != null){
             userAds.remove(ads);
             AnnouncementService.removeAnnouncement(ad);
+            //announcementsTable.refresh();
+            announcementsTable.getItems().remove(crt);
         }
-        this.updateMyAnnouncementList();
+        //announcementsTable.refresh();
+        //this.updateMyAnnouncementList();
 
     }
+
+
 
     @FXML
     public void handleEditAnnouncementAction(ActionEvent event) throws Exception{
@@ -217,7 +305,7 @@ public class AnnouncementsController {
         try {
             Node node = (Node) event.getSource();
             Stage currentStage = (Stage) node.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("homePage.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("homePageScene.fxml"));
             Parent root = loader.load();
             currentStage.setTitle("Home");
             currentStage.setScene(new Scene(root, 500, 500));
@@ -234,11 +322,17 @@ public class AnnouncementsController {
 
     public void setUser(User user) throws MalformedURLException {
         this.user = user;
-        AccountStatus.setText("Logged-in as " + user.getUsername());File file = new File(imagePath);
+        AccountStatus.setText("Logged-in as " + user.getUsername());
+
+        File file = new File(user.getImagePath());
         String localUrl = file.toURI().toURL().toExternalForm();
+        Image profile = new Image(localUrl, false);
+        profilePicture.setImage(profile);
+
+        /*String localUrl = file.toURI().toURL().toExternalForm();
         Image profile = new Image(localUrl, false);
         imageView.setImage(profile);
         imageView.setFitHeight(100);
-        imageView.setFitHeight(100);
+        imageView.setFitHeight(100);*/
     }
 }

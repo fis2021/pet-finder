@@ -50,4 +50,13 @@ public class AnnouncementService {
         return null;
     }
 
+    public static Announcement getIdAnnouncement(String id){
+        for(Announcement crt : announcementRepository.find()){
+            if(crt.getID().equals(id)){
+                return crt;
+            }
+        }
+        return null;
+    }
+
 }

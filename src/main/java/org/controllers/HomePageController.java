@@ -51,19 +51,36 @@ public class HomePageController {
     private TableColumn<ImageStringTableRow, String> announcementInfo;
 
     @FXML
+    private ImageView photo;
+    @FXML
+    private Text title;
+    @FXML
+    private Text body;
+    @FXML
+    private Text userInfo;
+
+    @FXML
     private MenuButton menu;
 
     public void initialize(){
-        announcementImage.setPrefWidth(100);
-        announcementImage.setCellValueFactory(new PropertyValueFactory<>("imageView"));
+        if(announcementImage != null && announcementInfo != null){
+            announcementImage.setPrefWidth(100);
+            announcementImage.setCellValueFactory(new PropertyValueFactory<>("imageView"));
+            announcementInfo.setCellValueFactory(new PropertyValueFactory<>("info"));
+            announcementsTable.setOnMouseClicked((MouseEvent event) -> {
+                if(event.getButton().equals(MouseButton.PRIMARY)){
+                    try{
+                        handleViewAnnouncementAction(announcementsTable.getSelectionModel().getSelectedItem(), event);
+                    }
+                    catch(Exception e){
+                        System.out.println(e);
+                    }
+                }
+            });
+        }
 
-        announcementInfo.setCellValueFactory(new PropertyValueFactory<>("info"));
 
-        announcementsTable.setOnMouseClicked((MouseEvent event) -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)){
-                handleViewAnnouncementAction(announcementsTable.getSelectionModel().getSelectedItem());
-            }
-        });
+
     }
 
     @FXML
@@ -99,7 +116,7 @@ public class HomePageController {
     @FXML
     public void handleViewMyAnnouncements(ActionEvent event) throws Exception{
         Stage currentStage = (Stage) menu.getScene().getWindow();
-        String page = "viewMyAnnouncements.fxml";
+        String page = "viewMyAnnouncementsScene.fxml";
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
         Parent root = loader.load();
         currentStage.setTitle("My announcements");
@@ -108,6 +125,7 @@ public class HomePageController {
         AnnouncementsController ac = loader.getController();
         ac.setUser(user);
         ac.updateMyAnnouncementList();
+
     }
 
     @FXML
@@ -172,12 +190,47 @@ public class HomePageController {
     }
 
     @FXML
-    public void handleViewAnnouncementAction(ImageStringTableRow selected){
+    public void handleViewAnnouncementAction(ImageStringTableRow selected, MouseEvent event) throws Exception{
         String ID = selected.getID();
+        try {
+            Node node = (Node) event.getSource();
+            Stage currentStage = (Stage) node.getScene().getWindow();
+            String page = "announcementDetails.fxml";
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
+            Parent root = loader.load();
+            currentStage.setTitle("Announcement Details");
+            currentStage.setScene(new Scene(root, 800, 600));
+            currentStage.show();
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Viewing announcement " + ID);
-        alert.showAndWait();
+            HomePageController hpc = loader.getController();
+            hpc.setUser(user);
+            Announcement ad = AnnouncementService.getIdAnnouncement(ID);
+            if(ad != null){
+                hpc.setAnnouncementInfo(ad);
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
+
+
+        //Alert alert = new Alert(Alert.AlertType.INFORMATION, "Viewing announcement " + ID);
+        //alert.showAndWait();
     }
+
+    @FXML
+    public void setAnnouncementInfo(Announcement announcement) throws MalformedURLException {
+        this.userInfo.setText(announcement.getUser().toString()+"\n"+announcement.getStringDate());
+        this.title.setText(announcement.getID());
+        this.body.setText(announcement.getPet().toString()+"\n"+announcement.getInfo());
+
+        File file = new File(announcement.getPet().getImagePath());
+        String localUrl = file.toURI().toURL().toExternalForm();
+        Image profile = new Image(localUrl, false);
+        this.photo.setImage(profile);
+    }
+
 
     @FXML
     public void redirectToHomePage(ActionEvent event){
