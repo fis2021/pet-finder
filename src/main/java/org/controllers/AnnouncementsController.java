@@ -176,23 +176,40 @@ public class AnnouncementsController {
 
     @FXML
     public void handleRemoveAnnouncementAction(ActionEvent event) {
-        //String crt = (String) ads.getSelectionModel().getSelectedItem();
-        Announcement crt = (Announcement) ads.getSelectionModel().getSelectedItem();
-        //ArrayList<Announcement> userAds;
 
-        //userPets = user.getPetList();
-
-        //ObservableList<String> userAds = FXCollections.observableArrayList();
-
-        //Cursor<Announcement> cursor = AnnouncementService.getAnnouncementRepository().find(ObjectFilters.eq("user",user));
-        //Cursor<Announcement> cursor = AnnouncementService.getAnnouncementRepository().find();
-
-        AnnouncementService.getAnnouncementRepository().remove(crt);
-
-        //UserService.updateUser(user);
-        //AnnouncementService.updateAnnouncement(ann);
-
+        String crt = (String) ads.getSelectionModel().getSelectedItem();
+        ArrayList<Announcement> userAds=AnnouncementService.getUserAnnouncements(user.getUsername());
+        Announcement ad = null;
+        for(Announcement announcement : userAds){
+            if(announcement.toString().equals(crt)){
+                ad = announcement;
+            }
+        }
+        if(ad != null){
+            userAds.remove(ads);
+            AnnouncementService.removeAnnouncement(ad);
+        }
         this.updateMyAnnouncementList();
+
+    }
+
+    @FXML
+    public void handleEditAnnouncementAction(ActionEvent event) throws Exception{
+        Announcement crt = (Announcement) ads.getSelectionModel().getSelectedItem();
+
+        Node node = (Node) event.getSource();
+        Stage currentStage = (Stage) node.getScene().getWindow();
+        String page = "addAnnouncementPage.fxml";
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
+        Parent root = loader.load();
+        currentStage.setTitle("Add Announcement");
+        currentStage.setScene(new Scene(root, 500, 500));
+        currentStage.show();
+        AnnouncementsController ac = loader.getController();
+        ac.setUser(user);
+            //smc.updateList();
+
+
     }
 
     @FXML
