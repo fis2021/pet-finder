@@ -57,10 +57,10 @@
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
                </children>
             </GridPane>
-            <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TableView fx:id="announcementsTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
               <columns>
-                <TableColumn prefWidth="120.0" text="Image" />
-                  <TableColumn prefWidth="383.0" text="Info" />
+                <TableColumn fx:id="announcementImage" prefWidth="120.0" text="Image" />
+                  <TableColumn fx:id="announcementInfo" prefWidth="383.0" text="Info" />
               </columns>
             </TableView>
          </children>
@@ -68,7 +68,7 @@
       <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" style="-fx-background-color: #94de92;" translateX="1.0" translateZ="1.0" GridPane.vgrow="NEVER">
          <children>
             <Button layoutX="725.0" layoutY="7.0" mnemonicParsing="false" onAction="#handleSignOutAction" prefHeight="37.0" prefWidth="64.0" text="Sign-Out" translateX="1.0" translateY="1.0" translateZ="1.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="10.0" />
-            <MenuButton layoutX="656.0" layoutY="7.0" mnemonicParsing="false" translateX="1.0" translateY="1.0" translateZ="1.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="10.0">
+            <MenuButton fx:id="menu" layoutX="656.0" layoutY="7.0" mnemonicParsing="false" translateX="1.0" translateY="1.0" translateZ="1.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="10.0">
               <items>
                 <MenuItem mnemonicParsing="false">
                      <graphic>
@@ -78,6 +78,11 @@
                      <graphic>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="View Profile" />
                      </graphic></MenuItem>
+                  <MenuItem fx:id="myAnnouncementsMenu" mnemonicParsing="false" onAction="#handleViewMyAnnouncements">
+                     <graphic>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="My announcements" />
+                     </graphic>
+                  </MenuItem>
               </items>
                <graphic>
                   <ImageView fx:id="profilePicture" fitHeight="29.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" />
