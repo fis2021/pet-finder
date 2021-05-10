@@ -52,7 +52,10 @@ public class AnnouncementService {
     public static ArrayList<Announcement> getCategoryAnnouncements(String category){
         ArrayList<Announcement> categAds= new ArrayList<>();
         for(Announcement crt : announcementRepository.find()){
-            if(Objects.equals(crt.getCategory(),category)){
+            if(category.equals("All")){
+                categAds.add(crt);
+            }
+            else if(Objects.equals(crt.getCategory(),category)){
                 categAds.add(crt);
             }
         }
@@ -62,6 +65,9 @@ public class AnnouncementService {
     public static ArrayList<Announcement> getPetTypeAnnouncements(String petType){
         ArrayList<Announcement> petTypeAds= new ArrayList<>();
         for(Announcement crt : announcementRepository.find()){
+            if(petType.equals("All")){
+                petTypeAds.add(crt);
+            }
             if(Objects.equals(crt.getPet().getType(),petType)){
                 petTypeAds.add(crt);
             }
@@ -70,13 +76,24 @@ public class AnnouncementService {
     }
 
     public static ArrayList<Announcement> getCategoryPetTypeAnnouncements(String category,String petType){
-        ArrayList<Announcement> categAds= new ArrayList<>();
-        for(Announcement crt : announcementRepository.find()){
-            if(Objects.equals(crt.getCategory(),category) && Objects.equals(crt.getPet().getType(),petType)){
-                categAds.add(crt);
-            }
+        if(category.equals("All") && petType.equals("All")){
+            return getAnnouncements();
         }
-        return categAds;
+        else {
+            if(category.equals("All")){
+                return getPetTypeAnnouncements(petType);
+            }
+            if(petType.equals("All")){
+                return getCategoryAnnouncements(category);
+            }
+            ArrayList<Announcement> filteredAds = new ArrayList<>();
+            for (Announcement crt : announcementRepository.find()) {
+                if (Objects.equals(crt.getCategory(), category) && Objects.equals(crt.getPet().getType(), petType)) {
+                    filteredAds.add(crt);
+                }
+            }
+            return filteredAds;
+        }
     }
 
     public static Announcement getPetAnnouncement(Pet pet){

@@ -72,8 +72,8 @@ public class HomePageController {
     private ChoiceBox category = new ChoiceBox();
 
     public void initialize(){
-        category.getItems().addAll("Lost", "Found", "Adoption");
-        petType.getItems().addAll("Cat","Dog","Other");
+        category.getItems().addAll("All","Lost", "Found", "Adoption");
+        petType.getItems().addAll("All","Cat","Dog","Other");
         //category.getSelectionModel().selectedIndexProperty().addListener();
         if(announcementImage != null && announcementInfo != null){
             announcementImage.setPrefWidth(100);
@@ -174,15 +174,18 @@ public class HomePageController {
         //ObservableList<String> allAds = FXCollections.observableArrayList();
         ArrayList <Announcement> cursor=AnnouncementService.getAnnouncements();
 
-        if((String) category.getValue()!= null && (String) petType.getValue()==null){
+        if((String) category.getValue()!= null  && ((String) petType.getValue()==null || ((String) petType.getValue()).equals("All"))){
+            announcementsTable.getItems().clear();
             cursor=AnnouncementService.getCategoryAnnouncements((String) category.getValue());
             //cursor=AnnouncementService.getAnnouncementRepository().find((FindOptions) Filters.eq("category",(String) category.getValue()));
         }
-        if((String) category.getValue()== null && (String) petType.getValue()!=null){
+        if(((String) category.getValue()== null || ((String) category.getValue()).equals("All")) && (String) petType.getValue()!=null){
+            announcementsTable.getItems().clear();
             cursor=AnnouncementService.getPetTypeAnnouncements((String) petType.getValue());
             //cursor=AnnouncementService.getAnnouncementRepository().find((FindOptions) Filters.eq("type",(String) category.getValue()))
         }
         if((String) category.getValue()!= null && (String) petType.getValue()!=null){
+            announcementsTable.getItems().clear();
             cursor=AnnouncementService.getCategoryPetTypeAnnouncements((String) category.getValue(),(String) petType.getValue());
         }
 
@@ -211,6 +214,7 @@ public class HomePageController {
         //}
 
         //ads.setItems(allAds);
+        //announcementsTable.getItems().clear();
         announcementsTable.setItems(announcements);
     }
 
@@ -246,9 +250,9 @@ public class HomePageController {
 
     @FXML
     public void setAnnouncementInfo(Announcement announcement) throws MalformedURLException {
-        this.userInfo.setText(announcement.getUser().toString()+"\n"+announcement.getStringDate());
-        this.title.setText(announcement.getID());
-        this.body.setText(announcement.getPet().toString()+"\n"+announcement.getInfo());
+        this.userInfo.setText(announcement.getUser().toString()+"\n\n"+announcement.getStringDate());
+        this.title.setText(announcement.getCategory()+" pet announcement");
+        this.body.setText(announcement.getPet().toString()+"\n\nAnnouncement info: "+announcement.getInfo());
 
         File file = new File(announcement.getPet().getImagePath());
         String localUrl = file.toURI().toURL().toExternalForm();
