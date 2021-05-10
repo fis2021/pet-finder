@@ -31,6 +31,14 @@ public class AnnouncementService {
         announcementRepository.remove(announcement);
     }
 
+    public static ArrayList<Announcement> getAnnouncements(){
+        ArrayList<Announcement> globalAds= new ArrayList<>();
+        for(Announcement crt : announcementRepository.find()){
+            globalAds.add(crt);
+        }
+        return globalAds;
+    }
+
     public static ArrayList<Announcement> getUserAnnouncements(String username){
         ArrayList<Announcement> userAds= new ArrayList<>();
         for(Announcement crt : announcementRepository.find()){
@@ -39,6 +47,36 @@ public class AnnouncementService {
             }
         }
         return userAds;
+    }
+
+    public static ArrayList<Announcement> getCategoryAnnouncements(String category){
+        ArrayList<Announcement> categAds= new ArrayList<>();
+        for(Announcement crt : announcementRepository.find()){
+            if(Objects.equals(crt.getCategory(),category)){
+                categAds.add(crt);
+            }
+        }
+        return categAds;
+    }
+
+    public static ArrayList<Announcement> getPetTypeAnnouncements(String petType){
+        ArrayList<Announcement> petTypeAds= new ArrayList<>();
+        for(Announcement crt : announcementRepository.find()){
+            if(Objects.equals(crt.getPet().getType(),petType)){
+                petTypeAds.add(crt);
+            }
+        }
+        return petTypeAds;
+    }
+
+    public static ArrayList<Announcement> getCategoryPetTypeAnnouncements(String category,String petType){
+        ArrayList<Announcement> categAds= new ArrayList<>();
+        for(Announcement crt : announcementRepository.find()){
+            if(Objects.equals(crt.getCategory(),category) && Objects.equals(crt.getPet().getType(),petType)){
+                categAds.add(crt);
+            }
+        }
+        return categAds;
     }
 
     public static Announcement getPetAnnouncement(Pet pet){
