@@ -49,8 +49,7 @@ public class RequestService {
         return userReceivedRequests;
     }
 
-    public boolean requestExists(User sender, User receiver, Announcement announcement) {
-
+    public static boolean requestExists(User sender, User receiver, Announcement announcement) {
         for (Request crt : requestRepository.find()) {
             if (Objects.equals(sender, crt.getSender()) && Objects.equals(receiver, crt.getReceiver()) && Objects.equals(announcement, crt.getAnnouncement())) {
                 return true;
@@ -60,4 +59,12 @@ public class RequestService {
         return false;
     }
 
+    public static Request findRequestByID(String ID){
+        for(Request crt : requestRepository.find()){
+            if(crt.getID().equals(ID)){
+                return crt;
+            }
+        }
+        return null;
+    }
 }
