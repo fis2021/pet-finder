@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import org.dizitart.no2.FindOptions;
 import org.dizitart.no2.filters.Filters;
 import org.dizitart.no2.objects.Cursor;
+import org.jetbrains.annotations.NotNull;
 import org.model.Announcement;
 import org.model.ImageStringTableRow;
 import org.model.User;
@@ -205,7 +206,7 @@ public class HomePageController {
     }
 
     @FXML
-    public void handleViewAnnouncementAction(ImageStringTableRow selected, MouseEvent event) throws Exception{
+    public void handleViewAnnouncementAction(@NotNull ImageStringTableRow selected, MouseEvent event) throws Exception{
         String ID = selected.getID();
         try {
             Node node = (Node) event.getSource();

@@ -47,16 +47,23 @@ public class LoginController {
             }
 
             if(user.getRole().equals("Shelter")){
-                page = "shelterHomePage.fxml";
+                page = "manageRequestsScene.fxml";
             }
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
             Parent root = loader.load();
             currentStage.setTitle("Home");
             currentStage.setScene(new Scene(root, 800, 600));
             currentStage.show();
-            HomePageController hpc = loader.getController();
-            hpc.setUser(user);
-            hpc.updateAnnouncementList();
+            if(user.getRole().equals("Individual")){
+                HomePageController hpc = loader.getController();
+                hpc.setUser(user);
+                hpc.updateAnnouncementList();
+            }else{
+                RequestController hpc = loader.getController();
+                hpc.setUser(user);
+                hpc.updateRequestList("Inbox");
+            }
+
 
         } catch (InvalidUserException | IOException e) {
             loginMessage.setText(e.getMessage());
