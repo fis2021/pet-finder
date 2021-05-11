@@ -2,18 +2,21 @@ package org.model;
 
 import org.dizitart.no2.objects.Id;
 
+import java.util.Date;
 import java.util.UUID;
 
 public class Request {
     @Id
-    String ID;
+    private String ID;
 
-    User sender;
-    User receiver;
+    private User sender;
+    private User receiver;
 
-    Announcement announcement;
-    String message;
-    String status;
+    private Announcement announcement;
+    private String message;
+    private String status;
+
+    private Date date = new Date();
 
     public Request(User sender, User receiver, Announcement announcement){
         UUID uuid = UUID.randomUUID();
@@ -36,6 +39,8 @@ public class Request {
 
     public String getStatus(){ return status; }
 
+    public void setStatus(String status){ this.status = status; }
+
     public String getID(){ return ID; }
 
     public String getMessage() {
@@ -54,4 +59,7 @@ public class Request {
         return announcement;
     }
 
+    public Date getDate() {
+        return date;
+    }
 }

@@ -5,6 +5,7 @@ import org.model.Announcement;
 import org.model.Request;
 import org.model.User;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -49,15 +50,37 @@ public class RequestService {
         return userReceivedRequests;
     }
 
-    public boolean requestExists(User sender, User receiver, Announcement announcement) {
-
+    public static boolean requestExistsAndIsOpen(User sender, User receiver, Announcement announcement) {
         for (Request crt : requestRepository.find()) {
-            if (Objects.equals(sender, crt.getSender()) && Objects.equals(receiver, crt.getReceiver()) && Objects.equals(announcement, crt.getAnnouncement())) {
+            if (Objects.equals(sender, crt.getSender()) && Objects.equals(receiver, crt.getReceiver()) && Objects.equals(announcement, crt.getAnnouncement()) && Objects.equals(crt.getStatus(),"Pending")) {
                 return true;
             }
         }
-
         return false;
     }
 
+    public static boolean canSendRequest(User sender, User receiver, Announcement announcement){
+        int count = 0;
+
+        for (Request crt : requestRepository.find()) {
+            if (Objects.equals(sender, crt.getSender()) && Objects.equals(receiver, crt.getReceiver()) && Objects.equals(announcement, crt.getAnnouncement())) {
+                count++;
+            }
+        }
+
+        if(count>3){
+            return false;
+        }
+
+        return true;
+    }
+
+    public static Request findRequestByID(String ID){
+        for(Request crt : requestRepository.find()){
+            if(crt.getID().equals(ID)){
+                return crt;
+            }
+        }
+        return null;
+    }
 }
