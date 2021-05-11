@@ -52,5 +52,7 @@ class LoginTest {
 
         robot.clickOn("#redirectToRegisterButton");
 
+
+
     }
 }
