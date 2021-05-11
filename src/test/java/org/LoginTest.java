@@ -27,7 +27,7 @@ class LoginTest {
     @BeforeEach
     void setUp() throws Exception {
         FileSystemService.APPLICATION_FOLDER = ".test-registration-example";
-        FileUtils.cleanDirectory(FileSystemService.getApplicationHomeFolder().toFile());
+        //FileUtils.cleanDirectory(FileSystemService.getApplicationHomeFolder().toFile());
         DatabaseService.initDatabase();
     }
 
