@@ -29,7 +29,7 @@ public class User {
 
     @Override
     public String toString(){
-        String s=this.getRole()+": "+this.getUsername()+"\nPhone: "+this.getPhoneNo()+"\nAddress: "+this.getAddress();
+        String s=this.getRole()+": "+this.getUsername()+"\n\nPhone: "+this.getPhoneNo()+"\n\nAddress: "+this.getAddress();
         return s;
     }
 
