@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.lang.ref.ReferenceQueue;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class RequestController {
     @FXML
@@ -50,7 +51,23 @@ public class RequestController {
     private Text userInfo;
 
     @FXML
+    private Button acceptRequestButton;
+    @FXML
+    private Button declineRequestButton;
+    @FXML
+    private Button endRequestButton;
+
+    @FXML
+    private Label reqUserLabel;
+    @FXML
     private Request request;
+    @FXML
+    private Text reqUserInfo;
+    @FXML
+    private Text reqAnnouncementInfo;
+    @FXML
+    private Text reqStatus;
+
 
     @FXML
     private Button requestButton;
@@ -104,9 +121,9 @@ public class RequestController {
 
         ArrayList<Request> databaseRequests;
 
-        if(listType.equals("Inbox")){
+        if(listType.equals("Inbox") || listType.equals("InboxClosed")){
             databaseRequests = RequestService.getUserReceivedRequests(user.getUsername());
-        }else if(listType.equals("Outbox")){
+        }else if(listType.equals("Outbox") || listType.equals("OutboxClosed")){
             databaseRequests = RequestService.getUserSentRequests(user.getUsername());
         }else{
             return;
@@ -118,13 +135,26 @@ public class RequestController {
             String crtID = crtRequest.getID();
             String crtStatus = crtRequest.getStatus();
             String crtCategory = crtRequest.getAnnouncement().getCategory();
-            String crtSender = crtRequest.getSender().getUsername();
+            String crtSender;
+            if(listType.equals("Inbox") || listType.equals("InboxClosed")){
+                crtSender = crtRequest.getSender().getUsername();
+            }else{
+                crtSender = crtRequest.getReceiver().getUsername();
+            }
             String crtDate = crtRequest.getDate().toString();
             String crtAnnouncementInfo = crtAnnouncement.getPet().getName() + " - " + crtAnnouncement.getPet().getType();
 
             RequestTableRow crtRequestRow = new RequestTableRow(crtID, crtStatus, crtCategory, crtSender, crtDate, crtAnnouncementInfo);
 
-            requests.add(crtRequestRow);
+            if(listType.equals("Inbox") || listType.equals("Outbox")){
+                if(crtRequestRow.getStatus().equals("Pending")){
+                    requests.add(crtRequestRow);
+                }
+            }else{
+                if(crtRequestRow.getStatus().equals("Pending")==false){
+                    requests.add(crtRequestRow);
+                }
+            }
         }
 
         requestsTable.setItems(requests);
@@ -137,25 +167,51 @@ public class RequestController {
         Request crt = RequestService.findRequestByID(ID);
 
         try{
-            Alert a = new Alert(Alert.AlertType.CONFIRMATION, "Viewing request ID:\n" + crt.getID());
-            a.showAndWait();
-            if(false){
-                Node node = (Node) event.getSource();
-                Stage currentStage = (Stage) node.getScene().getWindow();
-                String page = "requestDetails.fxml";
+            //Alert a = new Alert(Alert.AlertType.CONFIRMATION, "Viewing request ID:\n" + crt.getID());
+            //a.showAndWait();
 
-                FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
-                Parent root = loader.load();
-                currentStage.setTitle("View Request");
-                currentStage.setScene(new Scene(root, 800, 600));
-                currentStage.show();
+            Node node = (Node) event.getSource();
+            Stage currentStage = (Stage) node.getScene().getWindow();
+            String page = "viewRequestDetails.fxml";
 
-                RequestController rc = loader.getController();
-                rc.setUser(user);
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
+            Parent root = loader.load();
+            currentStage.setTitle("View Request");
+            currentStage.setScene(new Scene(root, 800, 600));
+            currentStage.show();
 
-                if(crt != null){
-                    rc.setRequestInfo(crt);
-                }
+            RequestController rc = loader.getController();
+            rc.setUser(user);
+            rc.setRequestInfo(crt);
+
+            if(crt != null){
+                rc.setRequestInfo(crt);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void reloadViewRequest(ActionEvent event){
+        Request crt = this.request;
+        try{
+            Node node = (Node) event.getSource();
+            Stage currentStage = (Stage) node.getScene().getWindow();
+            String page = "viewRequestDetails.fxml";
+
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
+            Parent root = loader.load();
+            currentStage.setTitle("View Request");
+            currentStage.setScene(new Scene(root, 800, 600));
+            currentStage.show();
+
+            RequestController rc = loader.getController();
+            rc.setUser(user);
+            rc.setRequestInfo(crt);
+
+            if(crt != null){
+                rc.setRequestInfo(crt);
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -165,7 +221,7 @@ public class RequestController {
     @FXML
     public void toggleViewTextFields() throws IOException {
         try {
-            if (RequestService.requestExists(this.user, announcement.getUser(), this.announcement)) {
+            if (!RequestService.canSendRequest(this.user, announcement.getUser(), this.announcement) && !RequestService.requestExistsAndIsOpen(this.user, announcement.getUser(), this.announcement)) {
                 throw new RequestAlreadyExistsException();
             }
 
@@ -190,9 +246,9 @@ public class RequestController {
             exceptionMessage.setVisible(opposite);
 
         }catch(RequestAlreadyExistsException e){
-            Alert a = new Alert(Alert.AlertType.INFORMATION, "You already have a request on this announcement pending reviewal");
+            Alert a = new Alert(Alert.AlertType.INFORMATION, e.getMessage());
             a.showAndWait();
-            redirectToMyRequests();
+            redirectToMySentRequests();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -253,9 +309,65 @@ public class RequestController {
     @FXML
     public void setRequestInfo(Request request) throws MalformedURLException {
         this.request = request;
-        this.userInfo.setText(announcement.getUser().toString()+"\n"+announcement.getStringDate());
-        this.title.setText(announcement.getID());
-        this.body.setText(announcement.getPet().toString()+"\n"+announcement.getInfo());
+
+        this.announcement = request.getAnnouncement();
+        User sender = request.getSender();
+        User receiver = request.getReceiver();
+
+        File file = new File(announcement.getPet().getImagePath());
+        String localUrl = file.toURI().toURL().toExternalForm();
+        Image profile = new Image(localUrl, false);
+        this.photo.setImage(profile);
+
+        if(request.getSender().equals(user)){
+            reqUserLabel.setText("Request sent to:");
+            reqUserInfo.setText(receiver.toString());
+        }else{
+            reqUserLabel.setText("Request from:");
+            reqUserInfo.setText(sender.toString());
+        }
+
+        if((!request.getSender().equals(user)) && ((request.getAnnouncement()).getCategory()).equals("Adoption") && request.getStatus().equals("Pending")){
+            acceptRequestButton.setVisible(true);
+            declineRequestButton.setVisible(true);
+        }
+
+        if(request.getStatus().equals("Pending")){
+            endRequestButton.setDisable(false);
+        }else{
+            endRequestButton.setDisable(true);
+        }
+
+        reqStatus.setText(request.getStatus());
+    }
+
+    @FXML
+    public void acceptAdoptionRequest(ActionEvent event){
+        request.setStatus("Accepted");
+        RequestService.updateRequest(request);
+        reloadViewRequest(event);
+    }
+
+    @FXML
+    public void declineAdoptionRequest(ActionEvent event){
+        request.setStatus("Declined");
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Decline message");
+        dialog.setHeaderText("Please enter a decline message:");
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()){
+            request.setStatus(request.getStatus() + "\nReason: " + result.get());
+        }
+        RequestService.updateRequest(request);
+        reloadViewRequest(event);
+    }
+
+    @FXML
+    public void closeRequest(ActionEvent event){
+        request.setStatus("Closed");
+        RequestService.updateRequest(request);
+        reloadViewRequest(event);
     }
 
     @FXML
@@ -333,5 +445,63 @@ public class RequestController {
         RequestController rc = loader.getController();
         rc.setUser(user);
         rc.updateRequestList("Inbox");
+    }
+
+    @FXML
+    public void redirectToMyClosedRequests() throws IOException {
+        Stage currentStage = (Stage) menu.getScene().getWindow();
+        String page = "manageClosedRequestsScene.fxml";
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
+        Parent root = loader.load();
+        currentStage.setTitle("My requests");
+        currentStage.setScene(new Scene(root, 800, 600));
+        currentStage.show();
+        RequestController rc = loader.getController();
+        rc.setUser(user);
+        rc.updateRequestList("InboxClosed");
+    }
+
+    @FXML
+    public void redirectToMySentRequests() throws IOException {
+        Stage currentStage = (Stage) menu.getScene().getWindow();
+        String page = "manageSentRequestsScene.fxml";
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
+        Parent root = loader.load();
+        currentStage.setTitle("My requests");
+        currentStage.setScene(new Scene(root, 800, 600));
+        currentStage.show();
+        RequestController rc = loader.getController();
+        rc.setUser(user);
+        rc.updateRequestList("Outbox");
+    }
+
+    @FXML
+    public void redirectToMySentClosedRequests() throws IOException {
+        Stage currentStage = (Stage) menu.getScene().getWindow();
+        String page = "manageSentRequestsScene.fxml";
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
+        Parent root = loader.load();
+        currentStage.setTitle("My requests");
+        currentStage.setScene(new Scene(root, 800, 600));
+        currentStage.show();
+        RequestController rc = loader.getController();
+        rc.setUser(user);
+        rc.updateRequestList("OutboxClosed");
+    }
+
+    @FXML
+    public void redirectToViewAnnouncement(ActionEvent event) throws IOException {
+        Node node = (Node) event.getSource();
+        Stage currentStage = (Stage) node.getScene().getWindow();
+        String page = "announcementDetails.fxml";
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
+        Parent root = loader.load();
+        currentStage.setTitle("Announcement Details");
+        currentStage.setScene(new Scene(root, 800, 600));
+        currentStage.show();
+
+        RequestController rc = loader.getController();
+        rc.setUser(user);
+        rc.setAnnouncementInfo(this.request.getAnnouncement());
     }
 }
