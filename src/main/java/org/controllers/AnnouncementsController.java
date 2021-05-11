@@ -292,7 +292,7 @@ public class AnnouncementsController {
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
         Parent root = loader.load();
         currentStage.setTitle("Add Announcement");
-        currentStage.setScene(new Scene(root, 500, 500));
+        currentStage.setScene(new Scene(root, 800, 600));
         currentStage.show();
         AnnouncementsController ac = loader.getController();
         ac.setUser(user);
@@ -309,7 +309,7 @@ public class AnnouncementsController {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("homePageScene.fxml"));
             Parent root = loader.load();
             currentStage.setTitle("Home");
-            currentStage.setScene(new Scene(root, 500, 500));
+            currentStage.setScene(new Scene(root, 800, 600));
             currentStage.show();
 
             HomePageController hpc = loader.getController();

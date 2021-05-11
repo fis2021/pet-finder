@@ -16,6 +16,8 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.dizitart.no2.FindOptions;
+import org.dizitart.no2.filters.Filters;
 import org.dizitart.no2.objects.Cursor;
 import org.model.Announcement;
 import org.model.ImageStringTableRow;
@@ -25,6 +27,7 @@ import org.services.AnnouncementService;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 
 
 public class HomePageController {
@@ -51,7 +54,16 @@ public class HomePageController {
     @FXML
     private MenuButton menu;
 
+    @FXML
+    private ChoiceBox petType = new ChoiceBox();
+
+    @FXML
+    private ChoiceBox category = new ChoiceBox();
+
     public void initialize(){
+        category.getItems().addAll("All","Lost", "Found", "Adoption");
+        petType.getItems().addAll("All","Cat","Dog","Other");
+        //category.getSelectionModel().selectedIndexProperty().addListener();
         if(announcementImage != null && announcementInfo != null){
             announcementImage.setPrefWidth(100);
             announcementImage.setCellValueFactory(new PropertyValueFactory<>("imageView"));
@@ -146,8 +158,24 @@ public class HomePageController {
     @FXML
     public void updateAnnouncementList() throws MalformedURLException {
         //ObservableList<String> allAds = FXCollections.observableArrayList();
+        ArrayList <Announcement> cursor=AnnouncementService.getAnnouncements();
 
-        Cursor<Announcement> cursor = AnnouncementService.getAnnouncementRepository().find();
+        if((String) category.getValue()!= null  && ((String) petType.getValue()==null || ((String) petType.getValue()).equals("All"))){
+            announcementsTable.getItems().clear();
+            cursor=AnnouncementService.getCategoryAnnouncements((String) category.getValue());
+            //cursor=AnnouncementService.getAnnouncementRepository().find((FindOptions) Filters.eq("category",(String) category.getValue()));
+        }
+        if(((String) category.getValue()== null || ((String) category.getValue()).equals("All")) && (String) petType.getValue()!=null){
+            announcementsTable.getItems().clear();
+            cursor=AnnouncementService.getPetTypeAnnouncements((String) petType.getValue());
+            //cursor=AnnouncementService.getAnnouncementRepository().find((FindOptions) Filters.eq("type",(String) category.getValue()))
+        }
+        if((String) category.getValue()!= null && (String) petType.getValue()!=null){
+            announcementsTable.getItems().clear();
+            cursor=AnnouncementService.getCategoryPetTypeAnnouncements((String) category.getValue(),(String) petType.getValue());
+        }
+
+        //Cursor<Announcement> cursor = AnnouncementService.getAnnouncementRepository().find();
 
         for (Announcement announcement : cursor) {
             //allAds.add(announcement.toString());
@@ -172,6 +200,7 @@ public class HomePageController {
         //}
 
         //ads.setItems(allAds);
+        //announcementsTable.getItems().clear();
         announcementsTable.setItems(announcements);
     }
 
@@ -204,6 +233,7 @@ public class HomePageController {
         //Alert alert = new Alert(Alert.AlertType.INFORMATION, "Viewing announcement " + ID);
         //alert.showAndWait();
     }
+
 
 
 
