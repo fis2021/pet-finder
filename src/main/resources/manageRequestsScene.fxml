@@ -52,6 +52,11 @@
                                         <Font name="Tahoma Bold" size="36.0" />
                                     </font>
                                 </Label>
+                        <Button fx:id="managePetsButton" defaultButton="true" layoutX="557.0" layoutY="3.0" mnemonicParsing="false" onAction="#handleManagePetsAction" prefHeight="50.0" prefWidth="165.0" text="Manage Pets">
+                           <font>
+                              <Font name="Tahoma Bold" size="13.0" />
+                           </font>
+                        </Button>
                             </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
@@ -61,7 +66,7 @@
                               <Font name="Tahoma Bold" size="27.0" />
                            </font>
                         </Label>
-                        <Button defaultButton="true" layoutX="117.0" layoutY="13.0" mnemonicParsing="false" onAction="#redirectToMySentRequests" prefHeight="30.0" prefWidth="88.0" text="View sent">
+                        <Button fx:id="viewSentButton" defaultButton="true" layoutX="117.0" layoutY="13.0" mnemonicParsing="false" onAction="#redirectToMySentRequests" prefHeight="30.0" prefWidth="88.0" text="View sent">
                            <font>
                               <Font name="Tahoma Bold" size="13.0" />
                            </font>
