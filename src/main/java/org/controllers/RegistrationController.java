@@ -58,8 +58,13 @@ public class RegistrationController {
     private ImageView imageView;
 
     @FXML
-    public void initialize() {
+    public void initialize() throws MalformedURLException {
         role.getItems().addAll("Individual", "Shelter");
+        imagePath = "src/main/resources/img/user.png";
+        File file = new File(imagePath);
+        String localUrl = file.toURI().toURL().toExternalForm();
+        Image profile = new Image(localUrl, false);
+        imageView.setImage(profile);
     }
 
     @FXML
@@ -84,7 +89,7 @@ public class RegistrationController {
 
     @FXML
     public void clearImageAction(ActionEvent event) throws MalformedURLException {
-        imagePath = "";
+        imagePath = "src/main/resources/img/user.png";
         File file = new File(imagePath);
         String localUrl = file.toURI().toURL().toExternalForm();
         Image profile = new Image(localUrl, false);
@@ -99,6 +104,8 @@ public class RegistrationController {
         boolean success = false;
         Pattern passwordPattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,}$");
         Pattern phoneNoPattern = Pattern.compile("\\d{10}");
+        String defaultImgPath = "src/main/resources/img/user.png";
+        imagePath = defaultImgPath;
         try {
             if(usernameField.getText() == "" || passwordField.getText() == "" || role.getValue() == "" || phoneNo.getText() == ""){
                 throw new NullPointerException("Username,password, role and phone number are required");
@@ -123,10 +130,9 @@ public class RegistrationController {
             if(address.equals(new Address()) == false){
                 user.setAddress(address);
             }
-            if(imagePath != ""){
-                user.setImagePath(imagePath);
-                user.setAddress(address);
-            }
+
+            user.setImagePath(imagePath);
+            user.setAddress(address);
 
             UserService.addUser(user);
 

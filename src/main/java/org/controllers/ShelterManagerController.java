@@ -52,13 +52,17 @@ public class ShelterManagerController {
     @FXML
     private File image;
     @FXML
-    private String imagePath="";
+    private String imagePath = "src/main/resources/img/pet.png";
     @FXML
     private ImageView imageView;
 
     @FXML
-    public void initialize() {
+    public void initialize() throws MalformedURLException {
         type.getItems().addAll("Dog", "Cat", "Other");
+        File file = new File(imagePath);
+        String localUrl = file.toURI().toURL().toExternalForm();
+        Image petImg = new Image(localUrl, false);
+        imageView.setImage(petImg);
     }
 
     @FXML
@@ -112,13 +116,13 @@ public class ShelterManagerController {
 
     @FXML
     public void clearImageAction(ActionEvent event) throws MalformedURLException {
-        imagePath = "";
+        imagePath = "src/main/resources/img/pet.jpg";
         File file = new File(imagePath);
         String localUrl = file.toURI().toURL().toExternalForm();
         Image profile = new Image(localUrl, false);
         imageView.setImage(profile);
-        imageView.setFitHeight(0);
-        imageView.setFitWidth(0);
+        imageView.setFitHeight(150);
+        imageView.setFitWidth(100);
         imageView.rotateProperty();
     }
 

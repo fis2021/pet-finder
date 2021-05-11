@@ -35,15 +35,6 @@ public class Pet{
     public void setInfo(String info){ this.info=info; }
     public void setImagePath(String imagePath){ this.imagePath=imagePath; }
 
-    //public void setImage(String imagePath){
-    //    Image image=new Image(imagePath);
-    //    ImageView imageView = new ImageView(image);
-    //}
-    //public Image getImage(){
-    //    Image image=new Image(imagePath);
-    //    ImageView imageView = new ImageView(image);
-    //    return image;
-    //}
 
     @Override
     public boolean equals(Object o){
@@ -61,6 +52,6 @@ public class Pet{
 
     @Override
     public String toString(){
-        return (this.name + " " + this.type + " " + this.info);
+        return ("Name: " + this.name + "\n\nPet type: " + this.type + "\n\nPet info: " + this.info);
     }
 }

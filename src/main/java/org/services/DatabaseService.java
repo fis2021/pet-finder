@@ -5,6 +5,7 @@ import org.dizitart.no2.objects.ObjectRepository;
 import org.exceptions.InvalidUserException;
 import org.exceptions.UsernameAlreadyExistsException;
 import org.model.Announcement;
+import org.model.Request;
 import org.model.User;
 
 import java.nio.charset.StandardCharsets;
@@ -18,7 +19,7 @@ public class DatabaseService {
 
     private static ObjectRepository<User> userRepository;
     private static ObjectRepository<Announcement> announcementRepository;
-//    private static ObjectRepository<User> requestRepository;
+    private static ObjectRepository<Request> requestRepository;
 
     public static void initDatabase() {
         Nitrite database = Nitrite.builder()
@@ -27,8 +28,10 @@ public class DatabaseService {
 
         userRepository = database.getRepository(User.class);
         announcementRepository = database.getRepository(Announcement.class);
+        requestRepository = database.getRepository(Request.class);
 
         UserService.initUserRepo(userRepository);
         AnnouncementService.initAnnouncementRepo(announcementRepository);
+        RequestService.initRequestRepo(requestRepository);
     }
 }
