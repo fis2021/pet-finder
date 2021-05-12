@@ -26,13 +26,15 @@ class AnnouncementServiceTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        FileSystemService.APPLICATION_FOLDER = ".test-registration-example";
+        FileSystemService.APPLICATION_FOLDER = ".testPetfinder";
+        FileSystemService.initDirectory();
         FileUtils.cleanDirectory(FileSystemService.getApplicationHomeFolder().toFile());
         DatabaseService.initDatabase();
     }
 
     @AfterEach
     void tearDown() {
+        DatabaseService.getDatabase().close();
         System.out.println("After each");
     }
 
