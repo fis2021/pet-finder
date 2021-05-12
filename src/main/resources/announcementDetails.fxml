@@ -39,7 +39,10 @@
               <items>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <Text fx:id="title" layoutX="27.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="209.33672332763672" />
+                        <Text fx:id="title" layoutX="215.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="209.33672332763672">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Text>
                         <Text fx:id="body" layoutX="27.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="597.9366683959961" />
                      </children>
                   </AnchorPane>

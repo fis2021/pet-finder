@@ -301,7 +301,7 @@ public class RequestController {
     public void setAnnouncementInfo(Announcement announcement) throws MalformedURLException {
         this.announcement = announcement;
         this.userInfo.setText(announcement.getUser().toString()+"\n"+announcement.getStringDate());
-        this.title.setText(announcement.getID());
+        this.title.setText((announcement.getCategory())+" pet announcement");
         this.body.setText(announcement.getPet().toString()+"\n"+announcement.getInfo());
 
         File file = new File(announcement.getPet().getImagePath());
