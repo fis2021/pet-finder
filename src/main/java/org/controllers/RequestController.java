@@ -22,6 +22,7 @@ import org.model.*;
 import org.services.AnnouncementService;
 import org.services.RequestService;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.ReferenceQueue;
@@ -80,6 +81,9 @@ public class RequestController {
     @FXML
     private Button sendButton;
 
+    @FXML
+    private Button managePetsButton;
+
     private final ObservableList<RequestTableRow> requests = FXCollections.observableArrayList();
 
     @FXML
@@ -94,6 +98,9 @@ public class RequestController {
     private TableColumn<RequestTableRow, String> requestDate;
     @FXML
     private TableColumn<RequestTableRow, String> requestAnnouncement;
+
+    @FXML
+    private Button viewSentButton;
 
     public void initialize(){
         if(requestStatus != null && requestCategory != null && requestSender != null && requestDate != null && requestAnnouncement != null && requestsTable != null){
@@ -278,6 +285,16 @@ public class RequestController {
         String localUrl = file.toURI().toURL().toExternalForm();
         Image profile = new Image(localUrl, false);
         profilePicture.setImage(profile);
+        if(managePetsButton!=null){
+            if(user.getRole().equals("Individual")){
+                managePetsButton.setVisible(false);
+            }
+        }
+        if(viewSentButton!=null){
+            if(user.getRole().equals("Shelter")){
+                viewSentButton.setVisible(false);
+            }
+        }
     }
 
     @FXML
@@ -389,7 +406,13 @@ public class RequestController {
         try {
             Node node = (Node) event.getSource();
             Stage currentStage = (Stage) node.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("homePageScene.fxml"));
+            FXMLLoader loader;
+            if(user.getRole().equals("Individual")){
+                loader = new FXMLLoader(getClass().getClassLoader().getResource("homePageScene.fxml"));
+            }
+            else{
+                loader = new FXMLLoader(getClass().getClassLoader().getResource("manageRequestsScene.fxml"));
+            }
             Parent root = loader.load();
             currentStage.setTitle("Home");
             currentStage.setScene(new Scene(root, 800, 600));
@@ -503,5 +526,20 @@ public class RequestController {
         RequestController rc = loader.getController();
         rc.setUser(user);
         rc.setAnnouncementInfo(this.request.getAnnouncement());
+    }
+
+    @FXML
+    public void handleManagePetsAction(ActionEvent event) throws Exception{
+        Node node = (Node) event.getSource();
+        Stage currentStage = (Stage) node.getScene().getWindow();
+        String page = "shelterManagerScene.fxml";
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
+        Parent root = loader.load();
+        currentStage.setTitle("Manage Pets");
+        currentStage.setScene(new Scene(root, 800, 600));
+        currentStage.show();
+        ShelterManagerController smc = loader.getController();
+        smc.setUser(user);
+        smc.updateList();
     }
 }
