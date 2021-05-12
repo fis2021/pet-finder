@@ -7,6 +7,7 @@ import org.model.Pet;
 import org.model.User;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class AnnouncementService {
@@ -112,6 +113,10 @@ public class AnnouncementService {
             }
         }
         return null;
+    }
+
+    public static List<Announcement> getAllAnnouncements() {
+        return announcementRepository.find().toList();
     }
 
 }

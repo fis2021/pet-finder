@@ -30,10 +30,10 @@
          <Label layoutX="64.0" layoutY="146.0" prefHeight="18.0" prefWidth="129.0" text="Account type:" />
          <PasswordField id="password" fx:id="passwordField" layoutX="226.0" layoutY="115.0" prefHeight="26.0" prefWidth="135.0" />
          <Label layoutX="245.0" layoutY="96.0" text="Password:" />
-         <ImageView id="image" fx:id="imageView" fitHeight="120.0" fitWidth="124.0" layoutX="223.0" layoutY="299.0" pickOnBounds="true" preserveRatio="true" />
-         <Button layoutX="91.0" layoutY="325.0" mnemonicParsing="false" onAction="#handleAddPhotoAction" prefHeight="33.0" prefWidth="77.0" text="Add photo" />
-         <Button layoutX="90.0" layoutY="369.0" mnemonicParsing="false" onAction="#clearImageAction" prefHeight="32.0" prefWidth="79.0" text="Clear photo" />
-         <Button id="registerButton" layoutX="67.0" layoutY="440.0" mnemonicParsing="false" onAction="#handleRegisterAction" prefHeight="26.0" prefWidth="292.0" text="Submit">
+         <ImageView fx:id="imageView" id="image" fitHeight="120.0" fitWidth="124.0" layoutX="223.0" layoutY="299.0" pickOnBounds="true" preserveRatio="true" />
+         <Button layoutX="91.0" layoutY="325.0" mnemonicParsing="false" onAction="#handleAddPhotoAction" id="handleAddPhotoAction" prefHeight="33.0" prefWidth="77.0" text="Add photo" />
+         <Button layoutX="90.0" layoutY="369.0" mnemonicParsing="false" onAction="#clearImageAction"  id="clearImageAction" prefHeight="32.0" prefWidth="79.0" text="Clear photo" />
+         <Button layoutX="67.0" layoutY="440.0" mnemonicParsing="false" onAction="#handleRegisterAction" id="registerButton" prefHeight="26.0" prefWidth="292.0" text="Submit">
             <font>
                <Font name="Tahoma Bold" size="14.0" />
             </font>
@@ -41,15 +41,15 @@
          <Label layoutX="101.0" layoutY="517.0" text="Already have an account?" />
          <Label layoutX="116.0" layoutY="199.0" text="Address:" />
          <Label layoutX="62.0" layoutY="223.0" text="Country:" />
-         <TextField fx:id="country" layoutX="110.0" layoutY="219.0" prefHeight="26.0" prefWidth="95.0" />
+         <TextField fx:id="country" id="country" layoutX="110.0" layoutY="219.0" prefHeight="26.0" prefWidth="95.0" />
          <Label layoutX="220.0" layoutY="224.0" text="Region:" />
-         <TextField fx:id="region" layoutX="263.0" layoutY="219.0" prefHeight="26.0" prefWidth="98.0" />
+         <TextField fx:id="region" id="region" layoutX="263.0" layoutY="219.0" prefHeight="26.0" prefWidth="98.0" />
          <Label layoutX="74.0" layoutY="251.0" text="Town:" />
-         <TextField fx:id="town" layoutX="110.0" layoutY="250.0" prefHeight="26.0" prefWidth="95.0" />
+         <TextField fx:id="town" id="town" layoutX="110.0" layoutY="250.0" prefHeight="26.0" prefWidth="95.0" />
          <Label layoutX="225.0" layoutY="255.0" text="Street:" />
-         <TextField fx:id="street" layoutX="263.0" layoutY="250.0" prefHeight="26.0" prefWidth="98.0" />
+         <TextField fx:id="street" id="street" layoutX="263.0" layoutY="250.0" prefHeight="26.0" prefWidth="98.0" />
          <Button layoutX="243.0" layoutY="513.0" mnemonicParsing="false" onAction="#handleSignOutAction" text="Log-in" />
-         <Text id="registrationMessage" fx:id="registrationMessage" layoutX="66.0" layoutY="490.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="292.0" />
+         <Text fx:id="registrationMessage" id="registrationMessage" layoutX="66.0" layoutY="490.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="292.0" />
       </children>
    </AnchorPane>
 </children>

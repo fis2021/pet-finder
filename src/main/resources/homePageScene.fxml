@@ -52,8 +52,8 @@
                   </AnchorPane>
                   <AnchorPane prefHeight="200.0" prefWidth="642.0" GridPane.rowIndex="1">
                      <children>
-                        <ChoiceBox fx:id="category" layoutX="192.0" layoutY="18.0" onAction="#updateAnnouncementList" prefWidth="150.0" />
-                        <ChoiceBox fx:id="petType" layoutX="367.0" layoutY="18.0" onAction="#updateAnnouncementList" prefWidth="150.0" />
+                        <ChoiceBox fx:id="category" id="category" layoutX="192.0" layoutY="18.0" prefWidth="150.0" onAction="#updateAnnouncementList" />
+                        <ChoiceBox fx:id="petType" id="petType" layoutX="367.0" layoutY="18.0" prefWidth="150.0"  onAction="#updateAnnouncementList" />
                         <Label layoutX="14.0" layoutY="8.0" prefHeight="46.0" prefWidth="171.0" text="Filter announcements by:">
                            <font>
                               <Font name="Tahoma Bold" size="12.0" />
