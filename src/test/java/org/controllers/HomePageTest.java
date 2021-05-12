@@ -9,31 +9,21 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.model.User;
 import org.services.DatabaseService;
 import org.services.FileSystemService;
-import org.services.UserService;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.testfx.assertions.api.Assertions.assertThat;
-
 @ExtendWith(ApplicationExtension.class)
-class LoginTest {
-
-    public static final String USER_1 = "user1";
-    public static final String PASSWORD_1 = "password1";
-
+class HomePageTest {
     @BeforeEach
     void setUp() throws Exception {
         FileSystemService.APPLICATION_FOLDER = ".testPetfinder";
         FileSystemService.initDirectory();
         FileUtils.cleanDirectory(FileSystemService.getApplicationHomeFolder().toFile());
         DatabaseService.initDatabase();
-        //User admin = new User(USER_1,PASSWORD_1,"Individual","");
-        //UserService.addUser(admin);
     }
 
     @AfterEach
@@ -44,23 +34,21 @@ class LoginTest {
 
     @Start
     void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("login.fxml"));
-        primaryStage.setTitle("Petfinder");
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("homePageScene.fxml"));
+        primaryStage.setTitle("HomePage");
         primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.show();
     }
 
     @Test
-    void testLogin(FxRobot robot) {
-        robot.clickOn("#username");
-        robot.write(USER_1);
-        robot.clickOn("#password");
-        robot.write(PASSWORD_1);
-        robot.clickOn("#loginButton");
+    void testRegistration(FxRobot robot) {
+        robot.clickOn("#category");
+        robot.dropBy(0,40);
+        robot.rightClickOn();
+        robot.clickOn("#petType");
+        robot.dropBy(-40,80);
+        robot.rightClickOn();
 
-        assertThat(robot.lookup("#loginMessage").queryText()).hasText("Invalid username/password");
-        assertThat(UserService.getAllUsers()).size().isEqualTo(0);
-
-        robot.clickOn("#redirectToRegisterButton");
     }
+
 }
