@@ -163,19 +163,6 @@ public class UserController extends Controller {
     }
 
     @FXML
-    public void redirectToProfile() throws IOException {
-        Stage currentStage = (Stage) menu.getScene().getWindow();
-        String page = "viewProfile.fxml";
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
-        Parent root = loader.load();
-        currentStage.setTitle("My requests");
-        currentStage.setScene(new Scene(root, 800, 600));
-        currentStage.show();
-        UserController uc = loader.getController();
-        uc.setUser(user);
-    }
-
-    @FXML
     public void redirectToHomePage(ActionEvent event){
         redirectToHome(event, user);
     }
