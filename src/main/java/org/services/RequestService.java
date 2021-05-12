@@ -2,6 +2,7 @@ package org.services;
 
 import org.dizitart.no2.objects.ObjectRepository;
 import org.model.Announcement;
+import org.model.Pet;
 import org.model.Request;
 import org.model.User;
 
@@ -22,6 +23,24 @@ public class RequestService {
 
     public static void updateRequest(Request request){
         requestRepository.update(request);
+    }
+
+    public static void closeAllRequestsRelatedToAnnouncement(Announcement announcement){
+        for(Request crt : requestRepository.find()){
+            if(Objects.equals(crt.getAnnouncement(), announcement) && Objects.equals(crt.getStatus(), "Pending")){
+                crt.setStatus("Closed");
+                updateRequest(crt);
+            }
+        }
+    }
+
+    public static void closeAllRequestsRelatedToPet(Pet pet){
+        for(Request crt : requestRepository.find()){
+            if(Objects.equals(crt.getAnnouncement().getPet(), pet) && Objects.equals(crt.getStatus(), "Pending")){
+                crt.setStatus("Closed");
+                updateRequest(crt);
+            }
+        }
     }
 
     public static void removeRequest(Request request){

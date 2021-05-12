@@ -13,13 +13,12 @@ import javafx.stage.Stage;
 
 import org.exceptions.InvalidUserException;
 import org.model.User;
-import org.services.DatabaseService;
 import org.services.UserService;
 
 import java.io.IOException;
 
 
-public class LoginController {
+public class LoginController extends Controller{
 
     @FXML
     private Text loginMessage;
@@ -27,56 +26,15 @@ public class LoginController {
     private PasswordField passwordField;
     @FXML
     private TextField usernameField;
-    @FXML
-    private String role;
 
     @FXML
     public void handleLoginAction(ActionEvent event) {
         try {
-            Node node = (Node) event.getSource();
-            Stage currentStage = (Stage) node.getScene().getWindow();
-
             User user = UserService.login(usernameField.getText(), passwordField.getText());
-            loginMessage.setText("Logged-In succesfully");
-            //wait(2000);
-
-            String page = "";
-
-            if(user.getRole().equals("Individual")){
-                page = "homePageScene.fxml";
-            }
-
-            if(user.getRole().equals("Shelter")){
-                page = "manageRequestsScene.fxml";
-            }
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
-            Parent root = loader.load();
-            currentStage.setTitle("Home");
-            currentStage.setScene(new Scene(root, 800, 600));
-            currentStage.show();
-            if(user.getRole().equals("Individual")){
-                HomePageController hpc = loader.getController();
-                hpc.setUser(user);
-                hpc.updateAnnouncementList();
-            }else{
-                RequestController hpc = loader.getController();
-                hpc.setUser(user);
-                hpc.updateRequestList("Inbox");
-            }
-
-
-        } catch (InvalidUserException | IOException e) {
+            loginMessage.setText("Logged-In successfully");
+            redirectToHome(event, user);
+        } catch (InvalidUserException e) {
             loginMessage.setText(e.getMessage());
         }
-    }
-
-    @FXML
-    public void redirectToRegister(ActionEvent event) throws Exception{
-        Node node = (Node) event.getSource();
-        Stage currentStage = (Stage) node.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("registerScene.fxml"));
-        currentStage.setTitle("Register");
-        currentStage.setScene(new Scene(root, 800, 600));
-        currentStage.show();
     }
 }

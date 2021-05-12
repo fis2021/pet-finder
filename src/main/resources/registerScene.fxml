@@ -22,13 +22,13 @@
                <Font name="Tahoma Bold" size="20.0" />
             </font>
          </Label>
-         <TextField fx:id="usernameField" id="username" layoutX="64.0" layoutY="115.0" prefHeight="26.0" prefWidth="142.0" />
+         <TextField id="username" fx:id="usernameField" layoutX="64.0" layoutY="115.0" prefHeight="26.0" prefWidth="142.0" />
          <Label layoutX="79.0" layoutY="96.0" text="Username:" />
-         <ChoiceBox fx:id="role" id="role" layoutX="62.0" layoutY="165.0" prefHeight="26.0" prefWidth="144.0" />
-         <TextField fx:id="phoneNo" id="phone" layoutX="226.0" layoutY="166.0" prefHeight="26.0" prefWidth="136.0" />
+         <ChoiceBox id="role" fx:id="role" layoutX="62.0" layoutY="165.0" prefHeight="26.0" prefWidth="144.0" />
+         <TextField id="phone" fx:id="phoneNo" layoutX="226.0" layoutY="166.0" prefHeight="26.0" prefWidth="136.0" />
          <Label layoutX="244.0" layoutY="149.0" text="Phone number:" />
          <Label layoutX="64.0" layoutY="146.0" prefHeight="18.0" prefWidth="129.0" text="Account type:" />
-         <PasswordField fx:id="passwordField" id="password" layoutX="226.0" layoutY="115.0" prefHeight="26.0" prefWidth="135.0" />
+         <PasswordField id="password" fx:id="passwordField" layoutX="226.0" layoutY="115.0" prefHeight="26.0" prefWidth="135.0" />
          <Label layoutX="245.0" layoutY="96.0" text="Password:" />
          <ImageView fx:id="imageView" id="image" fitHeight="120.0" fitWidth="124.0" layoutX="223.0" layoutY="299.0" pickOnBounds="true" preserveRatio="true" />
          <Button layoutX="91.0" layoutY="325.0" mnemonicParsing="false" onAction="#handleAddPhotoAction" id="handleAddPhotoAction" prefHeight="33.0" prefWidth="77.0" text="Add photo" />
@@ -48,7 +48,7 @@
          <TextField fx:id="town" id="town" layoutX="110.0" layoutY="250.0" prefHeight="26.0" prefWidth="95.0" />
          <Label layoutX="225.0" layoutY="255.0" text="Street:" />
          <TextField fx:id="street" id="street" layoutX="263.0" layoutY="250.0" prefHeight="26.0" prefWidth="98.0" />
-         <Button layoutX="243.0" layoutY="513.0" mnemonicParsing="false" onAction="#redirectToLogin" text="Log-in" />
+         <Button layoutX="243.0" layoutY="513.0" mnemonicParsing="false" onAction="#handleSignOutAction" text="Log-in" />
          <Text fx:id="registrationMessage" id="registrationMessage" layoutX="66.0" layoutY="490.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="292.0" />
       </children>
    </AnchorPane>

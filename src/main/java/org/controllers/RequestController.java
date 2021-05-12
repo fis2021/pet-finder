@@ -21,6 +21,7 @@ import org.exceptions.RequestAlreadyExistsException;
 import org.model.*;
 import org.services.AnnouncementService;
 import org.services.RequestService;
+import org.services.UserService;
 
 import javax.swing.*;
 import java.io.File;
@@ -30,16 +31,7 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class RequestController {
-    @FXML
-    private User user;
-    @FXML
-    private Text AccountStatus;
-    @FXML
-    private ImageView profilePicture;
-    @FXML
-    private MenuButton menu;
-
+public class RequestController extends Controller{
     @FXML
     private Announcement announcement;
     @FXML
@@ -83,6 +75,8 @@ public class RequestController {
 
     @FXML
     private Button managePetsButton;
+    @FXML
+    private Label outboxText;
 
     private final ObservableList<RequestTableRow> requests = FXCollections.observableArrayList();
 
@@ -124,8 +118,7 @@ public class RequestController {
     }
 
     @FXML
-    public void updateRequestList(String listType) throws MalformedURLException {
-
+    public void updateRequestList(String listType){
         ArrayList<Request> databaseRequests;
 
         if(listType.equals("Inbox") || listType.equals("InboxClosed")){
@@ -168,30 +161,20 @@ public class RequestController {
     }
 
     @FXML
+    public void redirectToViewAnnouncement(ActionEvent event) throws Exception {
+        handleViewAnnouncementAction(this.request.getAnnouncement(),event);
+    }
+
+    @FXML
     public void handleViewRequestAction(RequestTableRow selected, MouseEvent event){
         String ID = selected.getID();
 
         Request crt = RequestService.findRequestByID(ID);
-
         try{
-            //Alert a = new Alert(Alert.AlertType.CONFIRMATION, "Viewing request ID:\n" + crt.getID());
-            //a.showAndWait();
-
-            Node node = (Node) event.getSource();
-            Stage currentStage = (Stage) node.getScene().getWindow();
-            String page = "viewRequestDetails.fxml";
-
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
-            Parent root = loader.load();
-            currentStage.setTitle("View Request");
-            currentStage.setScene(new Scene(root, 800, 600));
-            currentStage.show();
-
+            FXMLLoader loader = redirect(event,"viewRequestDetails.fxml", "Details");
             RequestController rc = loader.getController();
             rc.setUser(user);
-            rc.setRequestInfo(crt);
-
-            if(crt != null){
+            if(crt!=null){
                 rc.setRequestInfo(crt);
             }
         }catch(Exception e){
@@ -203,19 +186,9 @@ public class RequestController {
     public void reloadViewRequest(ActionEvent event){
         Request crt = this.request;
         try{
-            Node node = (Node) event.getSource();
-            Stage currentStage = (Stage) node.getScene().getWindow();
-            String page = "viewRequestDetails.fxml";
-
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
-            Parent root = loader.load();
-            currentStage.setTitle("View Request");
-            currentStage.setScene(new Scene(root, 800, 600));
-            currentStage.show();
-
+            FXMLLoader loader = redirect(event,"viewRequestDetails.fxml", "Details");
             RequestController rc = loader.getController();
             rc.setUser(user);
-            rc.setRequestInfo(crt);
 
             if(crt != null){
                 rc.setRequestInfo(crt);
@@ -233,17 +206,22 @@ public class RequestController {
             }
 
             boolean opposite = !(requestMessage.isVisible());
-            if (opposite == true) {
+            if (opposite) {
                 requestButton.setText("Cancel");
             } else {
-                if (announcement.getCategory().equals("Adoption")) {
-                    requestButton.setText("Send adoption request");
-                } else if (announcement.getCategory().equals("Found")) {
-                    requestButton.setText("Contact finder");
-                } else if (announcement.getCategory().equals("Lost")) {
-                    requestButton.setText("Contact owner");
-                } else {
-                    requestButton.setVisible(false);
+                switch (announcement.getCategory()) {
+                    case "Adoption":
+                        requestButton.setText("Send adoption request");
+                        break;
+                    case "Found":
+                        requestButton.setText("Contact finder");
+                        break;
+                    case "Lost":
+                        requestButton.setText("Contact owner");
+                        break;
+                    default:
+                        requestButton.setVisible(false);
+                        break;
                 }
             }
 
@@ -278,21 +256,21 @@ public class RequestController {
     }
 
     public void setUser(User user) throws MalformedURLException {
-        this.user = user;
-        AccountStatus.setText("Logged-in as " + user.getUsername());
-
-        File file = new File(user.getImagePath());
-        String localUrl = file.toURI().toURL().toExternalForm();
-        Image profile = new Image(localUrl, false);
-        profilePicture.setImage(profile);
-        if(managePetsButton!=null){
+        super.setUser(user);
+        if(managePetsButton != null){
             if(user.getRole().equals("Individual")){
                 managePetsButton.setVisible(false);
             }
         }
-        if(viewSentButton!=null){
+        if(viewSentButton != null){
             if(user.getRole().equals("Shelter")){
                 viewSentButton.setVisible(false);
+            }
+        }
+
+        if(outboxText != null){
+            if(user.getRole().equals("Shelter")){
+                outboxText.setVisible(false);
             }
         }
     }
@@ -301,7 +279,7 @@ public class RequestController {
     public void setAnnouncementInfo(Announcement announcement) throws MalformedURLException {
         this.announcement = announcement;
         this.userInfo.setText(announcement.getUser().toString()+"\n"+announcement.getStringDate());
-        this.title.setText((announcement.getCategory())+" pet announcement");
+        this.title.setText(announcement.getCategory() + " pet announcement");
         this.body.setText(announcement.getPet().toString()+"\n"+announcement.getInfo());
 
         File file = new File(announcement.getPet().getImagePath());
@@ -356,11 +334,18 @@ public class RequestController {
         }
 
         reqStatus.setText(request.getStatus());
+        reqAnnouncementInfo.setText(request.getAnnouncement().getInfo());
     }
 
     @FXML
     public void acceptAdoptionRequest(ActionEvent event){
         request.setStatus("Accepted");
+        Announcement announcement = request.getAnnouncement();
+        if(user.getRole().equals("Shelter")){
+            user.removePet(request.getAnnouncement().getPet());
+            UserService.updateUser(user);
+        }
+        AnnouncementService.removeAnnouncement(announcement);
         RequestService.updateRequest(request);
         reloadViewRequest(event);
     }
@@ -385,89 +370,6 @@ public class RequestController {
         request.setStatus("Closed");
         RequestService.updateRequest(request);
         reloadViewRequest(event);
-    }
-
-    @FXML
-    public void handleAddAnnouncementAction(ActionEvent event) throws Exception{
-        Node node = (Node) event.getSource();
-        Stage currentStage = (Stage) node.getScene().getWindow();
-        String page = "addAnnouncementPage.fxml";
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
-        Parent root = loader.load();
-        currentStage.setTitle("Add Announcement");
-        currentStage.setScene(new Scene(root, 800, 600));
-        currentStage.show();
-        AnnouncementsController ac = loader.getController();
-        ac.setUser(user);
-    }
-
-    @FXML
-    public void redirectToHomePage(ActionEvent event){
-        try {
-            Node node = (Node) event.getSource();
-            Stage currentStage = (Stage) node.getScene().getWindow();
-            FXMLLoader loader;
-            if(user.getRole().equals("Individual")){
-                loader = new FXMLLoader(getClass().getClassLoader().getResource("homePageScene.fxml"));
-            }
-            else{
-                loader = new FXMLLoader(getClass().getClassLoader().getResource("manageRequestsScene.fxml"));
-            }
-            Parent root = loader.load();
-            currentStage.setTitle("Home");
-            currentStage.setScene(new Scene(root, 800, 600));
-            currentStage.show();
-
-            HomePageController hpc = loader.getController();
-            hpc.setUser(user);
-            hpc.updateAnnouncementList();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
-    @FXML
-    public void handleViewMyAnnouncements(ActionEvent event) throws Exception{
-        Stage currentStage = (Stage) menu.getScene().getWindow();
-        String page = "viewMyAnnouncementsScene.fxml";
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
-        Parent root = loader.load();
-        currentStage.setTitle("My announcements");
-        currentStage.setScene(new Scene(root, 800, 600));
-        currentStage.show();
-        AnnouncementsController ac = loader.getController();
-        ac.setUser(user);
-        ac.updateMyAnnouncementList();
-
-    }
-
-    @FXML
-    public void handleSignOutAction(ActionEvent event) {
-        try {
-            Node node = (Node) event.getSource();
-            Stage currentStage = (Stage) node.getScene().getWindow();
-
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("login.fxml"));
-            currentStage.setTitle("Login");
-            currentStage.setScene(new Scene(root, 800, 600));
-            currentStage.show();
-        } catch (IOException e) {
-            System.out.println(e);
-        }
-    }
-
-    @FXML
-    public void redirectToMyRequests() throws IOException {
-        Stage currentStage = (Stage) menu.getScene().getWindow();
-        String page = "manageRequestsScene.fxml";
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
-        Parent root = loader.load();
-        currentStage.setTitle("My requests");
-        currentStage.setScene(new Scene(root, 800, 600));
-        currentStage.show();
-        RequestController rc = loader.getController();
-        rc.setUser(user);
-        rc.updateRequestList("Inbox");
     }
 
     @FXML
@@ -501,7 +403,7 @@ public class RequestController {
     @FXML
     public void redirectToMySentClosedRequests() throws IOException {
         Stage currentStage = (Stage) menu.getScene().getWindow();
-        String page = "manageSentRequestsScene.fxml";
+        String page = "manageClosedSentRequestsScene.fxml";
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
         Parent root = loader.load();
         currentStage.setTitle("My requests");
@@ -510,22 +412,6 @@ public class RequestController {
         RequestController rc = loader.getController();
         rc.setUser(user);
         rc.updateRequestList("OutboxClosed");
-    }
-
-    @FXML
-    public void redirectToViewAnnouncement(ActionEvent event) throws IOException {
-        Node node = (Node) event.getSource();
-        Stage currentStage = (Stage) node.getScene().getWindow();
-        String page = "announcementDetails.fxml";
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
-        Parent root = loader.load();
-        currentStage.setTitle("Announcement Details");
-        currentStage.setScene(new Scene(root, 800, 600));
-        currentStage.show();
-
-        RequestController rc = loader.getController();
-        rc.setUser(user);
-        rc.setAnnouncementInfo(this.request.getAnnouncement());
     }
 
     @FXML
@@ -541,5 +427,10 @@ public class RequestController {
         ShelterManagerController smc = loader.getController();
         smc.setUser(user);
         smc.updateList();
+    }
+
+    @FXML
+    public void redirectToHomePage(ActionEvent event){
+        redirectToHome(event, user);
     }
 }

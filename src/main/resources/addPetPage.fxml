@@ -1,48 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Text?>
-<?import javafx.scene.image.ImageView?>
-<GridPane xmlns:fx="http://javafx.com/fxml/1" alignment="center" hgap="10" prefHeight="700" prefWidth="800"
-          vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal"
-          fx:controller="org.controllers.ShelterManagerController">
+<?import javafx.scene.text.*?>
+
+<GridPane alignment="center" hgap="10" prefHeight="700" prefWidth="800" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.controllers.ShelterManagerController">
     <padding>
-        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0"/>
+        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
     </padding>
-    <Text id="title-text" text="Add Pet Page" GridPane.columnIndex="1" GridPane.columnSpan="2"
-          GridPane.rowIndex="0"/>
+    <Text id="title-text" text="Add Pet Page" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="0" />
 
 
     <HBox GridPane.columnIndex="0" GridPane.rowIndex="1">
-        <Label text="Add photo: " GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-        <Button onAction="#handleAddPhotoAction" text="Choose..." GridPane.columnIndex="2" GridPane.rowIndex="1"/>
-        <ImageView fx:id="imageView" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
-        <Button onAction="#clearImageAction" text="Clear" GridPane.columnIndex="4" GridPane.rowIndex="1"/>
+        <Label text="Add photo: " GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <Button onAction="#handleAddPhotoAction" text="Choose..." GridPane.columnIndex="2" GridPane.rowIndex="1" />
+        <ImageView fx:id="imageView" fitHeight="156.0" fitWidth="139.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+        <Button onAction="#clearImageAction" text="Clear" GridPane.columnIndex="4" GridPane.rowIndex="1" />
     </HBox>
 
-    <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-    <TextField fx:id="petName" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+    <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+    <TextField fx:id="petName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-    <Label text="Type:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+    <Label text="Type:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
     <ChoiceBox fx:id="type" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
     </ChoiceBox>
 
-    <Label text="Info:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
-    <TextField fx:id="petInfo" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+    <Label text="Info:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+    <TextField fx:id="petInfo" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
     <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="5">
-        <Button onAction="#handleAddPetAction" text="Add"/>
+        <Button onAction="#handleAddPetAction" text="Add" />
     </HBox>
     <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="2" GridPane.rowIndex="5">
-    <Button onAction="#cancelAddPet" text="Cancel"/>
+    <Button onAction="#cancelAddPet" text="Cancel" />
     </HBox>
 
     <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="6">
-    <Text fx:id="AddStatus"/>
+    <Text fx:id="AddStatus" />
     </HBox>
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
 
 
 </GridPane>
-
