@@ -15,15 +15,15 @@
 
     <Label text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
 
-    <TextField fx:id="usernameField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+    <TextField fx:id="usernameField" id="username" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
     <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
 
-    <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+    <PasswordField fx:id="passwordField" id="password" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
-    <Text fx:id="loginMessage" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+    <Text fx:id="loginMessage" id="loginMessage" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
     <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="5">
-        <Button fx:id="loginButton" onAction="#handleLoginAction" text="Log-In"/>
-        <Button onAction="#redirectToRegister" text="Sign-up"/>
+        <Button fx:id="loginButton" onAction="#handleLoginAction" id="loginButton" text="Log-In"/>
+        <Button onAction="#redirectToRegister" id="redirectToRegisterButton" text="Sign-up"/>
     </HBox>
 </GridPane>

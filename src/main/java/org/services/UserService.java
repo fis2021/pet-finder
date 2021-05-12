@@ -7,6 +7,7 @@ import org.model.User;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -87,5 +88,8 @@ public class UserService {
         return md;
     }
 
+    public static List<User> getAllUsers() {
+        return userRepository.find().toList();
+    }
 
 }
