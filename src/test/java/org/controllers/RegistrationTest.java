@@ -78,9 +78,28 @@ class RegistrationTest {
         robot.clickOn("#registerButton");
         assertThat(robot.lookup("#registrationMessage").queryText()).hasText("Invalid phone number");
 
-        robot.doubleClickOn("#phone");
-        robot.write("07211111");
+
+        robot.clickOn("#country");
+        robot.write("Romania");
+        robot.clickOn("#region");
+        robot.write("TM");
+        robot.clickOn("#town");
+        robot.write("Timisoara");
+        robot.clickOn("#street");
+        robot.write("Ghirlandei");
+
+        robot.clickOn("#handleAddPhotoAction");
+        robot.dropBy(300,-310);
+        robot.rightClickOn();
+        robot.clickOn("#clearImageAction");
+
         robot.clickOn("#registerButton");
+        assertThat(robot.lookup("#registrationMessage").queryText()).hasText("Invalid phone number");
+        robot.doubleClickOn("#phone");
+        robot.write("0725464647");
+        robot.clickOn("#registerButton");
+
+
         /*assertThat(robot.lookup("#registrationMessage").queryText()).hasText(
                 String.format("Password must be at least 8 characters long and contain:\n1 uppercase letter\n1 lowercase letter\n1 number\n1 special char")
         );*/
