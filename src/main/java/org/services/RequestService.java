@@ -5,8 +5,6 @@ import org.model.Announcement;
 import org.model.Pet;
 import org.model.Request;
 import org.model.User;
-
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Objects;
 
