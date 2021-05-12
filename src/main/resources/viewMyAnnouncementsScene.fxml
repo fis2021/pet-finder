@@ -91,6 +91,11 @@
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="View Profile" />
                      </graphic>
                   </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#redirectToMyRequests">
+                     <graphic>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="My requests" />
+                     </graphic>
+                  </MenuItem>
               </items>
                <graphic>
                   <ImageView fx:id="profilePicture" fitHeight="29.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" />

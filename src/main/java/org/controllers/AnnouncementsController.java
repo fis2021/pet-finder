@@ -37,7 +37,8 @@ import java.util.ArrayList;
 public class AnnouncementsController {
 
     private User user;
-
+    @FXML
+    private MenuButton menu;
     @FXML
     private TextField petName;
 
@@ -334,5 +335,19 @@ public class AnnouncementsController {
         imageView.setImage(profile);
         imageView.setFitHeight(100);
         imageView.setFitHeight(100);*/
+    }
+
+    @FXML
+    public void redirectToMyRequests() throws IOException {
+        Stage currentStage = (Stage) menu.getScene().getWindow();
+        String page = "manageRequestsScene.fxml";
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
+        Parent root = loader.load();
+        currentStage.setTitle("My requests");
+        currentStage.setScene(new Scene(root, 800, 600));
+        currentStage.show();
+        RequestController rc = loader.getController();
+        rc.setUser(user);
+        rc.updateRequestList("Inbox");
     }
 }

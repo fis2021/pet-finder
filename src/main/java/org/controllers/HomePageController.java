@@ -1,7 +1,5 @@
 package org.controllers;
 
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,6 +19,7 @@ import javafx.stage.Stage;
 import org.dizitart.no2.FindOptions;
 import org.dizitart.no2.filters.Filters;
 import org.dizitart.no2.objects.Cursor;
+import org.jetbrains.annotations.NotNull;
 import org.model.Announcement;
 import org.model.ImageStringTableRow;
 import org.model.User;
@@ -37,8 +36,8 @@ public class HomePageController {
     private User user;
     @FXML
     private Text AccountStatus;
-    @FXML
-    private ImageView imageView;
+    //@FXML
+    //private ImageView imageView;
     @FXML
     private ListView ads = new ListView<>();
     @FXML
@@ -52,15 +51,6 @@ public class HomePageController {
     private TableColumn<ImageStringTableRow, ImageView> announcementImage;
     @FXML
     private TableColumn<ImageStringTableRow, String> announcementInfo;
-
-    @FXML
-    private ImageView photo;
-    @FXML
-    private Text title;
-    @FXML
-    private Text body;
-    @FXML
-    private Text userInfo;
 
     @FXML
     private MenuButton menu;
@@ -90,9 +80,6 @@ public class HomePageController {
                 }
             });
         }
-
-
-
     }
 
     @FXML
@@ -219,7 +206,7 @@ public class HomePageController {
     }
 
     @FXML
-    public void handleViewAnnouncementAction(ImageStringTableRow selected, MouseEvent event) throws Exception{
+    public void handleViewAnnouncementAction(@NotNull ImageStringTableRow selected, MouseEvent event) throws Exception{
         String ID = selected.getID();
         try {
             Node node = (Node) event.getSource();
@@ -231,11 +218,11 @@ public class HomePageController {
             currentStage.setScene(new Scene(root, 800, 600));
             currentStage.show();
 
-            HomePageController hpc = loader.getController();
-            hpc.setUser(user);
+            RequestController rc = loader.getController();
+            rc.setUser(user);
             Announcement ad = AnnouncementService.getIdAnnouncement(ID);
             if(ad != null){
-                hpc.setAnnouncementInfo(ad);
+                rc.setAnnouncementInfo(ad);
             }
         }
         catch(Exception e){
@@ -248,17 +235,8 @@ public class HomePageController {
         //alert.showAndWait();
     }
 
-    @FXML
-    public void setAnnouncementInfo(Announcement announcement) throws MalformedURLException {
-        this.userInfo.setText(announcement.getUser().toString()+"\n\n"+announcement.getStringDate());
-        this.title.setText(announcement.getCategory()+" pet announcement");
-        this.body.setText(announcement.getPet().toString()+"\n\nAnnouncement info: "+announcement.getInfo());
 
-        File file = new File(announcement.getPet().getImagePath());
-        String localUrl = file.toURI().toURL().toExternalForm();
-        Image profile = new Image(localUrl, false);
-        this.photo.setImage(profile);
-    }
+
 
 
     @FXML
@@ -278,5 +256,19 @@ public class HomePageController {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    @FXML
+    public void redirectToMyRequests() throws IOException {
+        Stage currentStage = (Stage) menu.getScene().getWindow();
+        String page = "manageRequestsScene.fxml";
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
+        Parent root = loader.load();
+        currentStage.setTitle("My requests");
+        currentStage.setScene(new Scene(root, 800, 600));
+        currentStage.show();
+        RequestController rc = loader.getController();
+        rc.setUser(user);
+        rc.updateRequestList("Inbox");
     }
 }
