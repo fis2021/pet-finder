@@ -42,6 +42,19 @@ public class Controller {
     }
 
     @FXML
+    public void redirectToMyProfile() throws IOException {
+        Stage currentStage = (Stage) menu.getScene().getWindow();
+        String page = "viewProfile.fxml";
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
+        Parent root = loader.load();
+        currentStage.setTitle("My profile");
+        currentStage.setScene(new Scene(root, 800, 600));
+        currentStage.show();
+
+        UserController uc = loader.getController();
+        uc.setUser(user);
+    }
+    @FXML
     public void redirectToMyRequests() throws IOException {
         Stage currentStage = (Stage) menu.getScene().getWindow();
         String page = "manageRequestsScene.fxml";

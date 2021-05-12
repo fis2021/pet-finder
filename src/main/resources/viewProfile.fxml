@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<GridPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.controllers.UserController">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints fillHeight="false" vgrow="NEVER" />
+        <RowConstraints maxHeight="512.0" minHeight="10.0" prefHeight="484.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="76.0" minHeight="5.0" prefHeight="50.0" vgrow="SOMETIMES" />
+    </rowConstraints>
+    <children>
+        <GridPane GridPane.rowIndex="1">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="179.0" minWidth="0.0" prefWidth="78.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="717.0" minWidth="10.0" prefWidth="641.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="261.0" minWidth="0.0" prefWidth="81.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="174.0" minHeight="4.0" prefHeight="77.99998779296875" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="413.20001220703125" minHeight="10.0" prefHeight="413.20001220703125" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <GridPane GridPane.columnIndex="1">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                            <children>
+                                <Label fx:id="username" layoutX="14.0" layoutY="5.0" prefHeight="46.0" prefWidth="544.0" text="Profile">
+                                    <font>
+                                        <Font name="Tahoma Bold" size="36.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                     <children>
+                        <Text fx:id="exceptionMessage" layoutX="14.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="514.9366683959961" />
+                     </children></AnchorPane>
+                    </children>
+                </GridPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <Label layoutX="147.0" layoutY="206.0" text="Address:">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="newCountry" disable="true" layoutX="147.0" layoutY="240.0" />
+                  <Label layoutX="93.0" layoutY="244.0" text="Country:" />
+                  <TextField fx:id="newRegion" disable="true" layoutX="397.0" layoutY="240.0" />
+                  <Label layoutX="348.0" layoutY="244.0" text="Region:" />
+                  <Label layoutX="103.0" layoutY="285.0" text="Town:" />
+                  <TextField fx:id="newTown" disable="true" layoutX="147.0" layoutY="281.0" />
+                  <Label layoutX="352.0" layoutY="285.0" text="Street:" />
+                  <TextField fx:id="newStreet" disable="true" layoutX="397.0" layoutY="281.0" />
+                  <ImageView fx:id="newPhoto" fitHeight="150.0" fitWidth="162.0" layoutX="135.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" />
+                  <Button fx:id="addPhotoButton" disable="true" layoutX="341.0" layoutY="104.0" mnemonicParsing="false" onAction="#handleAddPhotoAction" text="Upload image" />
+                  <CheckBox fx:id="editToggle" layoutX="500.0" layoutY="55.0" mnemonicParsing="false" text="Edit" />
+                  <Button fx:id="updateButton" disable="true" layoutX="293.0" layoutY="328.0" mnemonicParsing="false" onAction="#updateUserAccount" text="Update" />
+                  <Label layoutX="102.0" layoutY="175.0" text="Phone:" />
+                  <TextField fx:id="newPhone" disable="true" layoutX="147.0" layoutY="171.0" />
+               </children>
+            </AnchorPane>
+            </children>
+        </GridPane>
+        <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" style="-fx-background-color: #94de92;" translateX="1.0" translateZ="1.0" GridPane.vgrow="NEVER">
+            <children>
+                <Button layoutX="725.0" layoutY="7.0" mnemonicParsing="false" onAction="#handleSignOutAction" prefHeight="37.0" prefWidth="64.0" text="Sign-Out" translateX="1.0" translateY="1.0" translateZ="1.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="10.0" />
+                <MenuButton fx:id="menu" layoutX="656.0" layoutY="7.0" mnemonicParsing="false" translateX="1.0" translateY="1.0" translateZ="1.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="10.0">
+                    <items>
+                        <MenuItem mnemonicParsing="false">
+                            <graphic>
+                                <Text fx:id="AccountStatus" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                            </graphic>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#redirectToProfile">
+                            <graphic>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="My profile" />
+                            </graphic>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#handleViewMyAnnouncements">
+                            <graphic>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="My announcements" />
+                            </graphic>
+                        </MenuItem>
+                    </items>
+                    <graphic>
+                        <ImageView fx:id="profilePicture" fitHeight="29.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" />
+                    </graphic>
+                </MenuButton>
+                <Button defaultButton="true" layoutX="10.0" layoutY="9.0" mnemonicParsing="false" onAction="#redirectToHomePage" prefHeight="38.0" prefWidth="64.0" style="-fx-background-color: #fce6b1; -fx-border-color: #000000;" text="Home" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
+                    <font>
+                        <Font name="Arial Rounded MT Bold" size="14.0" />
+                    </font>
+                </Button>
+            </children>
+        </AnchorPane>
+    </children>
+</GridPane>
