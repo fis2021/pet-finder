@@ -27,3 +27,8 @@ buildNumber.properties
 .java-version
 **/bin/
 !src/**/bin/
+/src/database/.petfinder/petfinder.db
+/src/database/.testLogin/petfinder.db
+/src/database/.testPetfinder/petfinder.db
+/src/database/.testRegistration/petfinder.db
+/src/database/.testUserService/petfinder.db

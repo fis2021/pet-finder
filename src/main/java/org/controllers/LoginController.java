@@ -13,13 +13,12 @@ import javafx.stage.Stage;
 
 import org.exceptions.InvalidUserException;
 import org.model.User;
-import org.services.DatabaseService;
 import org.services.UserService;
 
 import java.io.IOException;
 
 
-public class LoginController {
+public class LoginController extends Controller{
 
     @FXML
     private Text loginMessage;
@@ -27,8 +26,6 @@ public class LoginController {
     private PasswordField passwordField;
     @FXML
     private TextField usernameField;
-    @FXML
-    private String role;
 
     @FXML
     public void handleLoginAction(ActionEvent event) {
@@ -38,8 +35,6 @@ public class LoginController {
 
             User user = UserService.login(usernameField.getText(), passwordField.getText());
             loginMessage.setText("Logged-In succesfully");
-            //wait(2000);
-
             String page = "";
 
             if(user.getRole().equals("Individual")){
@@ -68,15 +63,5 @@ public class LoginController {
         } catch (InvalidUserException | IOException e) {
             loginMessage.setText(e.getMessage());
         }
-    }
-
-    @FXML
-    public void redirectToRegister(ActionEvent event) throws Exception{
-        Node node = (Node) event.getSource();
-        Stage currentStage = (Stage) node.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("registerScene.fxml"));
-        currentStage.setTitle("Register");
-        currentStage.setScene(new Scene(root, 800, 600));
-        currentStage.show();
     }
 }
