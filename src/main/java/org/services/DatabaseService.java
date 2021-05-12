@@ -17,13 +17,15 @@ import static org.services.FileSystemService.getPathToFile;
 
 public class DatabaseService {
 
+    private static Nitrite database;
+
     private static ObjectRepository<User> userRepository;
     private static ObjectRepository<Announcement> announcementRepository;
     private static ObjectRepository<Request> requestRepository;
 
     public static void initDatabase() {
         FileSystemService.initDirectory();
-        Nitrite database = Nitrite.builder()
+        database = Nitrite.builder()
                 .filePath(getPathToFile("petfinder.db").toFile())
                 .openOrCreate("test", "parola");
 
@@ -34,5 +36,9 @@ public class DatabaseService {
         UserService.initUserRepo(userRepository);
         AnnouncementService.initAnnouncementRepo(announcementRepository);
         RequestService.initRequestRepo(requestRepository);
+    }
+
+    public static Nitrite getDatabase() {
+        return database;
     }
 }
