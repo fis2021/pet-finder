@@ -2,34 +2,21 @@ package org.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.dizitart.no2.objects.Cursor;
-import org.dizitart.no2.objects.ObjectFilter;
-import org.dizitart.no2.objects.filters.ObjectFilters;
 import org.model.Announcement;
 import org.model.ImageStringTableRow;
 import org.model.Pet;
 import org.model.User;
 import org.services.AnnouncementService;
-import org.services.DatabaseService;
 import org.services.RequestService;
-import org.services.UserService;
-
-import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -42,9 +29,6 @@ public class AnnouncementsController extends Controller{
     private TextField petInfo;
     @FXML
     private ChoiceBox<String> petType = new ChoiceBox<>();
-
-    @FXML
-    private ListView ads = new ListView<>();
 
     private final ObservableList<ImageStringTableRow> announcements = FXCollections.observableArrayList();
 

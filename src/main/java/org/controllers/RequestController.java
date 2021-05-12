@@ -16,17 +16,14 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import org.dizitart.no2.objects.Cursor;
 import org.exceptions.RequestAlreadyExistsException;
 import org.model.*;
 import org.services.AnnouncementService;
 import org.services.RequestService;
 import org.services.UserService;
 
-import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
-import java.lang.ref.ReferenceQueue;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Optional;

@@ -2,20 +2,13 @@ package org.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 import org.exceptions.InvalidUserException;
 import org.model.User;
 import org.services.UserService;
-
-import java.io.IOException;
 
 
 public class LoginController extends Controller{
