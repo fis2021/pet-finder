@@ -30,37 +30,10 @@ public class LoginController extends Controller{
     @FXML
     public void handleLoginAction(ActionEvent event) {
         try {
-            Node node = (Node) event.getSource();
-            Stage currentStage = (Stage) node.getScene().getWindow();
-
             User user = UserService.login(usernameField.getText(), passwordField.getText());
-            loginMessage.setText("Logged-In succesfully");
-            String page = "";
-
-            if(user.getRole().equals("Individual")){
-                page = "homePageScene.fxml";
-            }
-
-            if(user.getRole().equals("Shelter")){
-                page = "manageRequestsScene.fxml";
-            }
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
-            Parent root = loader.load();
-            currentStage.setTitle("Home");
-            currentStage.setScene(new Scene(root, 800, 600));
-            currentStage.show();
-            if(user.getRole().equals("Individual")){
-                HomePageController hpc = loader.getController();
-                hpc.setUser(user);
-                hpc.updateAnnouncementList();
-            }else{
-                RequestController hpc = loader.getController();
-                hpc.setUser(user);
-                hpc.updateRequestList("Inbox");
-            }
-
-
-        } catch (InvalidUserException | IOException e) {
+            loginMessage.setText("Logged-In successfully");
+            redirectToHome(event, user);
+        } catch (InvalidUserException e) {
             loginMessage.setText(e.getMessage());
         }
     }

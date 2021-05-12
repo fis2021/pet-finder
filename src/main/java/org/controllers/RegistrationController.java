@@ -27,10 +27,9 @@ import org.exceptions.UsernameAlreadyExistsException;
 import org.exceptions.WeakPasswordException;
 import org.model.Address;
 import org.model.User;
-import org.services.DatabaseService;
 import org.services.UserService;
 
-public class RegistrationController {
+public class RegistrationController extends Controller{
 
     @FXML
     private Text registrationMessage;
@@ -39,7 +38,7 @@ public class RegistrationController {
     @FXML
     private TextField usernameField;
     @FXML
-    private ChoiceBox role;
+    private ChoiceBox<String> role;
     @FXML
     private TextField phoneNo;
     @FXML
@@ -83,7 +82,6 @@ public class RegistrationController {
         imageView.setImage(profile);
         imageView.setFitHeight(100);
         imageView.setFitWidth(150);
-        imageView.rotateProperty();
     }
 
 
@@ -127,12 +125,13 @@ public class RegistrationController {
             User user = new User(usernameField.getText(), encodedPassword, (String) role.getValue(), phoneNo.getText());
 
             Address address = new Address(country.getText(), region.getText(), town.getText(), street.getText());
-            if(address.equals(new Address()) == false){
+            if(!address.equals(new Address())){
                 user.setAddress(address);
             }
 
-            user.setImagePath(imagePath);
-            user.setAddress(address);
+            if(imagePath!=defaultImgPath){
+                user.setImagePath(imagePath);
+            }
 
             UserService.addUser(user);
 
@@ -155,15 +154,5 @@ public class RegistrationController {
             currentStage.setScene(new Scene(root, 800, 600));
             currentStage.show();
         }
-    }
-
-    @FXML
-    public void redirectToLogin(ActionEvent event) throws Exception{
-        Node node = (Node) event.getSource();
-        Stage currentStage = (Stage) node.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("login.fxml"));
-        currentStage.setTitle("Register");
-        currentStage.setScene(new Scene(root, 800, 600));
-        currentStage.show();
     }
 }

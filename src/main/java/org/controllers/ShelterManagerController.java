@@ -31,21 +31,13 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
-public class ShelterManagerController {
-
-    private User user;
-
+public class ShelterManagerController extends Controller{
     @FXML
     private TextField petName;
-
     @FXML
     private TextField petInfo;
-
     @FXML
     private ChoiceBox type = new ChoiceBox();
-
-    @FXML
-    private Text AccountStatus;
 
     @FXML
     private Text AddStatus;
@@ -58,18 +50,31 @@ public class ShelterManagerController {
     private ImageView imageView;
 
     @FXML
-    private ImageView profilePicture;
-
-    @FXML
     private TableView<ImageStringTableRow> petsTable;
     @FXML
     private TableColumn<ImageStringTableRow, ImageView> petImage;
     @FXML
     private TableColumn<ImageStringTableRow, String> petInformation;
 
+
     @FXML
-    public void initialize() throws MalformedURLException {
+    public void initialize() {
         type.getItems().addAll("Dog", "Cat", "Other");
+
+        if(imageView != null){
+            imagePath = "src/main/resources/img/pet.png";
+            File file = new File(imagePath);
+            String localUrl = null;
+            try {
+                localUrl = file.toURI().toURL().toExternalForm();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            Image profile = new Image(localUrl, false);
+            imageView.setImage(profile);
+            imageView.setFitHeight(150);
+            imageView.setFitWidth(100);
+        }
 
         if(petImage != null && petInformation != null && petsTable != null){
             petImage.setPrefWidth(100);
@@ -84,7 +89,6 @@ public class ShelterManagerController {
         ArrayList<Pet> crtPetList = user.getPetList();
 
         for(Pet pet : crtPetList){
-            //crtPets.add(pet.toString());
             File file = new File(pet.getImagePath());
             String localUrl = file.toURI().toURL().toExternalForm();
             Image profile = new Image(localUrl, false);
@@ -100,20 +104,6 @@ public class ShelterManagerController {
         }
 
         petsTable.setItems(pets);
-    }
-
-    @FXML
-    public void handleSignOutAction(ActionEvent event) {
-        try {
-            Node node = (Node) event.getSource();
-            Stage currentStage = (Stage) node.getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("login.fxml"));
-            currentStage.setTitle("Login");
-            currentStage.setScene(new Scene(root, 500, 500));
-            currentStage.show();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
     }
 
     @FXML
@@ -137,14 +127,13 @@ public class ShelterManagerController {
 
     @FXML
     public void clearImageAction(ActionEvent event) throws MalformedURLException {
-        imagePath = "src/main/resources/img/pet.jpg";
+        imagePath = "src/main/resources/img/pet.png";
         File file = new File(imagePath);
         String localUrl = file.toURI().toURL().toExternalForm();
         Image profile = new Image(localUrl, false);
         imageView.setImage(profile);
         imageView.setFitHeight(150);
         imageView.setFitWidth(100);
-        imageView.rotateProperty();
     }
 
     @FXML
@@ -163,14 +152,7 @@ public class ShelterManagerController {
         crtAd.setInfo("");
         AnnouncementService.addAnnouncement(crtAd);
 
-        Node node = (Node) event.getSource();
-        Stage currentStage = (Stage) node.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("shelterManagerScene.fxml"));
-        Parent root = loader.load();
-        currentStage.setTitle("Manage pets");
-        currentStage.setScene(new Scene(root, 800, 600));
-        currentStage.show();
-
+        FXMLLoader loader = redirect(event,"shelterManagerScene.fxml", "Manage pets");
         ShelterManagerController smc = loader.getController();
         smc.setUser(user);
         smc.updateList();
@@ -197,6 +179,7 @@ public class ShelterManagerController {
         if(crtPet!=null){
             userPets.remove(crtPet);
             this.user.removePet(crtPet);
+
             ad = AnnouncementService.getPetAnnouncement(crtPet);
         }
 
@@ -208,14 +191,7 @@ public class ShelterManagerController {
 
     @FXML
     public void cancelAddPet(ActionEvent event) throws IOException {
-        Node node = (Node) event.getSource();
-        Stage currentStage = (Stage) node.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("shelterManagerScene.fxml"));
-        Parent root = loader.load();
-        currentStage.setTitle("Manage pets");
-        currentStage.setScene(new Scene(root, 800, 600));
-        currentStage.show();
-
+        FXMLLoader loader = redirect(event,"shelterManagerScene.fxml", "Manage pets");
         ShelterManagerController smc = loader.getController();
         smc.setUser(user);
         smc.updateList();
@@ -223,65 +199,13 @@ public class ShelterManagerController {
 
     @FXML
     public void openAddPetPage(ActionEvent event) throws Exception{
-        Node node = (Node) event.getSource();
-        Stage currentStage = (Stage) node.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("addPetPage.fxml"));
-        Parent root = loader.load();
-        currentStage.setTitle("AddPet");
-        currentStage.setScene(new Scene(root, 800, 600));
-        currentStage.show();
-
+        FXMLLoader loader = redirect(event,"addPetPage.fxml", "Add pet");
         ShelterManagerController smc = loader.getController();
         smc.setUser(user);
-
-    }
-
-    @FXML
-    public void redirectToShelterHomePage(ActionEvent event){
-        try {
-            Node node = (Node) event.getSource();
-            Stage currentStage = (Stage) node.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("shelterHomePage.fxml"));
-            Parent root = loader.load();
-            currentStage.setTitle("Home");
-            currentStage.setScene(new Scene(root, 500, 500));
-            currentStage.show();
-
-            HomePageController hpc = loader.getController();
-            hpc.setUser(user);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
     }
 
     @FXML
     public void redirectToHomePage(ActionEvent event) throws Exception{
-        Node node = (Node) event.getSource();
-        Stage currentStage = (Stage) node.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("manageRequestsScene.fxml"));
-        Parent root = loader.load();
-        currentStage.setTitle("My requests");
-        currentStage.setScene(new Scene(root, 800, 600));
-        currentStage.show();
-
-        RequestController rc = loader.getController();
-        rc.setUser(user);
-        rc.updateRequestList("Inbox");
-    }
-
-
-    public void setUser(User user) throws MalformedURLException {
-        this.user = user;
-        if(AccountStatus != null){
-            AccountStatus.setText("Logged-in as " + user.getUsername());
-        }
-
-        if(profilePicture != null){
-            File file = new File(user.getImagePath());
-            String localUrl = file.toURI().toURL().toExternalForm();
-            Image profile = new Image(localUrl, false);
-            profilePicture.setImage(profile);
-        }
-
+        redirectToHome(event,user);
     }
 }
