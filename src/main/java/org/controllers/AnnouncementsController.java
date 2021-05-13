@@ -71,6 +71,8 @@ public class AnnouncementsController extends Controller{
     private String imagePath = "src/main/resources/img/pet.png";
     @FXML
     private ImageView imageView;
+    @FXML
+    private Label title;
 
     @FXML
     public void initialize() {
@@ -200,6 +202,7 @@ public class AnnouncementsController extends Controller{
         this.adInfo.setText(announcement.getInfo());
         this.petInfo.setText(announcement.getPet().getInfo());
         this.imagePath = announcement.getPet().getImagePath();
+        title.setText("Announcement - " + announcement.getPet().getName() + " " + announcement.getCategory());
         File file = new File(imagePath);
         String localUrl = file.toURI().toURL().toExternalForm();
         Image img = new Image(localUrl, false);
