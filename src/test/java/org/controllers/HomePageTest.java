@@ -16,13 +16,15 @@ import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.testfx.assertions.api.Assertions.assertThat;
+
 @ExtendWith(ApplicationExtension.class)
 class HomePageTest {
     @BeforeEach
     void setUp() throws Exception {
-        FileSystemService.APPLICATION_FOLDER = ".testPetfinder";
-        FileSystemService.initDirectory();
-        FileUtils.cleanDirectory(FileSystemService.getApplicationHomeFolder().toFile());
+        FileSystemService.APPLICATION_FOLDER = ".test";
+        //FileSystemService.initDirectory();
+        //FileUtils.cleanDirectory(FileSystemService.getApplicationHomeFolder().toFile());
         DatabaseService.initDatabase();
     }
 
@@ -41,14 +43,15 @@ class HomePageTest {
     }
 
     @Test
-    void testRegistration(FxRobot robot) {
+    void testChooseAnnouncement(FxRobot robot) {
         robot.clickOn("#category");
         robot.dropBy(0,40);
         robot.rightClickOn();
         robot.clickOn("#petType");
         robot.dropBy(-40,80);
         robot.rightClickOn();
-
+        robot.dropBy(-100,150);
+        robot.doubleClickOn();
     }
 
 }

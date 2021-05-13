@@ -28,9 +28,9 @@ class LoginTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        FileSystemService.APPLICATION_FOLDER = ".testPetfinder";
-        FileSystemService.initDirectory();
-        FileUtils.cleanDirectory(FileSystemService.getApplicationHomeFolder().toFile());
+        FileSystemService.APPLICATION_FOLDER = ".test";
+        //FileSystemService.initDirectory();
+        //FileUtils.cleanDirectory(FileSystemService.getApplicationHomeFolder().toFile());
         DatabaseService.initDatabase();
         //User admin = new User(USER_1,PASSWORD_1,"Individual","");
         //UserService.addUser(admin);
@@ -59,8 +59,15 @@ class LoginTest {
         robot.clickOn("#loginButton");
 
         assertThat(robot.lookup("#loginMessage").queryText()).hasText("Invalid username/password");
-        assertThat(UserService.getAllUsers()).size().isEqualTo(0);
+        //assertThat(UserService.getAllUsers()).size().isEqualTo(0);
 
-        robot.clickOn("#redirectToRegisterButton");
+        robot.doubleClickOn("#username");
+        robot.write("Bianca");
+        robot.doubleClickOn("#password");
+        robot.write("Parola123!");
+        robot.clickOn("#loginButton");
+        //assertThat(robot.lookup("#loginMessage").queryText()).hasText("Invalid username/password");
+
+        //robot.clickOn("#redirectToRegisterButton");
     }
 }
