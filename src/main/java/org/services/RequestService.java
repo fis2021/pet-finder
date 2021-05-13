@@ -77,16 +77,10 @@ public class RequestService {
     }
 
     public static boolean canSendRequest(User sender, User receiver, Announcement announcement){
-        int count = 0;
-
         for (Request crt : requestRepository.find()) {
             if (Objects.equals(sender, crt.getSender()) && Objects.equals(receiver, crt.getReceiver()) && Objects.equals(announcement, crt.getAnnouncement())) {
-                count++;
+                return false;
             }
-        }
-
-        if(count>3){
-            return false;
         }
 
         return true;
@@ -99,5 +93,9 @@ public class RequestService {
             }
         }
         return null;
+    }
+
+    public static ObjectRepository<Request> getRequestRepository() {
+        return requestRepository;
     }
 }
