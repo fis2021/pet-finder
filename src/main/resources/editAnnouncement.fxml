@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.controllers.UserController">
+<GridPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.controllers.AnnouncementsController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     </columnConstraints>
@@ -46,7 +46,7 @@
                     <children>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                             <children>
-                                <Label fx:id="username" layoutX="14.0" layoutY="5.0" prefHeight="46.0" prefWidth="544.0" text="Profile">
+                                <Label layoutX="14.0" layoutY="5.0" prefHeight="46.0" prefWidth="544.0" text="Edit announcement">
                                     <font>
                                         <Font name="Tahoma Bold" size="36.0" />
                                     </font>
@@ -54,34 +54,29 @@
                             </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
-                     <children>
-                        <Text fx:id="exceptionMessage" layoutX="14.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="514.9366683959961" />
-                     </children></AnchorPane>
+                            <children>
+                                <Text fx:id="exceptionMessage" layoutX="14.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="514.9366683959961" />
+                            </children></AnchorPane>
                     </children>
                 </GridPane>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <children>
-                  <Label layoutX="147.0" layoutY="206.0" text="Address:">
+                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <children>
+                        <TextField fx:id="adInfo" disable="true" layoutX="188.0" layoutY="244.0" prefHeight="30.0" prefWidth="285.0" />
+                        <Label layoutX="12.0" layoutY="246.0" prefHeight="27.0" prefWidth="175.0" text="Announcement Info: ">
                      <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="newCountry" disable="true" layoutX="147.0" layoutY="240.0" />
-                  <Label layoutX="93.0" layoutY="244.0" text="Country:" />
-                  <TextField fx:id="newRegion" disable="true" layoutX="397.0" layoutY="240.0" />
-                  <Label layoutX="348.0" layoutY="244.0" text="Region:" />
-                  <Label layoutX="103.0" layoutY="285.0" text="Town:" />
-                  <TextField fx:id="newTown" disable="true" layoutX="147.0" layoutY="281.0" />
-                  <Label layoutX="352.0" layoutY="285.0" text="Street:" />
-                  <TextField fx:id="newStreet" disable="true" layoutX="397.0" layoutY="281.0" />
-                  <ImageView fx:id="newPhoto" fitHeight="150.0" fitWidth="162.0" layoutX="135.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button fx:id="addPhotoButton" disable="true" layoutX="341.0" layoutY="104.0" mnemonicParsing="false" onAction="#handleAddPhotoAction" text="Upload image" />
-                  <CheckBox fx:id="editToggle" layoutX="500.0" layoutY="55.0" mnemonicParsing="false" text="Edit" />
-                  <Button fx:id="updateButton" disable="true" layoutX="293.0" layoutY="328.0" mnemonicParsing="false" onAction="#updateUserAccount" text="Update" />
-                  <Label layoutX="102.0" layoutY="175.0" text="Phone:" />
-                  <TextField fx:id="newPhone" disable="true" layoutX="147.0" layoutY="171.0" />
-               </children>
-            </AnchorPane>
+                        <Font size="18.0" />
+                     </font></Label>
+                        <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="162.0" layoutX="135.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" />
+                        <Button fx:id="addPhotoButton" disable="true" layoutX="341.0" layoutY="104.0" mnemonicParsing="false" onAction="#handleAddPhotoAction" text="Upload image" />
+                        <CheckBox fx:id="editToggle" layoutX="500.0" layoutY="55.0" mnemonicParsing="false" text="Edit" />
+                        <Button fx:id="updateButton" disable="true" layoutX="293.0" layoutY="328.0" mnemonicParsing="false" onAction="#handleEditAnnouncement" text="Update" />
+                        <Label layoutX="111.0" layoutY="177.0" prefHeight="27.0" prefWidth="75.0" text="Pet Info: ">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Label>
+                        <TextField fx:id="petInfo" disable="true" layoutX="188.0" layoutY="175.0" prefHeight="30.0" prefWidth="285.0" />
+                    </children>
+                </AnchorPane>
             </children>
         </GridPane>
         <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" style="-fx-background-color: #94de92;" translateX="1.0" translateZ="1.0" GridPane.vgrow="NEVER">

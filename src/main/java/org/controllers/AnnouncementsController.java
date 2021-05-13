@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -11,18 +12,27 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.model.Announcement;
-import org.model.ImageStringTableRow;
-import org.model.Pet;
-import org.model.User;
+import org.exceptions.InvalidPhoneNoException;
+import org.model.*;
 import org.services.AnnouncementService;
 import org.services.RequestService;
+import org.services.UserService;
+
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class AnnouncementsController extends Controller{
+    @FXML
+    private Text exceptionMessage;
+    @FXML
+    private Announcement announcement;
     @FXML
     private TextField petName;
     @FXML
@@ -39,6 +49,12 @@ public class AnnouncementsController extends Controller{
     @FXML
     private TableColumn<ImageStringTableRow, String> announcementInfo;
 
+    @FXML
+    private CheckBox editToggle;
+    @FXML
+    private Button addPhotoButton;
+    @FXML
+    private Button updateButton;
 
     @FXML
     private TextField adInfo;
@@ -65,6 +81,17 @@ public class AnnouncementsController extends Controller{
             announcementImage.setCellValueFactory(new PropertyValueFactory<>("imageView"));
             announcementInfo.setCellValueFactory(new PropertyValueFactory<>("info"));
         }
+        if(editToggle != null){
+            editToggle.selectedProperty().addListener((observable, oldValue, newValue) -> toggleEditAnnouncement(editToggle.isSelected()));
+        }
+    }
+
+    @FXML
+    public void toggleEditAnnouncement(Boolean enable){
+        petInfo.setDisable(!enable);
+        adInfo.setDisable(!enable);
+        addPhotoButton.setDisable(!enable);
+        updateButton.setDisable(!enable);
     }
 
     @FXML
@@ -157,6 +184,60 @@ public class AnnouncementsController extends Controller{
             AnnouncementService.removeAnnouncement(ad);
             announcementsTable.getItems().remove(crt);
         }
+    }
+
+    @FXML
+    public void redirectToEditAnnouncement(ActionEvent event) throws IOException {
+        FXMLLoader loader = redirect(event, "editAnnouncement.fxml", "Edit Announcement");
+        AnnouncementsController ac = loader.getController();
+        ac.setUser(user);
+        ac.setAnnouncement(AnnouncementService.getIdAnnouncement(announcementsTable.getSelectionModel().getSelectedItem().getID()));
+    }
+
+    @FXML
+    public void setAnnouncement(Announcement announcement) throws MalformedURLException {
+        this.announcement = announcement;
+        this.adInfo.setText(announcement.getInfo());
+        this.petInfo.setText(announcement.getPet().getInfo());
+        this.imagePath = announcement.getPet().getImagePath();
+        File file = new File(imagePath);
+        String localUrl = file.toURI().toURL().toExternalForm();
+        Image img = new Image(localUrl, false);
+        imageView.setImage(img);
+    }
+
+    @FXML
+    public void handleEditAnnouncement(ActionEvent event)throws MalformedURLException {
+
+        try {
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setTitle("Confirm your identity");
+            dialog.setHeaderText("Please enter your current password");
+
+            Optional<String> result = dialog.showAndWait();
+            if (result.isPresent()) {
+                if (Objects.equals(UserService.encodePassword(user.getUsername(),result.get()),user.getPassword())) {
+                    announcement.setInfo(adInfo.getText());
+                    announcement.getPet().setImagePath(imagePath);
+                    announcement.getPet().setInfo(petInfo.getText());
+
+                    AnnouncementService.updateAnnouncement(announcement);
+                    Alert a = new Alert(Alert.AlertType.CONFIRMATION, "Announcement modified");
+                    a.showAndWait();
+
+                    redirectToHomePage(event);
+                } else {
+                    Alert a = new Alert(Alert.AlertType.ERROR, "Invalid password!");
+                    a.showAndWait();
+                }
+            } else {
+                Alert a = new Alert(Alert.AlertType.WARNING, "Your password is required!");
+                a.showAndWait();
+            }
+        } catch (Exception e) {
+            exceptionMessage.setText(e.getMessage());
+        }
+
     }
 
     @FXML
