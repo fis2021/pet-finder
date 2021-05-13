@@ -15,30 +15,30 @@
 
     <HBox GridPane.columnIndex="0" GridPane.rowIndex="1">
         <Label text="Add photo: " GridPane.columnIndex="1" GridPane.rowIndex="1" />
-        <Button onAction="#handleAddPhotoAction" text="Choose..." GridPane.columnIndex="2" GridPane.rowIndex="1" />
+        <Button onAction="#handleAddPhotoAction" id="photo" text="Choose..." GridPane.columnIndex="2" GridPane.rowIndex="1" />
         <ImageView fx:id="imageView" fitHeight="156.0" fitWidth="139.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-        <Button onAction="#clearImageAction" text="Clear" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+        <Button onAction="#clearImageAction" id="clearPhoto" text="Clear" GridPane.columnIndex="4" GridPane.rowIndex="1" />
     </HBox>
 
     <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-    <TextField fx:id="petName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+    <TextField fx:id="petName" id="petName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
     <Label text="Type:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-    <ChoiceBox fx:id="type" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+    <ChoiceBox fx:id="type" id="petType" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
     </ChoiceBox>
 
     <Label text="Info:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-    <TextField fx:id="petInfo" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+    <TextField fx:id="petInfo" id="petInfo" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
     <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="5">
-        <Button onAction="#handleAddPetAction" text="Add" />
+        <Button onAction="#handleAddPetAction" id="addButton" text="Add" />
     </HBox>
     <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="2" GridPane.rowIndex="5">
-    <Button onAction="#cancelAddPet" text="Cancel" />
+    <Button onAction="#cancelAddPet" id="cancelButton" text="Cancel" />
     </HBox>
 
     <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="6">
-    <Text fx:id="AddStatus" />
+    <Text fx:id="AddStatus" id="addMessage" />
     </HBox>
    <columnConstraints>
       <ColumnConstraints />

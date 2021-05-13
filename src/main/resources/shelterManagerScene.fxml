@@ -56,7 +56,7 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                      <children>
-                        <Button fx:id="addPetButton" layoutX="98.0" layoutY="15.0" onAction="#openAddPetPage" text="Add pet" />
+                        <Button fx:id="addPetButton" id="addPet" layoutX="98.0" layoutY="15.0" onAction="#openAddPetPage" text="Add pet" />
                         <Button fx:id="removePetButton" layoutX="170.0" layoutY="15.0" onAction="#handleRemovePetAction" text="Remove pet" />
                      </children></AnchorPane>
                     </children>

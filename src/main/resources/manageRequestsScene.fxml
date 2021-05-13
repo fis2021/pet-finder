@@ -52,7 +52,7 @@
                                         <Font name="Tahoma Bold" size="36.0" />
                                     </font>
                                 </Label>
-                        <Button fx:id="managePetsButton" defaultButton="true" layoutX="557.0" layoutY="3.0" mnemonicParsing="false" onAction="#handleManagePetsAction" prefHeight="50.0" prefWidth="165.0" text="Manage Pets">
+                        <Button fx:id="managePetsButton" id="managePets" defaultButton="true" layoutX="557.0" layoutY="3.0" mnemonicParsing="false" onAction="#handleManagePetsAction" prefHeight="50.0" prefWidth="165.0" text="Manage Pets">
                            <font>
                               <Font name="Tahoma Bold" size="13.0" />
                            </font>
