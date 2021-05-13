@@ -46,7 +46,7 @@
                     <children>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                             <children>
-                                <Label layoutX="14.0" layoutY="5.0" prefHeight="46.0" prefWidth="544.0" text="Edit announcement">
+                                <Label fx:id="title" layoutX="14.0" layoutY="5.0" prefHeight="46.0" prefWidth="699.0" text="Announcement">
                                     <font>
                                         <Font name="Tahoma Bold" size="36.0" />
                                     </font>
@@ -99,6 +99,11 @@
                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="My announcements" />
                             </graphic>
                         </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#redirectToMyRequests">
+                     <graphic>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="My requests" />
+                     </graphic>
+                  </MenuItem>
                     </items>
                     <graphic>
                         <ImageView fx:id="profilePicture" fitHeight="29.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" />
