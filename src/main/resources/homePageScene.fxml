@@ -43,7 +43,7 @@
                               <Font name="Tahoma Bold" size="36.0" />
                            </font>
                         </Label>
-                        <Button defaultButton="true" layoutX="456.0" layoutY="9.0" mnemonicParsing="false" onAction="#redirectToAddAnnouncement" prefHeight="38.0" prefWidth="171.0" style="-fx-background-color: #fce6b1; -fx-border-color: #000000;" text="Add announcement">
+                        <Button defaultButton="true" id="addAnnouncement" layoutX="456.0" layoutY="9.0" mnemonicParsing="false" onAction="#redirectToAddAnnouncement" prefHeight="38.0" prefWidth="171.0" style="-fx-background-color: #fce6b1; -fx-border-color: #000000;" text="Add announcement">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="14.0" />
                            </font>
@@ -83,14 +83,14 @@
       </GridPane>
       <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" style="-fx-background-color: #94de92;" translateX="1.0" translateZ="1.0" GridPane.vgrow="NEVER">
          <children>
-            <Button layoutX="725.0" layoutY="7.0" mnemonicParsing="false" onAction="#handleSignOutAction" prefHeight="37.0" prefWidth="64.0" text="Sign-Out" translateX="1.0" translateY="1.0" translateZ="1.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="10.0" />
+            <Button id="signOut" layoutX="725.0" layoutY="7.0" mnemonicParsing="false" onAction="#handleSignOutAction" prefHeight="37.0" prefWidth="64.0" text="Sign-Out" translateX="1.0" translateY="1.0" translateZ="1.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="10.0" />
             <MenuButton fx:id="menu" layoutX="656.0" layoutY="7.0" mnemonicParsing="false" translateX="1.0" translateY="1.0" translateZ="1.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="10.0">
               <items>
                 <MenuItem mnemonicParsing="false">
                      <graphic>
                         <Text fx:id="AccountStatus" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
                      </graphic></MenuItem>
-                  <MenuItem mnemonicParsing="false" onAction="#redirectToMyProfile">
+                  <MenuItem mnemonicParsing="false"  onAction="#redirectToMyProfile">
                      <graphic>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="View Profile" />
                      </graphic></MenuItem>
@@ -109,7 +109,7 @@
                   <ImageView fx:id="profilePicture" fitHeight="29.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" />
                </graphic>
             </MenuButton>
-            <Button defaultButton="true" layoutX="10.0" layoutY="9.0" mnemonicParsing="false" onAction="#redirectToHomePage" prefHeight="38.0" prefWidth="64.0" style="-fx-background-color: #fce6b1; -fx-border-color: #000000;" text="Home" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
+            <Button defaultButton="true" id="home" layoutX="10.0" layoutY="9.0" mnemonicParsing="false" onAction="#redirectToHomePage" prefHeight="38.0" prefWidth="64.0" style="-fx-background-color: #fce6b1; -fx-border-color: #000000;" text="Home" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
                <font>
                   <Font name="Arial Rounded MT Bold" size="14.0" />
                </font>

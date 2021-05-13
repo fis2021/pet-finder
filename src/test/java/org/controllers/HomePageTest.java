@@ -36,20 +36,74 @@ class HomePageTest {
 
     @Start
     void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("homePageScene.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("login.fxml"));
         primaryStage.setTitle("HomePage");
         primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.show();
     }
 
     @Test
+    void testAddAnnouncement(FxRobot robot){
+        robot.doubleClickOn("#username");
+        robot.write("Bianca");
+        robot.doubleClickOn("#password");
+        robot.write("Parola123!");
+        robot.clickOn("#loginButton");
+        robot.clickOn("#addAnnouncement");
+    }
+
+    /*@Test
+    void testSignOut(FxRobot robot){
+        robot.doubleClickOn("#username");
+        robot.write("Bianca");
+        robot.doubleClickOn("#password");
+        robot.write("Parola123!");
+        robot.clickOn("#loginButton");
+        robot.clickOn("#signOut");
+    }*/
+
+    @Test
+    void homeBarMethods(FxRobot robot){
+        robot.doubleClickOn("#username");
+        robot.write("Bianca");
+        robot.doubleClickOn("#password");
+        robot.write("Parola123!");
+        robot.clickOn("#loginButton");
+        robot.clickOn("#home");
+    }
+
+
+    @Test
     void testChooseAnnouncement(FxRobot robot) {
+        robot.doubleClickOn("#username");
+        robot.write("Bianca");
+        robot.doubleClickOn("#password");
+        robot.write("Parola123!");
+        robot.clickOn("#loginButton");
+        robot.clickOn("#category");
+        robot.dropBy(0,20);
+        robot.clickOn();
+        robot.clickOn("#petType");
+        robot.dropBy(-40,20);
+        robot.clickOn();
+        robot.clickOn("#category");
+        robot.dropBy(0,20);
+        robot.clickOn();
+        robot.clickOn("#petType");
+        robot.dropBy(-40,20);
+        robot.clickOn();
         robot.clickOn("#category");
         robot.dropBy(0,40);
-        robot.rightClickOn();
+        robot.clickOn();
         robot.clickOn("#petType");
-        robot.dropBy(-40,80);
-        robot.rightClickOn();
+        robot.dropBy(-40,40);
+        robot.clickOn();
+        robot.clickOn("#category");
+        robot.dropBy(0,-20);
+        robot.clickOn();
+        robot.clickOn("#petType");
+        robot.dropBy(-40,-20);
+        robot.clickOn();
         robot.dropBy(-100,150);
         robot.doubleClickOn();
     }
