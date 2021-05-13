@@ -95,7 +95,7 @@
                                 <Text fx:id="AccountStatus" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
                             </graphic>
                         </MenuItem>
-                        <MenuItem mnemonicParsing="false">
+                        <MenuItem mnemonicParsing="false" onAction="#redirectToMyProfile">
                             <graphic>
                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="My profile" />
                             </graphic>
