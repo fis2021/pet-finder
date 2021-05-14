@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.testfx.assertions.api.Assertions.assertThat;
 
 @ExtendWith(ApplicationExtension.class)
-class HomePageTest {
+class ManagePetPageTest {
     @BeforeEach
     void setUp() throws Exception {
         FileSystemService.APPLICATION_FOLDER = ".testPetfinder";
@@ -39,9 +39,9 @@ class HomePageTest {
     }
 
     @Start
-    void start(Stage primaryStage) throws Exception{
+    void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("login.fxml"));
-        primaryStage.setTitle("HomePage");
+        primaryStage.setTitle("Login");
         primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.show();
     }
@@ -109,64 +109,66 @@ class HomePageTest {
     void login(FxRobot robot){
         populateDatabase();
         robot.clickOn("#username");
-        robot.write("crtUsername");
+        robot.write("shelter");
         robot.clickOn("#password");
-        robot.write("crtP@ssword1");
+        robot.write("Parola123!");
         robot.clickOn("#loginButton");
     }
 
     @Test
-    void testAddAnnouncement(FxRobot robot){
+    void cancelAddPet(FxRobot robot) {
         login(robot);
-        robot.clickOn("#addAnnouncement");
+        robot.clickOn("#managePets");
+        robot.clickOn("#addPet");
+        robot.clickOn("#cancelButton");
     }
 
 
     @Test
-    void homeBarMethods(FxRobot robot){
+    void testAddRemovePet(FxRobot robot) {
         login(robot);
-        robot.clickOn("#home");
-        robot.clickOn("#menuButton");
-        robot.clickOn("#myProfile");
-        robot.clickOn("#home");
-        robot.clickOn("#menuButton");
-        robot.clickOn("#viewRequests");
-        robot.clickOn("#home");
-        robot.clickOn("#menuButton");
-        robot.clickOn("#viewAnnouncements");
+        robot.clickOn("#managePets");
+        robot.clickOn("#addPet");
+        robot.clickOn("#addButton");
+        assertThat(robot.lookup("#addMessage").queryText()).hasText("Name and type are required!");
+        robot.clickOn("#petName");
+        robot.write("fifi");
+        robot.clickOn("#petType");
+        robot.dropBy(-20,40);
+        robot.clickOn();
+        robot.clickOn("#petInfo");
+        robot.write("cute");
+        robot.clickOn("#photo");
+        robot.dropBy(100,-100);
+        robot.clickOn();
+        robot.clickOn("#clearPhoto");
+        robot.clickOn("#addButton");
+        robot.dropBy(-150,-150);
+        robot.clickOn();
+        robot.clickOn("#removePet");
+    }
+
+    @Test
+    void testRedirectHome(FxRobot robot){
+        login(robot);
+        robot.clickOn("#managePets");
         robot.clickOn("#home");
     }
 
+    @Test
+    void testRedirectProfile(FxRobot robot){
+        login(robot);
+        robot.clickOn("#managePets");
+        robot.clickOn("#profilePicture");
+        robot.clickOn("#profile");
+    }
 
     @Test
-    void testChooseAnnouncement(FxRobot robot) {
+    void testRedirectRequests(FxRobot robot){
         login(robot);
-        robot.clickOn("#category");
-        robot.dropBy(0,20);
-        robot.clickOn();
-        robot.clickOn("#petType");
-        robot.dropBy(-40,20);
-        robot.clickOn();
-        robot.clickOn("#category");
-        robot.dropBy(0,20);
-        robot.clickOn();
-        robot.clickOn("#petType");
-        robot.dropBy(-40,20);
-        robot.clickOn();
-        robot.clickOn("#category");
-        robot.dropBy(0,40);
-        robot.clickOn();
-        robot.clickOn("#petType");
-        robot.dropBy(-40,40);
-        robot.clickOn();
-        robot.clickOn("#category");
-        robot.dropBy(0,-20);
-        robot.clickOn();
-        robot.clickOn("#petType");
-        robot.dropBy(-40,-20);
-        robot.clickOn();
-        robot.dropBy(-100,150);
-        robot.doubleClickOn();
+        robot.clickOn("#managePets");
+        robot.clickOn("#profilePicture");
+        robot.clickOn("#requests");
     }
 
 }
