@@ -17,12 +17,12 @@ public class FileSystemService {
     }
 
     public static void initDirectory() {
-        System.out.print("FILE ");
+        System.out.print("\nFILE ");
         System.out.print("SYSTEM ");
         System.out.print("SERVICE");
         System.out.print(" - ");
         System.out.print("Initialising ");
-        System.out.print(" Directory");
+        System.out.print(" Directory\n");
         Path applicationHomePath = getApplicationHomeFolder();
         if (!Files.exists(applicationHomePath))
             applicationHomePath.toFile().mkdirs();

@@ -128,21 +128,6 @@ public class UserController extends Controller {
         newPhoto.setImage(newProfile);
     }
 
-    @FXML
-    public void handleSignOutAction(ActionEvent event) {
-        try {
-            Node node = (Node) event.getSource();
-            Stage currentStage = (Stage) node.getScene().getWindow();
-
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("login.fxml"));
-            currentStage.setTitle("Login");
-            currentStage.setScene(new Scene(root, 800, 600));
-            currentStage.show();
-        } catch (IOException e) {
-            System.out.println(e);
-        }
-    }
-
     public void setUser(User user) throws MalformedURLException {
         this.user = user;
         AccountStatus.setText("Logged-in as " + user.getUsername());

@@ -10,19 +10,18 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.model.Announcement;
-import org.model.Pet;
-import org.model.Request;
-import org.model.User;
+import org.model.*;
 import org.services.*;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
+
 import java.io.IOException;
 
-@ExtendWith(ApplicationExtension.class)
-class RequestControllerTest {
+import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(ApplicationExtension.class)
+class UserControllerTest {
     private void populateDatabase(){
         User user1 = new User("user1", "password1", "Individual", "0722111111");
         User user2 = new User("user2", "password2", "Individual", "0722111112");
@@ -109,8 +108,6 @@ class RequestControllerTest {
         System.out.println("After each");
     }
 
-
-
     @Start
     void start(Stage primaryStage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("login.fxml"));
@@ -129,81 +126,28 @@ class RequestControllerTest {
     }
 
     @Test
-    void testSendRequest(FxRobot robot){
-        loginUser(robot);
-        robot.clickOn("#filterLabel");
-        robot.dropBy(20, 70);
-        robot.clickOn();
-        robot.clickOn("#triggerRequest");
-        robot.clickOn("#triggerRequest");
-        robot.clickOn("#triggerRequest");
-        robot.clickOn("#requestMessage");
-        robot.write("something");
-        robot.clickOn("#sendButton");
-    }
-
-    @Test
-    void redirectToViewAnnouncement(FxRobot robot) {
+    void testUpdateUserAccount(FxRobot robot) throws InterruptedException {
         loginUser(robot);
         robot.clickOn("#menuButton");
-        robot.clickOn("#viewRequests");
-        robot.clickOn("#viewSent");
-        robot.clickOn("#viewClosedSent");
-        robot.clickOn("#home");
-        robot.clickOn("#menuButton");
-        robot.clickOn("#viewRequests");
-        robot.clickOn("#viewClosed");
-        robot.clickOn("#home");
-        robot.clickOn("#menuButton");
-        robot.clickOn("#viewRequests");
-        robot.clickOn("#viewSent");
-        robot.clickOn("#outboxText");
-        robot.dropBy(0,65);
-
+        robot.clickOn("#myProfile");
+        robot.clickOn("#toggleEdit");
+        robot.clickOn("#country");
+        robot.write("Romania");
+        robot.clickOn("#region");
+        robot.write("Timis");
+        robot.clickOn("#town");
+        robot.write("Giarmata-Vii");
+        robot.clickOn("#street");
+        robot.write("Str. Macesului, 20");
+        robot.clickOn("#updateButton");
+        robot.dropBy(0,-205);
         robot.clickOn();
-        robot.clickOn("#viewAnnouncement");
-    }
-
-    @Test
-    void acceptAdoptionRequest(FxRobot robot) {
-        loginUser(robot);
-        robot.clickOn("#menuButton");
-        robot.clickOn("#viewRequests");
-        robot.dropBy(0,65);
-        robot.clickOn();
-        robot.clickOn("#acceptRequestButton");
-    }
-
-    @Test
-    void declineAdoptionRequest(FxRobot robot) {
-        loginUser(robot);
-        robot.clickOn("#menuButton");
-        robot.clickOn("#viewRequests");
-        robot.dropBy(0,65);
-        robot.clickOn();
-        robot.clickOn("#declineRequestButton");
-        robot.dropBy(-95,-50);
-        robot.clickOn();
-    }
-
-    @Test
-    void closeRequest(FxRobot robot) {
-        loginUser(robot);
-        robot.clickOn("#menuButton");
-        robot.clickOn("#viewRequests");
-        robot.dropBy(0,65);
-        robot.clickOn();
-        robot.clickOn("#closeRequestButton");
-    }
-
-    @Test
-    void handleManagePetsAction(FxRobot robot) {
-        populateDatabase();
-        robot.doubleClickOn("#username");
-        robot.write("shelterUser");
-        robot.doubleClickOn("#password");
         robot.write("crtP@ssword1");
-        robot.clickOn("#loginButton");
-        robot.clickOn("#managePets");
+        robot.dropBy(50,40);
+        robot.clickOn();
+        robot.dropBy(-20,-20);
+        robot.clickOn();
+        robot.clickOn("#menuButton");
+        robot.clickOn("#myProfile");
     }
 }
