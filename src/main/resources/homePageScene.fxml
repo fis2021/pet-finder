@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<GridPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.controllers.HomePageController">
+<GridPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.controllers.HomePageController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -43,7 +53,7 @@
                               <Font name="Tahoma Bold" size="36.0" />
                            </font>
                         </Label>
-                        <Button defaultButton="true" id="addAnnouncement" layoutX="456.0" layoutY="9.0" mnemonicParsing="false" onAction="#redirectToAddAnnouncement" prefHeight="38.0" prefWidth="171.0" style="-fx-background-color: #fce6b1; -fx-border-color: #000000;" text="Add announcement">
+                        <Button id="addAnnouncement" defaultButton="true" layoutX="456.0" layoutY="9.0" mnemonicParsing="false" onAction="#redirectToAddAnnouncement" prefHeight="38.0" prefWidth="171.0" style="-fx-background-color: #fce6b1; -fx-border-color: #000000;" text="Add announcement">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="14.0" />
                            </font>
@@ -54,7 +64,7 @@
                      <children>
                         <ChoiceBox id="category" fx:id="category" layoutX="192.0" layoutY="18.0" onAction="#updateAnnouncementList" prefWidth="150.0" />
                         <ChoiceBox id="petType" fx:id="petType" layoutX="367.0" layoutY="18.0" onAction="#updateAnnouncementList" prefWidth="150.0" />
-                        <Label layoutX="14.0" layoutY="8.0" prefHeight="46.0" prefWidth="171.0" text="Filter announcements by:">
+                        <Label id="filterLabel" layoutX="14.0" layoutY="8.0" prefHeight="46.0" prefWidth="171.0" text="Filter announcements by:">
                            <font>
                               <Font name="Tahoma Bold" size="12.0" />
                            </font>
@@ -83,8 +93,8 @@
       </GridPane>
       <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" style="-fx-background-color: #94de92;" translateX="1.0" translateZ="1.0" GridPane.vgrow="NEVER">
          <children>
-            <Button id="signOut" layoutX="725.0" layoutY="7.0" mnemonicParsing="false" onAction="#handleSignOutAction" prefHeight="37.0" prefWidth="64.0" text="Sign-Out" translateX="1.0" translateY="1.0" translateZ="1.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="10.0" />
-            <MenuButton fx:id="menu" layoutX="656.0" layoutY="7.0" mnemonicParsing="false" translateX="1.0" translateY="1.0" translateZ="1.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="10.0">
+            <Button id="signOut" defaultButton="true" layoutX="725.0" layoutY="7.0" mnemonicParsing="false" onAction="#handleSignOutAction" prefHeight="37.0" prefWidth="64.0" text="Sign-Out" translateX="1.0" translateY="1.0" translateZ="1.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="10.0" />
+            <MenuButton id="menu" fx:id="menu" layoutX="656.0" layoutY="7.0" mnemonicParsing="false" translateX="1.0" translateY="1.0" translateZ="1.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="10.0">
               <items>
                 <MenuItem mnemonicParsing="false">
                      <graphic>
@@ -109,7 +119,7 @@
                   <ImageView fx:id="profilePicture" id="menuButton" fitHeight="29.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" />
                </graphic>
             </MenuButton>
-            <Button defaultButton="true" id="home" layoutX="10.0" layoutY="9.0" mnemonicParsing="false" onAction="#redirectToHomePage" prefHeight="38.0" prefWidth="64.0" style="-fx-background-color: #fce6b1; -fx-border-color: #000000;" text="Home" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
+            <Button id="home" defaultButton="true" layoutX="10.0" layoutY="9.0" mnemonicParsing="false" onAction="#redirectToHomePage" prefHeight="38.0" prefWidth="64.0" style="-fx-background-color: #fce6b1; -fx-border-color: #000000;" text="Home" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
                <font>
                   <Font name="Arial Rounded MT Bold" size="14.0" />
                </font>

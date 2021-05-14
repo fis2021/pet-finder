@@ -48,9 +48,9 @@
                   </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                      <children>
-                        <TextField fx:id="requestMessage" layoutX="27.0" layoutY="34.0" prefHeight="57.0" prefWidth="368.0" visible="false" />
+                        <TextField id="requestMessage" fx:id="requestMessage" layoutX="27.0" layoutY="34.0" prefHeight="57.0" prefWidth="368.0" visible="false" />
                         <Label fx:id="requestMessageLabel" layoutX="27.0" layoutY="14.0" prefHeight="17.0" prefWidth="303.0" text="Request message" visible="false" />
-                        <Button fx:id="sendButton" layoutX="410.0" layoutY="21.0" mnemonicParsing="false" onAction="#handleRequestAction" prefHeight="38.0" prefWidth="150.0" text="Send" visible="false">
+                        <Button id="sendButton" fx:id="sendButton" layoutX="410.0" layoutY="21.0" mnemonicParsing="false" onAction="#handleRequestAction" prefHeight="38.0" prefWidth="150.0" text="Send" visible="false">
                            <font>
                               <Font size="36.0" />
                            </font>
@@ -79,7 +79,7 @@
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
-                              <Button fx:id="requestButton" layoutX="75.0" layoutY="10.0" mnemonicParsing="false" onAction="#toggleViewTextFields" prefHeight="25.0" prefWidth="167.0" text="Send request" />
+                              <Button id="triggerRequest" fx:id="requestButton" layoutX="75.0" layoutY="10.0" mnemonicParsing="false" onAction="#toggleViewTextFields" prefHeight="25.0" prefWidth="167.0" text="Send request" />
                            </children>
                         </AnchorPane>
                     </items>

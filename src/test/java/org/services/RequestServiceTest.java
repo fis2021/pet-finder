@@ -2,6 +2,7 @@ package org.services;
 
 import org.apache.commons.io.FileUtils;
 import org.dizitart.no2.objects.ObjectRepository;
+import org.exceptions.UsernameAlreadyExistsException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,7 @@ import org.model.Announcement;
 import org.model.Pet;
 import org.model.Request;
 import org.model.User;
+import org.testfx.framework.junit5.Start;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -159,8 +161,8 @@ class RequestServiceTest {
         RequestService.updateRequest(request1);
         RequestService.updateRequest(request2);
 
-        assert RequestService.requestExistsAndIsOpen(request1.getSender(),request1.getReceiver(), request1.getAnnouncement());
-        assert !RequestService.requestExistsAndIsOpen(request2.getSender(),request2.getReceiver(), request2.getAnnouncement());
+        assert RequestService.requestExistsAndIsOpen(request1.getSender().getUsername(),request1.getReceiver().getUsername(), request1.getAnnouncement().getID());
+        assert !RequestService.requestExistsAndIsOpen(request2.getSender().getUsername(),request2.getReceiver().getUsername(), request2.getAnnouncement().getID());
     }
 
     @Test
@@ -169,7 +171,7 @@ class RequestServiceTest {
         List<Request> requestList = RequestService.getRequestRepository().find().toList();
         Request request1 = requestList.get(0);
 
-        assert !RequestService.canSendRequest(request1.getSender(), request1.getReceiver(), request1.getAnnouncement());
-        assert RequestService.canSendRequest(sender,receiver,announcement);
+        assert !RequestService.canSendRequest(request1.getSender().getUsername(), request1.getReceiver().getUsername(), request1.getAnnouncement().getID());
+        assert RequestService.canSendRequest(sender.getUsername(),receiver.getUsername(),announcement.getID());
     }
 }
