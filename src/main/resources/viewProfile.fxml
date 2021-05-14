@@ -55,7 +55,7 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                      <children>
-                        <Text fx:id="exceptionMessage" layoutX="14.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="514.9366683959961" />
+                        <Text id="errorMsg" fx:id="exceptionMessage" layoutX="14.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="514.9366683959961" />
                      </children></AnchorPane>
                     </children>
                 </GridPane>
@@ -79,7 +79,7 @@
                   <CheckBox id="toggleEdit" fx:id="editToggle" layoutX="500.0" layoutY="55.0" mnemonicParsing="false" text="Edit" />
                   <Button id="updateButton" fx:id="updateButton" disable="true" layoutX="293.0" layoutY="328.0" mnemonicParsing="false" onAction="#updateUserAccount" text="Update" />
                   <Label layoutX="102.0" layoutY="175.0" text="Phone:" />
-                  <TextField fx:id="newPhone" disable="true" layoutX="147.0" layoutY="171.0" />
+                  <TextField id="phone" fx:id="newPhone" disable="true" layoutX="147.0" layoutY="171.0" />
                   <Button id="clearImage" fx:id="addPhotoButton1" disable="true" layoutX="343.0" layoutY="122.0" mnemonicParsing="false" onAction="#clearImageAction" prefHeight="25.0" prefWidth="91.0" text="Clear image" />
                </children>
             </AnchorPane>

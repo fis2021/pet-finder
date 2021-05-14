@@ -5,6 +5,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.apache.commons.io.FileUtils;
+import org.exceptions.InvalidPhoneNoException;
 import org.exceptions.UsernameAlreadyExistsException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -131,6 +132,11 @@ class UserControllerTest {
         robot.clickOn("#menuButton");
         robot.clickOn("#myProfile");
         robot.clickOn("#toggleEdit");
+        robot.doubleClickOn("#phone");
+        robot.write("0763");
+        robot.clickOn("#updateButton");
+        robot.doubleClickOn("#phone");
+        robot.write("0356598776");
         robot.clickOn("#country");
         robot.write("Romania");
         robot.clickOn("#region");
@@ -141,6 +147,12 @@ class UserControllerTest {
         robot.write("Str. Macesului, 20");
         robot.clickOn("#uploadImage");
         robot.clickOn("#clearImage");
+
+        robot.clickOn("#updateButton");
+        robot.dropBy(0,-205);
+        robot.clickOn();
+        robot.dropBy(50,40);
+        robot.clickOn();
 
         robot.clickOn("#updateButton");
         robot.dropBy(0,-205);
