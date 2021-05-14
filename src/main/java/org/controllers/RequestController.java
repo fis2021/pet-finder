@@ -16,7 +16,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import org.exceptions.RequestAlreadyExistsException;
 import org.model.*;
 import org.services.AnnouncementService;
 import org.services.RequestService;
@@ -196,46 +195,32 @@ public class RequestController extends Controller{
     }
 
     @FXML
-    public void toggleViewTextFields() throws IOException {
-        try {
-            boolean requestCanBeSent = !RequestService.canSendRequest(this.user.getUsername(), this.announcement.getUser().getUsername(), this.announcement.getID());
-            boolean requestDoesNotExistAndIsOpen = !RequestService.requestExistsAndIsOpen(this.user.getUsername(), this.announcement.getUser().getUsername(), this.announcement.getID());
-            if (requestCanBeSent&&requestDoesNotExistAndIsOpen) {
-                throw new RequestAlreadyExistsException();
+    public void toggleViewTextFields(){
+        boolean opposite = !(requestMessage.isVisible());
+        if (opposite) {
+            requestButton.setText("Cancel");
+        } else {
+            switch (announcement.getCategory()) {
+                case "Adoption":
+                    requestButton.setText("Send adoption request");
+                    break;
+                case "Found":
+                    requestButton.setText("Contact finder");
+                    break;
+                case "Lost":
+                    requestButton.setText("Contact owner");
+                    break;
+                default:
+                    requestButton.setVisible(false);
+                    break;
             }
-
-            boolean opposite = !(requestMessage.isVisible());
-            if (opposite) {
-                requestButton.setText("Cancel");
-            } else {
-                switch (announcement.getCategory()) {
-                    case "Adoption":
-                        requestButton.setText("Send adoption request");
-                        break;
-                    case "Found":
-                        requestButton.setText("Contact finder");
-                        break;
-                    case "Lost":
-                        requestButton.setText("Contact owner");
-                        break;
-                    default:
-                        requestButton.setVisible(false);
-                        break;
-                }
-            }
-
-            requestMessageLabel.setVisible(opposite);
-            requestMessage.setVisible(opposite);
-            sendButton.setVisible(opposite);
-            exceptionMessage.setVisible(opposite);
-
-        }catch(RequestAlreadyExistsException e){
-            Alert a = new Alert(Alert.AlertType.INFORMATION, e.getMessage());
-            a.showAndWait();
-            redirectToMySentRequests();
-        }catch (Exception e){
-            e.printStackTrace();
         }
+
+        requestMessageLabel.setVisible(opposite);
+        requestMessage.setVisible(opposite);
+        sendButton.setVisible(opposite);
+        exceptionMessage.setVisible(opposite);
+
     }
 
     @FXML
