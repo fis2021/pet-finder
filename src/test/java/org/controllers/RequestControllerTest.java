@@ -182,7 +182,7 @@ class RequestControllerTest {
         robot.dropBy(0,65);
         robot.clickOn();
         robot.clickOn("#declineRequestButton");
-        robot.dropBy(-95,-50);
+        robot.dropBy(-95,-40);
         robot.clickOn();
     }
 
