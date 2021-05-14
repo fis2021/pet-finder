@@ -67,18 +67,18 @@ public class RequestService {
         return userReceivedRequests;
     }
 
-    public static boolean requestExistsAndIsOpen(User sender, User receiver, Announcement announcement) {
+    public static boolean requestExistsAndIsOpen(String senderUsername, String receiverUsername, String announcementID) {
         for (Request crt : requestRepository.find()) {
-            if (Objects.equals(sender, crt.getSender()) && Objects.equals(receiver, crt.getReceiver()) && Objects.equals(announcement, crt.getAnnouncement()) && Objects.equals(crt.getStatus(),"Pending")) {
+            if (Objects.equals(senderUsername, crt.getSender().getUsername()) && Objects.equals(receiverUsername, crt.getReceiver().getUsername()) && Objects.equals(announcementID, crt.getAnnouncement().getID()) && Objects.equals(crt.getStatus(),"Pending")) {
                 return true;
             }
         }
         return false;
     }
 
-    public static boolean canSendRequest(User sender, User receiver, Announcement announcement){
+    public static boolean canSendRequest(String senderUsername, String receiverUsername, String announcementID){
         for (Request crt : requestRepository.find()) {
-            if (Objects.equals(sender, crt.getSender()) && Objects.equals(receiver, crt.getReceiver()) && Objects.equals(announcement, crt.getAnnouncement())) {
+            if (Objects.equals(senderUsername, crt.getSender().getUsername()) && Objects.equals(receiverUsername, crt.getReceiver().getUsername()) && Objects.equals(announcementID, crt.getAnnouncement().getID())) {
                 return false;
             }
         }

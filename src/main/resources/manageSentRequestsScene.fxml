@@ -56,12 +56,12 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                             <children>
-                                <Label layoutX="67.0" layoutY="11.0" text="Outbox">
+                                <Label id="outboxText" layoutX="67.0" layoutY="11.0" text="Outbox">
                                     <font>
                                         <Font name="Tahoma Bold" size="27.0" />
                                     </font>
                                 </Label>
-                        <Button defaultButton="true" layoutX="616.0" layoutY="10.0" mnemonicParsing="false" onAction="#redirectToMySentClosedRequests" prefHeight="30.0" prefWidth="88.0" text="Closed">
+                        <Button id="viewClosedSent" defaultButton="true" layoutX="616.0" layoutY="10.0" mnemonicParsing="false" onAction="#redirectToMySentClosedRequests" prefHeight="30.0" prefWidth="88.0" text="Closed">
                            <font>
                               <Font name="Tahoma Bold" size="13.0" />
                            </font>

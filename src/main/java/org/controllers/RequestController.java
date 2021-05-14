@@ -107,7 +107,7 @@ public class RequestController extends Controller{
                         handleViewRequestAction(requestsTable.getSelectionModel().getSelectedItem(), event);
                     }
                     catch(Exception e){
-                        System.out.println(e);
+                        e.printStackTrace();
                     }
                 }
             });
@@ -148,7 +148,7 @@ public class RequestController extends Controller{
                     requests.add(crtRequestRow);
                 }
             }else{
-                if(crtRequestRow.getStatus().equals("Pending")==false){
+                if(!crtRequestRow.getStatus().equals("Pending")){
                     requests.add(crtRequestRow);
                 }
             }
@@ -198,7 +198,9 @@ public class RequestController extends Controller{
     @FXML
     public void toggleViewTextFields() throws IOException {
         try {
-            if (!RequestService.canSendRequest(this.user, announcement.getUser(), this.announcement) && !RequestService.requestExistsAndIsOpen(this.user, announcement.getUser(), this.announcement)) {
+            boolean requestCanBeSent = !RequestService.canSendRequest(this.user.getUsername(), this.announcement.getUser().getUsername(), this.announcement.getID());
+            boolean requestDoesNotExistAndIsOpen = !RequestService.requestExistsAndIsOpen(this.user.getUsername(), this.announcement.getUser().getUsername(), this.announcement.getID());
+            if (requestCanBeSent&&requestDoesNotExistAndIsOpen) {
                 throw new RequestAlreadyExistsException();
             }
 
@@ -283,14 +285,19 @@ public class RequestController extends Controller{
         String localUrl = file.toURI().toURL().toExternalForm();
         Image profile = new Image(localUrl, false);
         this.photo.setImage(profile);
-        if(announcement.getCategory().equals("Adoption")){
-            requestButton.setText("Send adoption request");
-        }else if(announcement.getCategory().equals("Found")){
-            requestButton.setText("Contact finder");
-        }else if(announcement.getCategory().equals("Lost")){
-            requestButton.setText("Contact owner");
-        }else{
-            requestButton.setVisible(false);
+        switch (announcement.getCategory()) {
+            case "Adoption":
+                requestButton.setText("Send adoption request");
+                break;
+            case "Found":
+                requestButton.setText("Contact finder");
+                break;
+            case "Lost":
+                requestButton.setText("Contact owner");
+                break;
+            default:
+                requestButton.setVisible(false);
+                break;
         }
 
         if(announcement.getUser().equals(user)){
@@ -324,11 +331,7 @@ public class RequestController extends Controller{
             declineRequestButton.setVisible(true);
         }
 
-        if(request.getStatus().equals("Pending")){
-            endRequestButton.setDisable(false);
-        }else{
-            endRequestButton.setDisable(true);
-        }
+        endRequestButton.setDisable(!request.getStatus().equals("Pending"));
 
         reqStatus.setText(request.getStatus());
         reqAnnouncementInfo.setText(request.getAnnouncement().getInfo());
