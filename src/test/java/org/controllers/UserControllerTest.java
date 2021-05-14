@@ -139,6 +139,18 @@ class UserControllerTest {
         robot.write("Giarmata-Vii");
         robot.clickOn("#street");
         robot.write("Str. Macesului, 20");
+        robot.clickOn("#uploadImage");
+        robot.clickOn("#clearImage");
+
+        robot.clickOn("#updateButton");
+        robot.dropBy(0,-205);
+        robot.clickOn();
+        robot.write("wrongPassword");
+        robot.dropBy(50,40);
+        robot.clickOn();
+        robot.dropBy(100,0);
+        robot.clickOn();
+
         robot.clickOn("#updateButton");
         robot.dropBy(0,-205);
         robot.clickOn();

@@ -75,11 +75,12 @@
                   <Label layoutX="352.0" layoutY="285.0" text="Street:" />
                   <TextField id="street" fx:id="newStreet" disable="true" layoutX="397.0" layoutY="281.0" />
                   <ImageView fx:id="newPhoto" fitHeight="150.0" fitWidth="162.0" layoutX="135.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button fx:id="addPhotoButton" disable="true" layoutX="341.0" layoutY="104.0" mnemonicParsing="false" onAction="#handleAddPhotoAction" text="Upload image" />
+                  <Button id="uploadImage" fx:id="addPhotoButton" disable="true" layoutX="343.0" layoutY="90.0" mnemonicParsing="false" onAction="#handleAddPhotoAction" text="Upload image" />
                   <CheckBox id="toggleEdit" fx:id="editToggle" layoutX="500.0" layoutY="55.0" mnemonicParsing="false" text="Edit" />
                   <Button id="updateButton" fx:id="updateButton" disable="true" layoutX="293.0" layoutY="328.0" mnemonicParsing="false" onAction="#updateUserAccount" text="Update" />
                   <Label layoutX="102.0" layoutY="175.0" text="Phone:" />
                   <TextField fx:id="newPhone" disable="true" layoutX="147.0" layoutY="171.0" />
+                  <Button id="clearImage" fx:id="addPhotoButton1" disable="true" layoutX="343.0" layoutY="122.0" mnemonicParsing="false" onAction="#clearImageAction" prefHeight="25.0" prefWidth="91.0" text="Clear image" />
                </children>
             </AnchorPane>
             </children>

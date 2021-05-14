@@ -128,6 +128,19 @@ public class UserController extends Controller {
         newPhoto.setImage(newProfile);
     }
 
+    @FXML
+    public void clearImageAction(ActionEvent event) throws MalformedURLException {
+        newPhotoPath = "src/main/resources/img/user.png";
+        File file = new File(newPhotoPath);
+        String localUrl = file.toURI().toURL().toExternalForm();
+        Image profile = new Image(localUrl, false);
+        newPhoto.setImage(profile);
+        newPhoto.setFitHeight(0);
+        newPhoto.setFitWidth(0);
+        newPhoto.rotateProperty();
+    }
+
+
     public void setUser(User user) throws MalformedURLException {
         this.user = user;
         AccountStatus.setText("Logged-in as " + user.getUsername());
