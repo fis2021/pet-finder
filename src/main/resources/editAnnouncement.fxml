@@ -55,26 +55,26 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                             <children>
-                                <Text fx:id="exceptionMessage" layoutX="14.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="514.9366683959961" />
+                                <Text fx:id="exceptionMessage" id="exception" layoutX="14.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="514.9366683959961" />
                             </children></AnchorPane>
                     </children>
                 </GridPane>
                 <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <children>
-                        <TextField fx:id="adInfo" disable="true" layoutX="188.0" layoutY="244.0" prefHeight="30.0" prefWidth="285.0" />
+                        <TextField fx:id="adInfo" id="adInfo" disable="true" layoutX="188.0" layoutY="244.0" prefHeight="30.0" prefWidth="285.0" />
                         <Label layoutX="12.0" layoutY="246.0" prefHeight="27.0" prefWidth="175.0" text="Announcement Info: ">
                      <font>
                         <Font size="18.0" />
                      </font></Label>
                         <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="162.0" layoutX="135.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" />
-                        <Button fx:id="addPhotoButton" disable="true" layoutX="341.0" layoutY="104.0" mnemonicParsing="false" onAction="#handleAddPhotoAction" text="Upload image" />
-                        <CheckBox fx:id="editToggle" layoutX="500.0" layoutY="55.0" mnemonicParsing="false" text="Edit" />
-                        <Button fx:id="updateButton" disable="true" layoutX="293.0" layoutY="328.0" mnemonicParsing="false" onAction="#handleEditAnnouncement" text="Update" />
+                        <Button fx:id="addPhotoButton" id="addPhoto" disable="true" layoutX="341.0" layoutY="104.0" mnemonicParsing="false" onAction="#handleAddPhotoAction" text="Upload image" />
+                        <CheckBox fx:id="editToggle" id="toggle" layoutX="500.0" layoutY="55.0" mnemonicParsing="false" text="Edit" />
+                        <Button fx:id="updateButton" id="update" disable="true" layoutX="293.0" layoutY="328.0" mnemonicParsing="false" onAction="#handleEditAnnouncement" text="Update" />
                         <Label layoutX="111.0" layoutY="177.0" prefHeight="27.0" prefWidth="75.0" text="Pet Info: ">
                      <font>
                         <Font size="18.0" />
                      </font></Label>
-                        <TextField fx:id="petInfo" disable="true" layoutX="188.0" layoutY="175.0" prefHeight="30.0" prefWidth="285.0" />
+                        <TextField fx:id="petInfo" id="petInfo" disable="true" layoutX="188.0" layoutY="175.0" prefHeight="30.0" prefWidth="285.0" />
                     </children>
                 </AnchorPane>
             </children>
