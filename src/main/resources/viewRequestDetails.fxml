@@ -44,7 +44,7 @@
                            </font>
                         </Label>
                                 <Text fx:id="reqAnnouncementInfo" layoutX="14.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="597.9366683959961" />
-                        <Button layoutX="187.0" layoutY="9.0" mnemonicParsing="false" onAction="#redirectToViewAnnouncement" text="View Announcement" />
+                        <Button id="viewAnnouncement" layoutX="187.0" layoutY="9.0" mnemonicParsing="false" onAction="#redirectToViewAnnouncement" text="View Announcement" />
                             </children>
                         </AnchorPane>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
@@ -56,7 +56,7 @@
                            </font>
                         </Label>
                         <Text fx:id="reqStatus" layoutX="14.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="461.9366683959961" />
-                        <Button fx:id="endRequestButton" layoutX="485.0" layoutY="40.0" mnemonicParsing="false" onAction="#closeRequest" prefHeight="49.0" prefWidth="111.0" style="-fx-background-color: #e6c649;" text="Close request">
+                        <Button id="closeRequestButton" fx:id="endRequestButton" layoutX="485.0" layoutY="40.0" mnemonicParsing="false" onAction="#closeRequest" prefHeight="49.0" prefWidth="111.0" style="-fx-background-color: #e6c649;" text="Close request">
                            <font>
                               <Font name="System Italic" size="15.0" />
                            </font>
@@ -86,12 +86,12 @@
                                 </AnchorPane>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                     <children>
-                              <Button fx:id="acceptRequestButton" layoutX="52.0" layoutY="17.0" mnemonicParsing="false" onAction="#acceptAdoptionRequest" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #58db7b;" text="Accept" visible="false">
+                              <Button id="acceptRequestButton" fx:id="acceptRequestButton" layoutX="52.0" layoutY="17.0" mnemonicParsing="false" onAction="#acceptAdoptionRequest" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #58db7b;" text="Accept" visible="false">
                                  <font>
                                     <Font name="System Bold Italic" size="12.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="declineRequestButton" layoutX="169.0" layoutY="17.0" mnemonicParsing="false" onAction="#declineAdoptionRequest" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #e65850;" text="Decline" visible="false" />
+                              <Button id="declineRequestButton" fx:id="declineRequestButton" layoutX="169.0" layoutY="17.0" mnemonicParsing="false" onAction="#declineAdoptionRequest" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #e65850;" text="Decline" visible="false" />
                                     </children>
                                 </AnchorPane>
                             </items>

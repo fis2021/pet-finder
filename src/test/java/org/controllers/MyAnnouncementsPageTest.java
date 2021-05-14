@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.testfx.assertions.api.Assertions.assertThat;
 
 @ExtendWith(ApplicationExtension.class)
-class HomePageTest {
+class MyAnnouncementsPageTest {
     @BeforeEach
     void setUp() throws Exception {
         FileSystemService.APPLICATION_FOLDER = ".testPetfinder";
@@ -39,7 +39,7 @@ class HomePageTest {
     }
 
     @Start
-    void start(Stage primaryStage) throws Exception{
+    void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("login.fxml"));
         primaryStage.setTitle("Login");
         primaryStage.setScene(new Scene(root, 800, 600));
@@ -116,57 +116,85 @@ class HomePageTest {
     }
 
     @Test
-    void testAddAnnouncement(FxRobot robot){
+    void redirectToProfile(FxRobot robot){
         login(robot);
-        robot.clickOn("#addAnnouncement");
-    }
-
-
-    @Test
-    void homeBarMethods(FxRobot robot){
-        login(robot);
-        robot.clickOn("#home");
-        robot.clickOn("#menuButton");
-        robot.clickOn("#myProfile");
-        robot.clickOn("#home");
-        robot.clickOn("#menuButton");
-        robot.clickOn("#viewRequests");
-        robot.clickOn("#home");
         robot.clickOn("#menuButton");
         robot.clickOn("#viewAnnouncements");
-        robot.clickOn("#home");
+        robot.clickOn("#menuButton");
+        robot.clickOn("#viewProfile");
     }
 
+    @Test
+    void redirectToRequests(FxRobot robot){
+        login(robot);
+        robot.clickOn("#menuButton");
+        robot.clickOn("#viewAnnouncements");
+        robot.clickOn("#menuButton");
+        robot.clickOn("#viewRequests");
+    }
 
     @Test
-    void testChooseAnnouncement(FxRobot robot) {
+    void testAddEditRemoveAnnouncement(FxRobot robot){
         login(robot);
-        robot.clickOn("#category");
-        robot.dropBy(0,20);
-        robot.clickOn();
+        robot.clickOn("#addAnnouncement");
+        robot.clickOn("#cancelButton");
+        robot.clickOn("#menuButton");
+        robot.clickOn("#viewAnnouncements");
+        robot.clickOn("#addAnnouncement");
+        robot.clickOn("#petName");
+        robot.write("fifi");
         robot.clickOn("#petType");
-        robot.dropBy(-40,20);
+        robot.dropBy(-20,40);
         robot.clickOn();
+        robot.clickOn("#addButton");
+        assertThat(robot.lookup("#addMessage").queryText()).hasText("Pet name, pet type and announcement category are required!");
+        robot.clickOn("#petInfo");
+        robot.write("cute");
         robot.clickOn("#category");
-        robot.dropBy(0,20);
+        robot.dropBy(-20,40);
         robot.clickOn();
-        robot.clickOn("#petType");
-        robot.dropBy(-40,20);
+        robot.clickOn("#adInfo");
+        robot.write("pls");
+        robot.clickOn("#photo");
+        robot.dropBy(100,-100);
         robot.clickOn();
-        robot.clickOn("#category");
-        robot.dropBy(0,40);
+        robot.clickOn("#clearPhoto");
+        robot.clickOn("#addButton");
+        robot.clickOn("#menuButton");
+        robot.clickOn("#viewAnnouncements");
+        robot.dropBy(-70,120);
         robot.clickOn();
-        robot.clickOn("#petType");
-        robot.dropBy(-40,40);
+        robot.clickOn("#editAnnouncement");
+        robot.clickOn("#toggle");
+        robot.doubleClickOn("#adInfo");
+        robot.write("idk");
+        robot.doubleClickOn("#petInfo");
+        robot.write("idk");
+        //robot.clickOn("#addPhoto");
+        robot.clickOn("#update");
+        robot.dropBy(0,-160);
         robot.clickOn();
-        robot.clickOn("#category");
-        robot.dropBy(0,-20);
+        robot.dropBy(110,-25);
         robot.clickOn();
-        robot.clickOn("#petType");
-        robot.dropBy(-40,-20);
+        robot.clickOn("#update");
+        robot.dropBy(80,-160);
         robot.clickOn();
-        robot.dropBy(-100,150);
-        robot.doubleClickOn();
+        robot.dropBy(40,-10);
+        robot.clickOn();
+        robot.clickOn("#update");
+        robot.dropBy(-50,-230);
+        robot.clickOn();
+        robot.write("crtP@ssword1");
+        robot.dropBy(60,70);
+        robot.clickOn();
+        robot.dropBy(40,-10);
+        robot.clickOn();
+        robot.clickOn("#menuButton");
+        robot.clickOn("#viewAnnouncements");
+        robot.dropBy(-70,120);
+        robot.clickOn();
+        robot.clickOn("#removeAnnouncement");
+        robot.clickOn("#home");
     }
 
 }

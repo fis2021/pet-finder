@@ -1,6 +1,7 @@
 package org.services;
 
 import org.apache.commons.io.FileUtils;
+import org.exceptions.InvalidUserException;
 import org.exceptions.UsernameAlreadyExistsException;
 import org.junit.jupiter.api.*;
 import org.model.User;
@@ -59,7 +60,6 @@ class UserServiceTest {
         User user = UserService.getAllUsers().get(0);
         assertThat(user).isNotNull();
         assertThat(user.getUsername()).isEqualTo(ADMIN);
-        //assertThat(user.getPassword()).isEqualTo(UserService.encodePassword(ADMIN, ADMIN));
         assertThat(user.getRole()).isEqualTo(ADMIN);
     }
 
@@ -71,5 +71,22 @@ class UserServiceTest {
             UserService.addUser(admin);
             UserService.addUser(admin);
         });
+    }
+
+    @Test
+    @DisplayName("Login")
+    void testLogin(){
+        assertThrows(InvalidUserException.class, () ->{
+           UserService.login("invalid","invalid");
+        });
+        User admin = new User(ADMIN,ADMIN,ADMIN,"");
+        try {
+            UserService.addUser(admin);
+            assertThat(UserService.login(ADMIN,ADMIN)).isNotNull();
+        } catch (UsernameAlreadyExistsException e) {
+            e.printStackTrace();
+        } catch (InvalidUserException e) {
+            e.printStackTrace();
+        }
     }
 }

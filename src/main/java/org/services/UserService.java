@@ -19,16 +19,6 @@ public class UserService {
         UserService.userRepository = userRepository;
     }
 
-    public static User findUserByUsername(String username){
-        for(User user : userRepository.find()){
-            if(Objects.equals(username,user.getUsername())){
-                return user;
-            }
-        }
-
-        return null;
-    }
-
     public static User login(String username, String password) throws InvalidUserException{
         User crt;
 
@@ -73,7 +63,6 @@ public class UserService {
 
         byte[] hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8));
 
-        // This is the way a password should be encoded when checking the credentials
         return new String(hashedPassword, StandardCharsets.UTF_8)
                 .replace("\"", ""); //to be able to save in JSON format
     }
@@ -91,5 +80,4 @@ public class UserService {
     public static List<User> getAllUsers() {
         return userRepository.find().toList();
     }
-
 }

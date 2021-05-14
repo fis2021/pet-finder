@@ -17,37 +17,37 @@
 
     <HBox GridPane.columnIndex="0" GridPane.rowIndex="1">
         <Label text="Add photo: " GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-        <Button onAction="#handleAddPhotoAction" text="Choose..." GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+        <Button onAction="#handleAddPhotoAction" id="photo" text="Choose..." GridPane.columnIndex="2" GridPane.rowIndex="1"/>
         <ImageView fx:id="imageView" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
-        <Button onAction="#clearImageAction" text="Clear" GridPane.columnIndex="4" GridPane.rowIndex="1"/>
+        <Button onAction="#clearImageAction" id="clearPhoto" text="Clear" GridPane.columnIndex="4" GridPane.rowIndex="1"/>
     </HBox>
 
     <Label text="Pet Name:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-    <TextField fx:id="petName" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+    <TextField fx:id="petName" id="petName" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
     <Label text="Pet Type:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-    <ChoiceBox fx:id="petType" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+    <ChoiceBox fx:id="petType" id="petType" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
     </ChoiceBox>
 
     <Label text="Pet Info:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
-    <TextField fx:id="petInfo" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+    <TextField fx:id="petInfo" id="petInfo" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
 
     <Label text="Announcement Category:" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
-    <ChoiceBox fx:id="category" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+    <ChoiceBox fx:id="category" id="category" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
     </ChoiceBox>
 
     <Label text="Announcement Info:" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
-    <TextField fx:id="adInfo" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+    <TextField fx:id="adInfo" id="adInfo" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
 
     <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="7">
-        <Button onAction="#handleAddAnnouncementAction" text="Add"/>
+        <Button onAction="#handleAddAnnouncementAction" id="addButton" text="Add"/>
     </HBox>
     <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="2" GridPane.rowIndex="7">
-        <Button onAction="#cancelAddAnnouncement" text="Cancel"/>
+        <Button onAction="#cancelAddAnnouncement" id="cancelButton" text="Cancel"/>
     </HBox>
 
     <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="8">
-        <Text fx:id="AddStatus"/>
+        <Text fx:id="AddStatus" id="addMessage" />
     </HBox>
 
     <HBox alignment="top_right" spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="9">

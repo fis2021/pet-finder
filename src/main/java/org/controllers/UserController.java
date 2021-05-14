@@ -129,19 +129,17 @@ public class UserController extends Controller {
     }
 
     @FXML
-    public void handleSignOutAction(ActionEvent event) {
-        try {
-            Node node = (Node) event.getSource();
-            Stage currentStage = (Stage) node.getScene().getWindow();
-
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("login.fxml"));
-            currentStage.setTitle("Login");
-            currentStage.setScene(new Scene(root, 800, 600));
-            currentStage.show();
-        } catch (IOException e) {
-            System.out.println(e);
-        }
+    public void clearImageAction(ActionEvent event) throws MalformedURLException {
+        newPhotoPath = "src/main/resources/img/user.png";
+        File file = new File(newPhotoPath);
+        String localUrl = file.toURI().toURL().toExternalForm();
+        Image profile = new Image(localUrl, false);
+        newPhoto.setImage(profile);
+        newPhoto.setFitHeight(0);
+        newPhoto.setFitWidth(0);
+        newPhoto.rotateProperty();
     }
+
 
     public void setUser(User user) throws MalformedURLException {
         this.user = user;

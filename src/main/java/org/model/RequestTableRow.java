@@ -17,53 +17,22 @@ public class RequestTableRow {
         this.date = date;
         this.announcementInfo = announcementInfo;
     }
-
-
     public String getID() {
         return ID;
     }
-
-    public void setID(String ID) {
-        this.ID = ID;
-    }
-
     public String getStatus() {
         return status;
     }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public String getCategory() {
         return category;
     }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
     public String getSender() {
         return sender;
     }
-
-    public void setSender(String sender) {
-        this.sender = sender;
-    }
-
     public String getDate() {
         return date;
     }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
     public String getAnnouncementInfo() {
         return announcementInfo;
-    }
-
-    public void setAnnouncementInfo(String announcementInfo) {
-        this.announcementInfo = announcementInfo;
     }
 }

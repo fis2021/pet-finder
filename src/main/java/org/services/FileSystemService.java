@@ -6,9 +6,7 @@ import java.nio.file.Paths;
 
 public class FileSystemService {
     public static String APPLICATION_FOLDER = ".petfinder";
-    //private static final String USER_FOLDER = System.getProperty("user.home");
     private static final String USER_FOLDER = "src/database";
-    //public static final Path APPLICATION_HOME_PATH = Paths.get(USER_FOLDER, APPLICATION_FOLDER);
 
     public static Path getPathToFile(String... path) {
         return getApplicationHomeFolder().resolve(Paths.get(".", path));
@@ -19,12 +17,14 @@ public class FileSystemService {
     }
 
     public static void initDirectory() {
+        System.out.print("\nFILE ");
+        System.out.print("SYSTEM ");
+        System.out.print("SERVICE");
+        System.out.print(" - ");
+        System.out.print("Initialising ");
+        System.out.print(" Directory\n");
         Path applicationHomePath = getApplicationHomeFolder();
         if (!Files.exists(applicationHomePath))
             applicationHomePath.toFile().mkdirs();
     }
-
-    // public static Path getPathToFile(String... path) {
-        //return APPLICATION_HOME_PATH.resolve(Paths.get(".", path));
-    //}
 }

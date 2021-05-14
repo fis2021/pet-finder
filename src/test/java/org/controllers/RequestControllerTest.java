@@ -18,33 +18,10 @@ import org.services.*;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.testfx.assertions.api.Assertions.assertThat;
+import java.io.IOException;
 
 @ExtendWith(ApplicationExtension.class)
-class HomePageTest {
-    @BeforeEach
-    void setUp() throws Exception {
-        FileSystemService.APPLICATION_FOLDER = ".testPetfinder";
-        FileSystemService.initDirectory();
-        FileUtils.cleanDirectory(FileSystemService.getApplicationHomeFolder().toFile());
-        DatabaseService.initDatabase();
-    }
-
-    @AfterEach
-    void tearDown() {
-        DatabaseService.getDatabase().close();
-        System.out.println("After each");
-    }
-
-    @Start
-    void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("login.fxml"));
-        primaryStage.setTitle("Login");
-        primaryStage.setScene(new Scene(root, 800, 600));
-        primaryStage.show();
-    }
+class RequestControllerTest {
 
     private void populateDatabase(){
         User user1 = new User("user1", "password1", "Individual", "0722111111");
@@ -59,6 +36,7 @@ class HomePageTest {
         Announcement announcement2 = new Announcement(pet2, user2, "Found");
         Announcement announcement3 = new Announcement(pet3, user3, "Adoption");
         Announcement announcement4 = new Announcement(pet4, user4, "Adoption");
+
         Request req1 = new Request(user1, user2, announcement2);
         Request req2 = new Request(user1, user3, announcement3);
         Request req3 = new Request(user1, user4, announcement4);
@@ -71,13 +49,20 @@ class HomePageTest {
         Request req10 = new Request(user4, user1, announcement1);
         Request req11 = new Request(user4, user2, announcement2);
         Request req12 = new Request(user4, user3, announcement3);
+
         String crtUsername = "crtUsername";
         String crtPassword = UserService.encodePassword(crtUsername, "crtP@ssword1");
         User crtUser = new User(crtUsername,crtPassword,"Individual","0787665511");
 
-        String shelterUsername = "shelter";
-        String crtPass = UserService.encodePassword(shelterUsername, "Parola123!");
-        User crtShelter = new User(shelterUsername,crtPass,"Shelter","0787665511");
+        String shPassword = UserService.encodePassword("shelterUser", "crtP@ssword1");
+
+        User crtShelter = new User("shelterUser", shPassword, "Shelter", "0799666555");
+
+        Pet crtPet = new Pet("userPet", "Cat");
+        Announcement crtAnnouncement = new Announcement(crtPet,crtUser,"Adoption");
+        Request reqTest = new Request(crtUser, user3, announcement3);
+        Request reqApprovalTest = new Request(user3, crtUser, crtAnnouncement);
+
         try {
             UserService.addUser(user1);
             UserService.addUser(user2);
@@ -85,10 +70,12 @@ class HomePageTest {
             UserService.addUser(user4);
             UserService.addUser(crtUser);
             UserService.addUser(crtShelter);
+
             AnnouncementService.addAnnouncement(announcement1);
             AnnouncementService.addAnnouncement(announcement2);
             AnnouncementService.addAnnouncement(announcement3);
             AnnouncementService.addAnnouncement(announcement4);
+
             RequestService.sendRequest(req1);
             RequestService.sendRequest(req2);
             RequestService.sendRequest(req3);
@@ -101,72 +88,122 @@ class HomePageTest {
             RequestService.sendRequest(req10);
             RequestService.sendRequest(req11);
             RequestService.sendRequest(req12);
+            RequestService.sendRequest(reqTest);
+            RequestService.sendRequest(reqApprovalTest);
         } catch (UsernameAlreadyExistsException e) {
             e.printStackTrace();
         }
     }
 
-    void login(FxRobot robot){
+    @BeforeEach
+    void setUp() throws Exception {
+        FileSystemService.APPLICATION_FOLDER = ".testPetfinder";
+        FileSystemService.initDirectory();
+        FileUtils.cleanDirectory(FileSystemService.getApplicationHomeFolder().toFile());
+        DatabaseService.initDatabase();
+    }
+
+    @AfterEach
+    void tearDown() {
+        DatabaseService.getDatabase().close();
+        System.out.println("After each");
+    }
+
+
+
+    @Start
+    void start(Stage primaryStage) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("login.fxml"));
+        primaryStage.setTitle("Login");
+        primaryStage.setScene(new Scene(root, 800, 600));
+        primaryStage.show();
+    }
+
+    public void loginUser(FxRobot robot){
         populateDatabase();
-        robot.clickOn("#username");
+        robot.doubleClickOn("#username");
         robot.write("crtUsername");
-        robot.clickOn("#password");
+        robot.doubleClickOn("#password");
         robot.write("crtP@ssword1");
         robot.clickOn("#loginButton");
     }
 
     @Test
-    void testAddAnnouncement(FxRobot robot){
-        login(robot);
-        robot.clickOn("#addAnnouncement");
+    void testSendRequest(FxRobot robot){
+        loginUser(robot);
+        robot.clickOn("#filterLabel");
+        robot.dropBy(20, 70);
+        robot.clickOn();
+        robot.clickOn("#triggerRequest");
+        robot.clickOn("#triggerRequest");
+        robot.clickOn("#triggerRequest");
+        robot.clickOn("#requestMessage");
+        robot.write("something");
+        robot.clickOn("#sendButton");
     }
 
-
     @Test
-    void homeBarMethods(FxRobot robot){
-        login(robot);
-        robot.clickOn("#home");
+    void redirectToViewAnnouncement(FxRobot robot) {
+        loginUser(robot);
         robot.clickOn("#menuButton");
-        robot.clickOn("#myProfile");
+        robot.clickOn("#viewRequests");
+        robot.clickOn("#viewSent");
+        robot.clickOn("#viewClosedSent");
         robot.clickOn("#home");
         robot.clickOn("#menuButton");
         robot.clickOn("#viewRequests");
+        robot.clickOn("#viewClosed");
         robot.clickOn("#home");
         robot.clickOn("#menuButton");
-        robot.clickOn("#viewAnnouncements");
-        robot.clickOn("#home");
-    }
+        robot.clickOn("#viewRequests");
+        robot.clickOn("#viewSent");
+        robot.clickOn("#outboxText");
+        robot.dropBy(0,65);
 
+        robot.clickOn();
+        robot.clickOn("#viewAnnouncement");
+    }
 
     @Test
-    void testChooseAnnouncement(FxRobot robot) {
-        login(robot);
-        robot.clickOn("#category");
-        robot.dropBy(0,20);
+    void acceptAdoptionRequest(FxRobot robot) {
+        loginUser(robot);
+        robot.clickOn("#menuButton");
+        robot.clickOn("#viewRequests");
+        robot.dropBy(0,65);
         robot.clickOn();
-        robot.clickOn("#petType");
-        robot.dropBy(-40,20);
-        robot.clickOn();
-        robot.clickOn("#category");
-        robot.dropBy(0,20);
-        robot.clickOn();
-        robot.clickOn("#petType");
-        robot.dropBy(-40,20);
-        robot.clickOn();
-        robot.clickOn("#category");
-        robot.dropBy(0,40);
-        robot.clickOn();
-        robot.clickOn("#petType");
-        robot.dropBy(-40,40);
-        robot.clickOn();
-        robot.clickOn("#category");
-        robot.dropBy(0,-20);
-        robot.clickOn();
-        robot.clickOn("#petType");
-        robot.dropBy(-40,-20);
-        robot.clickOn();
-        robot.dropBy(-100,150);
-        robot.doubleClickOn();
+        robot.clickOn("#acceptRequestButton");
     }
 
+    @Test
+    void declineAdoptionRequest(FxRobot robot) {
+        loginUser(robot);
+        robot.clickOn("#menuButton");
+        robot.clickOn("#viewRequests");
+        robot.dropBy(0,65);
+        robot.clickOn();
+        robot.clickOn("#declineRequestButton");
+        robot.dropBy(-95,-40);
+        robot.clickOn();
+    }
+
+    @Test
+    void closeRequest(FxRobot robot) {
+        loginUser(robot);
+        robot.clickOn("#menuButton");
+        robot.clickOn("#viewRequests");
+        robot.dropBy(0,65);
+        robot.clickOn();
+        robot.clickOn("#closeRequestButton");
+    }
+
+    @Test
+    void handleManagePetsAction(FxRobot robot) {
+        populateDatabase();
+        robot.doubleClickOn("#username");
+        robot.write("shelterUser");
+        robot.doubleClickOn("#password");
+        robot.write("crtP@ssword1");
+        robot.clickOn("#loginButton");
+        robot.clickOn("#managePets");
+    }
 }

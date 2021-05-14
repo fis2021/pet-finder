@@ -55,7 +55,7 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                      <children>
-                        <Text fx:id="exceptionMessage" layoutX="14.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="514.9366683959961" />
+                        <Text id="errorMsg" fx:id="exceptionMessage" layoutX="14.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="514.9366683959961" />
                      </children></AnchorPane>
                     </children>
                 </GridPane>
@@ -66,20 +66,21 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="newCountry" disable="true" layoutX="147.0" layoutY="240.0" />
+                  <TextField id="country" fx:id="newCountry" disable="true" layoutX="147.0" layoutY="240.0" />
                   <Label layoutX="93.0" layoutY="244.0" text="Country:" />
-                  <TextField fx:id="newRegion" disable="true" layoutX="397.0" layoutY="240.0" />
+                  <TextField id="region" fx:id="newRegion" disable="true" layoutX="397.0" layoutY="240.0" />
                   <Label layoutX="348.0" layoutY="244.0" text="Region:" />
                   <Label layoutX="103.0" layoutY="285.0" text="Town:" />
-                  <TextField fx:id="newTown" disable="true" layoutX="147.0" layoutY="281.0" />
+                  <TextField id="town" fx:id="newTown" disable="true" layoutX="147.0" layoutY="281.0" />
                   <Label layoutX="352.0" layoutY="285.0" text="Street:" />
-                  <TextField fx:id="newStreet" disable="true" layoutX="397.0" layoutY="281.0" />
+                  <TextField id="street" fx:id="newStreet" disable="true" layoutX="397.0" layoutY="281.0" />
                   <ImageView fx:id="newPhoto" fitHeight="150.0" fitWidth="162.0" layoutX="135.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button fx:id="addPhotoButton" disable="true" layoutX="341.0" layoutY="104.0" mnemonicParsing="false" onAction="#handleAddPhotoAction" text="Upload image" />
-                  <CheckBox fx:id="editToggle" layoutX="500.0" layoutY="55.0" mnemonicParsing="false" text="Edit" />
-                  <Button fx:id="updateButton" disable="true" layoutX="293.0" layoutY="328.0" mnemonicParsing="false" onAction="#updateUserAccount" text="Update" />
+                  <Button id="uploadImage" fx:id="addPhotoButton" disable="true" layoutX="343.0" layoutY="90.0" mnemonicParsing="false" onAction="#handleAddPhotoAction" text="Upload image" />
+                  <CheckBox id="toggleEdit" fx:id="editToggle" layoutX="500.0" layoutY="55.0" mnemonicParsing="false" text="Edit" />
+                  <Button id="updateButton" fx:id="updateButton" disable="true" layoutX="293.0" layoutY="328.0" mnemonicParsing="false" onAction="#updateUserAccount" text="Update" />
                   <Label layoutX="102.0" layoutY="175.0" text="Phone:" />
-                  <TextField fx:id="newPhone" disable="true" layoutX="147.0" layoutY="171.0" />
+                  <TextField id="phone" fx:id="newPhone" disable="true" layoutX="147.0" layoutY="171.0" />
+                  <Button id="clearImage" fx:id="addPhotoButton1" disable="true" layoutX="343.0" layoutY="122.0" mnemonicParsing="false" onAction="#clearImageAction" prefHeight="25.0" prefWidth="91.0" text="Clear image" />
                </children>
             </AnchorPane>
             </children>
@@ -109,7 +110,7 @@
                         <ImageView fx:id="profilePicture" fitHeight="29.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" />
                     </graphic>
                 </MenuButton>
-                <Button defaultButton="true" layoutX="10.0" layoutY="9.0" mnemonicParsing="false" onAction="#redirectToHomePage" prefHeight="38.0" prefWidth="64.0" style="-fx-background-color: #fce6b1; -fx-border-color: #000000;" text="Home" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
+                <Button id="home" defaultButton="true" layoutX="10.0" layoutY="9.0" mnemonicParsing="false" onAction="#redirectToHomePage" prefHeight="38.0" prefWidth="64.0" style="-fx-background-color: #fce6b1; -fx-border-color: #000000;" text="Home" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
                     <font>
                         <Font name="Arial Rounded MT Bold" size="14.0" />
                     </font>
