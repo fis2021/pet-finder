@@ -9,24 +9,21 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.exceptions.InvalidPhoneNoException;
 import org.model.*;
 import org.services.AnnouncementService;
 import org.services.RequestService;
 import org.services.UserService;
-
-import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class AnnouncementsController extends Controller{
     @FXML
@@ -75,13 +72,28 @@ public class AnnouncementsController extends Controller{
     private Label title;
 
     @FXML
+    private Button editButton;
+    @FXML
+    private Button removeButton;
+
+    @FXML
     public void initialize() {
         category.getItems().addAll("Lost", "Found", "Adoption");
         petType.getItems().addAll("Cat","Dog","Other");
-        if(announcementImage != null && announcementInfo != null){
+        if(announcementImage != null && announcementInfo != null && announcementsTable != null){
             announcementImage.setPrefWidth(100);
             announcementImage.setCellValueFactory(new PropertyValueFactory<>("imageView"));
             announcementInfo.setCellValueFactory(new PropertyValueFactory<>("info"));
+            if(editButton != null && removeButton != null){
+                enableButtons(false);
+                announcementsTable.setOnMouseClicked((MouseEvent event) -> {
+                    if(event.getButton().equals(MouseButton.PRIMARY) && announcementsTable.getSelectionModel().getSelectedItem() != null){
+                        enableButtons(true);
+                    }else{
+                        enableButtons(false);
+                    }
+                });
+            }
         }
         if(editToggle != null){
             editToggle.selectedProperty().addListener((observable, oldValue, newValue) -> toggleEditAnnouncement(editToggle.isSelected()));
@@ -94,6 +106,12 @@ public class AnnouncementsController extends Controller{
         adInfo.setDisable(!enable);
         addPhotoButton.setDisable(!enable);
         updateButton.setDisable(!enable);
+    }
+
+    @FXML
+    public void enableButtons(Boolean enable){
+        editButton.setDisable(!enable);
+        removeButton.setDisable(!enable);
     }
 
     @FXML
@@ -137,6 +155,7 @@ public class AnnouncementsController extends Controller{
         imageView.rotateProperty();
     }
 
+
     @FXML
     public void clearImageAction(ActionEvent event) throws MalformedURLException {
         imagePath = "src/main/resources/img/pet.png";
@@ -144,8 +163,6 @@ public class AnnouncementsController extends Controller{
         String localUrl = file.toURI().toURL().toExternalForm();
         Image petImg = new Image(localUrl, false);
         imageView.setImage(petImg);
-        imageView.setFitHeight(100);
-        imageView.setFitWidth(100);
         imageView.rotateProperty();
     }
 

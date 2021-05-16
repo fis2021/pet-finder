@@ -56,17 +56,17 @@
                   </AnchorPane>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                      <children>
-                        <Button defaultButton="true" id="addAnnouncement" layoutX="32.0" layoutY="7.0" mnemonicParsing="false" onAction="#redirectToAddAnnouncement" prefHeight="38.0" prefWidth="171.0" style="-fx-background-color: #fce6b1; -fx-border-color: #000000;" text="Add announcement">
+                        <Button id="addAnnouncement" defaultButton="true" layoutX="32.0" layoutY="7.0" mnemonicParsing="false" onAction="#redirectToAddAnnouncement" prefHeight="38.0" prefWidth="171.0" style="-fx-background-color: #fce6b1; -fx-border-color: #000000;" text="Add announcement">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="14.0" />
                            </font>
                         </Button>
-                        <Button defaultButton="true" id="removeAnnouncement"  layoutX="223.0" layoutY="7.0" mnemonicParsing="false" onAction="#handleRemoveAnnouncementAction" prefHeight="38.0" prefWidth="186.0" style="-fx-background-color: #ff564a; -fx-border-color: #000000;" text="Remove announcement">
+                        <Button id="removeAnnouncement" fx:id="removeButton" defaultButton="true" layoutX="223.0" layoutY="7.0" mnemonicParsing="false" onAction="#handleRemoveAnnouncementAction" prefHeight="38.0" prefWidth="186.0" style="-fx-background-color: #ff564a; -fx-border-color: #000000;" text="Remove announcement">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="14.0" />
                            </font>
                         </Button>
-                        <Button defaultButton="true" id="editAnnouncement" layoutX="430.0" layoutY="7.0" mnemonicParsing="false" onAction="#redirectToEditAnnouncement" prefHeight="38.0" prefWidth="171.0" style="-fx-background-color: #99ddff; -fx-border-color: #000000;" text="Edit announcement">
+                        <Button id="editAnnouncement" fx:id="editButton" defaultButton="true" layoutX="430.0" layoutY="7.0" mnemonicParsing="false" onAction="#redirectToEditAnnouncement" prefHeight="38.0" prefWidth="171.0" style="-fx-background-color: #99ddff; -fx-border-color: #000000;" text="Edit announcement">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="14.0" />
                            </font>
@@ -91,22 +91,22 @@
                      <graphic>
                         <Text fx:id="AccountStatus" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
                      </graphic></MenuItem>
-                  <MenuItem mnemonicParsing="false" id="viewProfile" onAction="#redirectToMyProfile">
+                  <MenuItem id="viewProfile" mnemonicParsing="false" onAction="#redirectToMyProfile">
                      <graphic>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="View Profile" />
                      </graphic>
                   </MenuItem>
-                  <MenuItem mnemonicParsing="false" id="viewRequests" onAction="#redirectToMyRequests">
+                  <MenuItem id="viewRequests" mnemonicParsing="false" onAction="#redirectToMyRequests">
                      <graphic>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="My requests" />
                      </graphic>
                   </MenuItem>
               </items>
                <graphic>
-                  <ImageView fx:id="profilePicture" id="menuButton" fitHeight="29.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView id="menuButton" fx:id="profilePicture" fitHeight="29.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" />
                </graphic>
             </MenuButton>
-            <Button defaultButton="true" id="home" layoutX="10.0" layoutY="9.0" mnemonicParsing="false" onAction="#redirectToHomePage" prefHeight="38.0" prefWidth="64.0" style="-fx-background-color: #fce6b1; -fx-border-color: #000000;" text="Home" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
+            <Button id="home" defaultButton="true" layoutX="10.0" layoutY="9.0" mnemonicParsing="false" onAction="#redirectToHomePage" prefHeight="38.0" prefWidth="64.0" style="-fx-background-color: #fce6b1; -fx-border-color: #000000;" text="Home" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
                <font>
                   <Font name="Arial Rounded MT Bold" size="14.0" />
                </font>
