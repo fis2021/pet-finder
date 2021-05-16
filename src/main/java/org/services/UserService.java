@@ -16,6 +16,7 @@ public class UserService {
     private static ObjectRepository<User> userRepository;
 
     public static void initUserRepo(ObjectRepository<User> userRepository){
+        System.out.println("INITIALISING USER REPOSITORY");
         UserService.userRepository = userRepository;
     }
 
@@ -25,6 +26,7 @@ public class UserService {
         crt = attemptLogin(username, password);
 
         if(crt == null){
+            System.out.println("\nLOGIN ATTEMPT FAILED - User does not exists or password mismatch");
             throw new InvalidUserException();
         }
 
@@ -32,6 +34,7 @@ public class UserService {
     }
 
     public static User attemptLogin(String username, String password){
+        System.out.println("\nAttempting login for user with username: " + username);
         for (User user : userRepository.find()) {
             if(Objects.equals(username, user.getUsername()) && Objects.equals(encodePassword(username, password), user.getPassword())){
                 return user;
@@ -42,8 +45,10 @@ public class UserService {
     }
 
     public static void addUser(User user) throws UsernameAlreadyExistsException {
+        System.out.println("\nCreating user with username " + user.getUsername());
         checkUserDoesNotAlreadyExist(user.getUsername());
         userRepository.insert(user);
+        System.out.println("User added successfully");
     }
 
     public static void updateUser(User user){

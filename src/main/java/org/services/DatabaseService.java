@@ -25,6 +25,7 @@ public class DatabaseService {
 
     public static void initDatabase() {
         FileSystemService.initDirectory();
+        System.out.println("\nINITIALISING DATABASE");
         database = Nitrite.builder()
                 .filePath(getPathToFile("petfinder.db").toFile())
                 .openOrCreate("test", "parola");

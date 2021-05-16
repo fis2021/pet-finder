@@ -12,15 +12,20 @@ public class RequestService {
     private static ObjectRepository<Request> requestRepository;
 
     public static void initRequestRepo(ObjectRepository<Request> requestRepository){
+        System.out.println("INITIALISING REQUEST REPOSITORY");
         RequestService.requestRepository = requestRepository;
     }
 
     public static void sendRequest(Request request)  {
+        System.out.println("\nProcessing request ID " + request.getID());
         requestRepository.insert(request);
+        System.out.println("Request added successfully");
     }
 
     public static void updateRequest(Request request){
+        System.out.println("\nUpdating request ID " + request.getID());
         requestRepository.update(request);
+        System.out.println("Request modified successfully");
     }
 
     public static void closeAllRequestsRelatedToAnnouncement(Announcement announcement){
@@ -42,7 +47,9 @@ public class RequestService {
     }
 
     public static void removeRequest(Request request){
+        System.out.println("\nDeleting request ID " + request.getID());
         requestRepository.remove(request);
+        System.out.println("Request deleted successfully");
     }
 
     public static ArrayList<Request> getUserSentRequests(String username){
@@ -87,11 +94,14 @@ public class RequestService {
     }
 
     public static Request findRequestByID(String ID){
+        System.out.println("Searching for request with ID " + ID);
         for(Request crt : requestRepository.find()){
             if(crt.getID().equals(ID)){
+                System.out.println("Request found");
                 return crt;
             }
         }
+        System.out.println("\nRequest with ID " + ID + " was not found in the repository");
         return null;
     }
 
