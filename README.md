@@ -30,7 +30,7 @@ git clone https://github.com/fis2021/pet-finder
 
 Verify that the project Builds locally
 
-Open a command line session and cd SimpleRegistrationExample. If you have installed all the prerequisites, you should be able to run any of the following commands:
+Open a command line session and cd pet-finder. If you have installed all the prerequisites, you should be able to run any of the following commands:
 
 
 gradle clean build
