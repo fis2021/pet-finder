@@ -41,7 +41,6 @@ public class HomePageController extends Controller{
     public void initialize(){
         category.getItems().addAll("All","Lost", "Found", "Adoption");
         petType.getItems().addAll("All","Cat","Dog","Other");
-        //category.getSelectionModel().selectedIndexProperty().addListener();
         if(announcementImage != null && announcementInfo != null){
             announcementImage.setPrefWidth(100);
             announcementImage.setCellValueFactory(new PropertyValueFactory<>("imageView"));

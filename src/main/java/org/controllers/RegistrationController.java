@@ -92,8 +92,6 @@ public class RegistrationController extends Controller{
         String localUrl = file.toURI().toURL().toExternalForm();
         Image profile = new Image(localUrl, false);
         imageView.setImage(profile);
-        imageView.setFitHeight(0);
-        imageView.setFitWidth(0);
         imageView.rotateProperty();
     }
 
