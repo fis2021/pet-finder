@@ -17,7 +17,7 @@ repositories {
 }
 
 group = 'org'
-version = '0.1.0-SNAPSHOT'
+version = '1.0'
 description = 'An application built to help pet owners find their lost companions'
 
 sourceCompatibility = 11
@@ -48,4 +48,18 @@ test {
 
 jacocoTestReport {
     dependsOn test // tests are required to run before generating the report
+}
+
+javafx {
+    modules = [ 'javafx.controls' , 'javafx.fxml']
+}
+
+jar {
+    manifest {
+        attributes "Main-Class": "$mainClassName"
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }

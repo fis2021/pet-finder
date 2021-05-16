@@ -80,7 +80,7 @@
                   <Button id="updateButton" fx:id="updateButton" disable="true" layoutX="293.0" layoutY="328.0" mnemonicParsing="false" onAction="#updateUserAccount" text="Update" />
                   <Label layoutX="102.0" layoutY="175.0" text="Phone:" />
                   <TextField id="phone" fx:id="newPhone" disable="true" layoutX="147.0" layoutY="171.0" />
-                  <Button id="clearImage" fx:id="addPhotoButton1" disable="true" layoutX="343.0" layoutY="122.0" mnemonicParsing="false" onAction="#clearImageAction" prefHeight="25.0" prefWidth="91.0" text="Clear image" />
+                  <Button id="clearImage" fx:id="clearImageButton" disable="true" layoutX="343.0" layoutY="122.0" mnemonicParsing="false" onAction="#clearImageAction" prefHeight="25.0" prefWidth="91.0" text="Clear image" />
                </children>
             </AnchorPane>
             </children>

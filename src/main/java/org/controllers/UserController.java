@@ -50,6 +50,8 @@ public class UserController extends Controller {
     private Button addPhotoButton;
     @FXML
     private Button updateButton;
+    @FXML
+    private Button clearImageButton;
 
     @FXML
     private Label username;
@@ -68,6 +70,7 @@ public class UserController extends Controller {
         newStreet.setDisable(!enable);
         addPhotoButton.setDisable(!enable);
         updateButton.setDisable(!enable);
+        clearImageButton.setDisable(!enable);
     }
 
     @FXML
@@ -135,8 +138,6 @@ public class UserController extends Controller {
         String localUrl = file.toURI().toURL().toExternalForm();
         Image profile = new Image(localUrl, false);
         newPhoto.setImage(profile);
-        newPhoto.setFitHeight(0);
-        newPhoto.setFitWidth(0);
         newPhoto.rotateProperty();
     }
 
