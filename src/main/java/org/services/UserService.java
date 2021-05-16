@@ -30,6 +30,7 @@ public class UserService {
             throw new InvalidUserException();
         }
 
+        System.out.println("Login succeeded");
         return crt;
     }
 

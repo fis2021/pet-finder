@@ -31,6 +31,7 @@ public class Controller {
     protected MenuButton menu;
 
     protected FXMLLoader redirect(Event event, String page, String title) throws IOException {
+        System.out.println("\nRedirecting to " + page.toUpperCase() + " scene");
         Node node = (Node) event.getSource();
         Stage currentStage = (Stage) node.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(page));
@@ -153,6 +154,7 @@ public class Controller {
     @FXML
     public void handleSignOutAction(ActionEvent event) {
         try {
+            System.out.println("\nSigning-out...");
             redirect(event,"login.fxml","Login");
         } catch (IOException e) {
             System.out.println(e);
